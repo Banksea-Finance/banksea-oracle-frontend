@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #707070;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #19f096;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="矩形_786" data-name="矩形 786" class="cls-1" width="24" height="24" transform="translate(4415 1551)"/>
+    </clipPath>
+  </defs>
+  <g id="icon-eye" class="cls-2" transform="translate(-4415 -1551)">
+    <g id="组_189" data-name="组 189">
+      <g id="组_188" data-name="组 188">
+        <path id="路径_239" data-name="路径 239" class="cls-3" d="M4434.929,1561.692l-4.2-3a7,7,0,0,0-8.146,0l-4.2,3a2,2,0,0,0,0,3.253l4.2,3a7,7,0,0,0,8.146,0l4.2-3A2,2,0,0,0,4434.929,1561.692Zm-8.27,5.626a4,4,0,1,1,4-4A4,4,0,0,1,4426.659,1567.318Z"/>
+        <circle id="椭圆_40" data-name="椭圆 40" class="cls-3" cx="2.5" cy="2.5" r="2.5" transform="translate(4424.159 1560.818)"/>
+      </g>
+    </g>
+  </g>
+</svg>

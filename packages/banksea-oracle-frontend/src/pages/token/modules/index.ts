@@ -1,0 +1,8 @@
+export { default as AssetAddress } from './asset-address'
+export { default as Properties } from './properties'
+export { default as TrustedAnswer } from './trusted-answer'
+export { default as PriceHistory } from './price-history'
+export { default as OraclesMatrix } from './oracles-matrix'
+export { default as TriggerParameters } from './trigger-parameters'
+export { default as OracleResponses } from './oracle-responses'
+export { default as LastUpdate } from './last-update'
