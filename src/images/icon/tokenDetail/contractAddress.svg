@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #707070;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #333;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="矩形_792" data-name="矩形 792" class="cls-1" width="24" height="24" transform="translate(6817 517)"/>
+    </clipPath>
+  </defs>
+  <g id="icon-1_ca" data-name="icon-1=ca" class="cls-2" transform="translate(-6817 -517)">
+    <g id="组_84" data-name="组 84" transform="translate(-0.002)">
+      <rect id="矩形_32" data-name="矩形 32" class="cls-3" width="12" height="2" transform="translate(6825.002 524.009)"/>
+      <rect id="矩形_33" data-name="矩形 33" class="cls-3" width="2" height="2" transform="translate(6820.002 524.009)"/>
+      <rect id="矩形_34" data-name="矩形 34" class="cls-3" width="12" height="2" transform="translate(6825.002 529.009)"/>
+      <rect id="矩形_35" data-name="矩形 35" class="cls-3" width="2" height="2" transform="translate(6820.002 529.009)"/>
+      <rect id="矩形_36" data-name="矩形 36" class="cls-3" width="12" height="2" transform="translate(6825.002 534.009)"/>
+      <rect id="矩形_37" data-name="矩形 37" class="cls-3" width="2" height="2" transform="translate(6820.002 534.009)"/>
+    </g>
+  </g>
+</svg>
