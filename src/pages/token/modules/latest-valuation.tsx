@@ -7,12 +7,12 @@ import price from '@/images/icon/tokenDetail/price.svg'
 import { getCurrencyIcon } from '@/utils'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 
-const TrustedAnswer: React.FC = () => {
+const LatestValuation: React.FC = () => {
   const { data } = useTokenDetailQuery()
 
   return (
     <CollapsibleBox
-      title="Trusted answer"
+      title="Latest Valuation"
       collapsible={false}
       titleIcon={<img src={trustAnswerIcon} alt="detail" />}
       style={{ marginTop: '14px' }}
@@ -32,4 +32,4 @@ const TrustedAnswer: React.FC = () => {
   )
 }
 
-export default TrustedAnswer
+export default LatestValuation
