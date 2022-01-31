@@ -10,11 +10,11 @@ import useTokenFeedsQuery from '@/hooks/queries/useTokenFeedsQuery'
 import {
   AssetAddress,
   LastUpdate,
+  LatestValuation,
   OracleResponses,
   PriceHistory,
   Properties,
-  TriggerParameters,
-  TrustedAnswer
+  TriggerParameters
 } from './modules'
 import { DefaultTimeFormat } from '@/utils/constant'
 
@@ -60,7 +60,7 @@ const CollectionTokenDetailPage: React.FC = () => {
               <Text fontSize={'30px'} fontWeight={'bold'}>{data?.name}</Text>
             </Flex>
 
-            <TrustedAnswer />
+            <LatestValuation />
             <AssetAddress />
             <TriggerParameters />
 
