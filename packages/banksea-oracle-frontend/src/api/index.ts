@@ -1,7 +1,8 @@
-import { BankseaApiPageQuery, BankseaApiPageResult, Service } from '@/api/service'
+import { API_HOST, BankseaApiPageQuery, Service } from '@/api/service'
 import { TokensOfCollectionQuery } from '@/hooks/queries/useTokensOfCollectionQuery'
 import { CollectionFeedFilterType } from '@/hooks/queries/useCollectionFeedsQuery'
-import { CollectionTokensQuery, TokenOverview } from '@/hooks/queries/useCollectionTokensQuery'
+import { CollectionTokensQuery } from '@/hooks/queries/useCollectionTokensQuery'
+import axios from 'axios'
 
 const API = {
   core: {
@@ -32,9 +33,15 @@ const API = {
     getCollectionInfo(slug: string) {
       return Service.post('/collection/info', { slug })
     },
-    getTokens(data: CollectionTokensQuery): Promise<BankseaApiPageResult<TokenOverview>> {
+    getTokens(data: CollectionTokensQuery){
       const { order, ...rest  } = data
-      return Service.post('/nft/search', { ...rest, orders: [JSON.parse(order || '{}')] }) as any
+      return axios.post(`${API_HOST}/analysis/web/v1//nft/search`, {
+        ...rest, orders: [JSON.parse(order || '{}')]
+      }, {
+        headers: {
+          'request-timestamp': Date.now().toString()
+        }
+      })
     }
   }
 }

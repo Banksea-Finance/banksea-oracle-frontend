@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { NavbarContainer } from './index.style'
 import Logo from '../logo'
 import { Flex } from '@react-css/flex'
@@ -23,18 +23,37 @@ const Search: React.FC = () => {
   const [search, setSearch] = useState('')
   const [records, setRecords] = useState<{ label: string, value: string }[]>()
 
-  useEffect(() => {
+  const [lastRequestTime, setLastRequestTime] = useState<number>(0)
+
+  const handleSearch = useCallback(() => {
     API.core.getTokens({
       search
-    }).then((r: BankseaApiPageResult<TokenOverview>) => {
-      setRecords(
-        r.records.map(
-          ({ nftTokenName, assetPublicKey }) => ({
-            label: nftTokenName, value: assetPublicKey
-          })
+    }).then(r => {
+      const timestamp = Number(r.config.headers?.['request-timestamp'])
+
+      if (timestamp > lastRequestTime) {
+        const body: BankseaApiPageResult<TokenOverview> = r.data.data
+
+        setRecords(
+          body.records.map(
+            ({ nftTokenName, assetPublicKey }) => ({
+              label: nftTokenName, value: assetPublicKey
+            })
+          )
         )
-      )
+        setLastRequestTime(timestamp)
+      } else {
+        console.log('search result abort: ', new Date().toLocaleTimeString(), new Date(timestamp).toLocaleTimeString())
+      }
     })
+  }, [lastRequestTime, search])
+
+  useEffect(() => {
+    if (!search) {
+      return
+    }
+
+    handleSearch()
   }, [search])
 
   const onSearch = (val: string) => {

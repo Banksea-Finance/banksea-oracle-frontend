@@ -53,7 +53,7 @@ function onRejected(error: any) {
   return Promise.reject(responseData)
 }
 
-const API_HOST = process.env.REACT_APP_API_BASE
+export const API_HOST = process.env.REACT_APP_API_BASE
 
 const Service = axios.create({
   baseURL: `${API_HOST}/analysis/web/v1/`
