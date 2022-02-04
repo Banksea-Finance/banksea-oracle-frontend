@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
                     <Text fontSize={'20px'} bold>{name}</Text>
                   </Link>
                 ) : (
-                  <a href={link} target={'_blank'} rel="noreferrer">
+                  <a href={link} target={'_blank'} rel="noreferrer" key={index}>
                     <Text fontSize={'20px'} bold>{name}</Text>
                   </a>
                 )

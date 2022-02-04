@@ -25,7 +25,7 @@ const useCollectionTokensQuery = (query: CollectionTokensQuery): UseQueryResult<
     () => {
       if (!slug) return undefined
 
-      return API.core.getTokens({ ...query, slug })
+      return API.core.getTokens({ ...query, slug }).then(r => r.data.data)
     },
     {
       refetchOnWindowFocus: false

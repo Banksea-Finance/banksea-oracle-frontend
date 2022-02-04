@@ -35,7 +35,7 @@ const API = {
     },
     getTokens(data: CollectionTokensQuery){
       const { order, ...rest  } = data
-      return axios.post(`${API_HOST}/analysis/web/v1//nft/search`, {
+      return axios.post(`${API_HOST}/analysis/web/v1/nft/search`, {
         ...rest, orders: [JSON.parse(order || '{}')]
       }, {
         headers: {
