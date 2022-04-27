@@ -41,6 +41,7 @@
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
     "react-scroll": "^1.8.4",
+    "react-tooltip": "^4.2.21",
     "react-transition-group": "^4.4.2",
     "react-zmage": "0.8.5-beta.36",
     "styled-components": "^5.3.3",
