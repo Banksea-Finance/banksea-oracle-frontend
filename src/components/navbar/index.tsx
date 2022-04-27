@@ -42,8 +42,6 @@ const Search: React.FC = () => {
           )
         )
         setLastRequestTime(timestamp)
-      } else {
-        console.log('search result abort: ', new Date().toLocaleTimeString(), new Date(timestamp).toLocaleTimeString())
       }
     })
   }, [lastRequestTime, search])
@@ -76,7 +74,6 @@ const Search: React.FC = () => {
   )
 }
 
-
 const Navbar: React.FC = () => {
   const { isDesktop } = useResponsive()
 
@@ -104,7 +101,7 @@ const Navbar: React.FC = () => {
           </Flex>
         )
       }
-      <Search />
+      {/*<Search />*/}
     </NavbarContainer>
   )
 }

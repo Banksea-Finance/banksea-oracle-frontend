@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react'
 import { Avatar, Dropdown, Menu } from 'antd'
-import { Link } from 'react-router-dom'
 import usePageQuery from '@/hooks/usePageQuery'
 import { CollectionsListContainer, Description, Line, Title } from './index.style'
 import { ReactComponent as DropdownIcon } from '@/images/icon/dropdown.svg'
@@ -60,15 +59,13 @@ const CollectionsListPage: React.FC = () => {
             title={'Collection'}
             width={'300px'}
             render={(_, record: CollectionFeed) => (
-              <Link to={`/collection/${record.slug}`}>
-                <Flex alignItemsCenter>
-                  <Avatar src={record.image} alt="" style={{ marginRight: '10px' }} />
-                  <div>
-                    <Text color={'textDisabled'} fontSize={'16px'} bold>{record.nftName}</Text>
-                    <Text color={'secondary'} bold>{record.announceNumber}</Text>
-                  </div>
-                </Flex>
-              </Link>
+              <Flex alignItemsCenter>
+                <Avatar src={record.image} alt="" style={{ marginRight: '10px' }} />
+                <div>
+                  <Text color={'textDisabled'} fontSize={'16px'} bold>{record.nftName}</Text>
+                  <Text color={'secondary'} bold>{record.announceNumber}</Text>
+                </div>
+              </Flex>
             )}
           />
           <Table.Column

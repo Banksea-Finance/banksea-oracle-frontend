@@ -5,9 +5,10 @@ import { Flex } from '@react-css/flex'
 import { CollectionFeed } from '@/hooks/queries/useCollectionFeedsQuery'
 
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import ReactTooltip from 'react-tooltip'
+import { Text } from '@/libs/uikit/components'
 
-const CollectionFeedRowContainer = styled(Link)`
+const CollectionFeedRowContainer = styled.div`
   width: 555px;
   padding: 11px 0 11px 30px;
   display: flex;
@@ -19,7 +20,7 @@ const CollectionFeedRowContainer = styled(Link)`
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   position: relative;
-  cursor: pointer;
+  cursor: not-allowed;
   
   transition: all 0.25s;
   &:hover {
@@ -57,19 +58,27 @@ const CollectionFeedRow: React.FC<CollectionFeed> = ({ chainSource, nftName, ima
   const icon = useMemo(() => chainSource === 'Solana' ? solanaIcon : etnIcon, [chainSource])
 
   return (
-    <CollectionFeedRowContainer to={`/collection/${slug}`}>
-      <Flex alignItemsCenter>
-        <img className="avatar" src={image} />
-        <Flex column>
-          <span className="nft-name">{nftName}</span>
-          <span className="num">{announceNumber}</span>
-        </Flex>
-      </Flex>
-      <div className="type">
-        <img style={{ width: '20px',marginRight: '10px' }} src={icon} />
-        <span>{chainSource}</span>
-      </div>
-    </CollectionFeedRowContainer>
+    <div>
+      <a data-for={`CollectionFeedRowContainer-${slug}`} data-tip={true}>
+        <CollectionFeedRowContainer>
+          <Flex alignItemsCenter>
+            <img className="avatar" src={image} />
+            <Flex column>
+              <span className="nft-name">{nftName}</span>
+              <span className="num">{announceNumber}</span>
+            </Flex>
+          </Flex>
+          <div className="type">
+            <img style={{ width: '20px',marginRight: '10px' }} src={icon} />
+            <span>{chainSource}</span>
+          </div>
+        </CollectionFeedRowContainer>
+      </a>
+
+      <ReactTooltip id={`CollectionFeedRowContainer-${slug}`} place="top" type="dark" effect="solid">
+        <Text color={'textContrary'}>Under-constructing</Text>
+      </ReactTooltip>
+    </div>
   )
 }
 
