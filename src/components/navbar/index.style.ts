@@ -9,6 +9,7 @@ export const NavbarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: ${({ theme }) => theme.colors.background};
   
   ${({ theme }) => theme.mediaQueries.xl} {
     height: 15vw;

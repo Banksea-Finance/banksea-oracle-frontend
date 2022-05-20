@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import marketBac from '../../images/market/marketBac.webp'
-import { Text } from '@/libs/uikit/components'
-
+import { Text } from '@banksea-finance/ui-kit'
 export const CollectionsListContainer = styled.div`
   background: url(${marketBac}) no-repeat;
   background-size: 100%;

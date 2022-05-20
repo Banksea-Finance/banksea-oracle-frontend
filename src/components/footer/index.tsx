@@ -9,9 +9,7 @@ import {
   SocialMediumContainer
 } from '@/components/footer/index.style'
 import Logo from '@/components/logo'
-import { Flex } from '@react-css/flex'
-import { Text } from '@/libs/uikit/components'
-import { useResponsive } from '@/libs/uikit'
+import { Flex, useResponsive, Text } from '@banksea-finance/ui-kit'
 
 export type SocialMedium = {
   icon: string
@@ -38,8 +36,10 @@ const Footer: React.FC = () => {
             Financialize your NFT.
           </FootText>
         </LogoAndInfoContainer>
-        <Flex column alignItemsCenter>
-          <Text mb={'17px'} color={'white'} textAlign={isDesktop ? 'start' : 'center'}>Community / Contact</Text>
+        <Flex flexDirection={'column'} ai={'center'}>
+          <Text mb={'17px'} color={'white'} textAlign={isDesktop ? 'start' : 'center'}>
+            Community / Contact
+          </Text>
           <SocialMediaContainer>
             {
               SOCIAL_MEDIA.map(({ icon, to }, index) => (

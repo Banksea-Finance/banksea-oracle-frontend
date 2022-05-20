@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import useTokenPriceHistoryQuery from '@/hooks/queries/useTokenPriceHistoryQuery'
 import moment from 'moment'
 import * as echarts from 'echarts'
-import { CollapsibleBox } from '@/libs/uikit/components'
 import historyPrice from '@/images/icon/tokenDetail/historyPrice.svg'
 import EChartsReact from 'echarts-for-react'
 import { DefaultTimeFormat } from '@/utils/constant'
@@ -94,14 +93,9 @@ const PriceHistory: React.FC = () => {
   }, [data])
 
   return (
-    <CollapsibleBox
-      title="Price history"
-      collapsible={true}
-      titleIcon={<img src={historyPrice} alt="detail" />}
-      style={{ marginTop: '30px' }}
-    >
+    <div>
       <EChartsReact option={options} />
-    </CollapsibleBox>
+    </div>
   )
 }
 

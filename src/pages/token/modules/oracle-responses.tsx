@@ -1,6 +1,6 @@
 import React from 'react'
 import oracleResponses from '@/images/icon/tokenDetail/oracleResponses.svg'
-import { CollapsibleBox, Text } from '@/libs/uikit/components'
+import { Text } from '@banksea-finance/ui-kit'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 import useTokenFeedsQuery from '@/hooks/queries/useTokenFeedsQuery'
 import {
@@ -14,12 +14,7 @@ const OracleResponses: React.FC = () => {
   const { data: feeds } = useTokenFeedsQuery()
 
   return (
-    <CollapsibleBox
-      title="Oracle responses"
-      collapsible={false}
-      titleIcon={<img src={oracleResponses} alt="detail" />}
-      style={{ marginTop: '20px', width: '100%' }}
-    >
+    <div >
       <CollapsibleBoxSecondaryContentContainer>
         <SecondaryText>
           Minimum response: {data?.minRsp}
@@ -31,7 +26,7 @@ const OracleResponses: React.FC = () => {
           {feeds?.responseNodes} / {feeds?.totalNodes}
         </Text>
       </CollapsibleBoxPrimaryContentContainer>
-    </CollapsibleBox>
+    </div>
   )
 }
 

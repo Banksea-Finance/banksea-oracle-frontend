@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Text } from '@/libs/uikit/components'
+import { Text } from '@banksea-finance/ui-kit'
 
 export const FooterContainer = styled.div`
   background: #30263F;

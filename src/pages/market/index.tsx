@@ -3,7 +3,6 @@ import { MarketPageContainer } from './index.style'
 import { AINodesDistribution, BankseaDataFeed } from '@/pages/market/modules'
 import styled from 'styled-components'
 import CollectionsFeedsModule from '@/pages/market/components/collections-feeds-module'
-import { PageWrapper } from '@/libs/uikit/components'
 
 const FeedsContainer = styled.div`
   width: 100%;
@@ -20,15 +19,13 @@ const FeedsContainer = styled.div`
 const MarketPage: React.FC = () => {
   return (
     <MarketPageContainer id={'MarketPageContainer'}>
-      <PageWrapper>
-        <BankseaDataFeed />
-        <AINodesDistribution />
+      <BankseaDataFeed />
+      <AINodesDistribution />
 
-        <FeedsContainer>
-          <CollectionsFeedsModule type={'popular'} title={'Most Popular Feeds'} />
-          <CollectionsFeedsModule type={'recent'} title={'Latest Feeds'} />
-        </FeedsContainer>
-      </PageWrapper>
+      <FeedsContainer>
+        <CollectionsFeedsModule type={'popular'} title={'Most Popular Feeds'} />
+        <CollectionsFeedsModule type={'recent'} title={'Latest Feeds'} />
+      </FeedsContainer>
     </MarketPageContainer>
   )
 }

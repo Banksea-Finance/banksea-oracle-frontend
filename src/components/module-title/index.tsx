@@ -1,4 +1,3 @@
-import Flex from '@react-css/flex'
 import React from 'react'
 import styled from 'styled-components'
 import { layout, LayoutProps, space, SpaceProps } from 'styled-system'
@@ -30,14 +29,14 @@ export interface ModuleTitleProps extends LayoutProps, SpaceProps {
   small?: boolean
 }
 
-const ModuleTitleContainer = styled(Flex)<LayoutProps>`
+const ModuleTitleContainer = styled.div<LayoutProps>`
   ${layout}
   ${space}
 `
 
 const ModuleTitle: React.FC<ModuleTitleProps> = ({ children, small, ...layoutProps }) => {
   return (
-    <ModuleTitleContainer column alignItemsCenter {...layoutProps}>
+    <ModuleTitleContainer {...layoutProps}>
       <TitleText small={small}>
         {children}
       </TitleText>

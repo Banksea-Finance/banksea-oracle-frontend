@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import marketBac from '../../images/market/marketBac.webp'
 import { Link } from 'react-router-dom'
-import { PageWrapper } from '@/libs/uikit/components'
 import ReactMarkdown from 'react-markdown'
 
 export const CollectionDetailContainer = styled.div`
@@ -11,7 +10,7 @@ export const CollectionDetailContainer = styled.div`
   min-height: 100vh;
 `
 
-export const CollectionDetailWrapper = styled(PageWrapper)`
+export const CollectionDetailWrapper = styled.div`
   padding-bottom: 100px;
 `
 

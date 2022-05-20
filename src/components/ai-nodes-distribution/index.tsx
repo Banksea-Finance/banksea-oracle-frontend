@@ -2,10 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import useFeedNodesQuery, { FeedNode } from '@/hooks/queries/useFeedNodesQuery'
 import ReactECharts from 'echarts-for-react'
 import useExecutingNodeQuery from '@/hooks/queries/useExecutingNodeQuery'
-import Flex from '@react-css/flex'
-import { Text } from '@/libs/uikit/components'
+import { Flex, Text } from '@banksea-finance/ui-kit'
 import { AvatarsContainer, ExecutingNodesContainer, MapContainer, MapMain } from './index.style'
-import { Avatar } from 'antd'
 import ModuleTitle from '@/components/module-title'
 
 const ExecutingNodes: React.FC = () => {
@@ -18,8 +16,8 @@ const ExecutingNodes: React.FC = () => {
       <Text bold fontSize={'24px'} mb={'10px'}>
         Running node:
       </Text>
-      <Flex alignItemsCenter>
-        <Avatar src={nodeInfo?.nodeImageUrl} />
+      <Flex ai={'center'}>
+        <img src={nodeInfo?.nodeImageUrl} />
         <Text ml={'10px'} bold fontSize={'20px'}>{nodeInfo?.nodeName}</Text>
       </Flex>
 
@@ -32,7 +30,7 @@ const ExecutingNodes: React.FC = () => {
             <AvatarsContainer>
               {
                 nodeInfo?.nftCollectionImageUrl.map((src, index) => (
-                  <Avatar src={src} key={index} style={{ marginRight: '10px' }} />
+                  <img src={src} key={index} style={{ marginRight: '10px' }} />
                 ))
               }
             </AvatarsContainer>

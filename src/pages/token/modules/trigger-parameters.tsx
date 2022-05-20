@@ -5,54 +5,39 @@ import {
   CollapsibleBoxSecondaryContentContainer,
   SecondaryText
 } from '@/pages/token/index.style'
-import { Flex } from '@react-css/flex'
-import { CollapsibleBox } from '@/libs/uikit/components'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 import moment from 'moment'
-import Text from '@/libs/uikit/components/Text/Text'
+import { Text, Flex } from '@banksea-finance/ui-kit'
 
 const TriggerParameters: React.FC = () => {
   const { data } = useTokenDetailQuery()
 
   return (
-    <CollapsibleBox
-      title="Trigger parameters"
-      collapsible={false}
-      titleIcon={<img src={triggerParameters} alt="detail" />}
-      style={{ marginTop: '20px' }}
-    >
+    <div>
       <CollapsibleBoxSecondaryContentContainer>
         <Flex>
-          <Flex.Item flex={1}>
-            <SecondaryText>
-              Heart beet
-            </SecondaryText>
-          </Flex.Item>
-          <Flex.Item flex={1}>
-            <SecondaryText>
-              Minimum response
-            </SecondaryText>
-          </Flex.Item>
+          <SecondaryText>
+            Heart beet
+          </SecondaryText>
+          <SecondaryText>
+            Minimum response
+          </SecondaryText>
         </Flex>
       </CollapsibleBoxSecondaryContentContainer>
 
       <CollapsibleBoxPrimaryContentContainer>
         <Flex>
-          <Flex.Item flex={1}>
-            <Text fontSize={'24px'} color={'primary'} bold>
-              {data?.heartbeat ? (
-                moment(Date.now() + data.heartbeat).fromNow()
-              ) : '-'}
-            </Text>
-          </Flex.Item>
-          <Flex.Item flex={1}>
-            <Text fontSize={'24px'} color={'primary'} bold>
-              {data?.minRsp || '-'}
-            </Text>
-          </Flex.Item>
+          <Text fontSize={'24px'} color={'primary'} bold>
+            {data?.heartbeat ? (
+              moment(Date.now() + data.heartbeat).fromNow()
+            ) : '-'}
+          </Text>
+          <Text fontSize={'24px'} color={'primary'} bold>
+            {data?.minRsp || '-'}
+          </Text>
         </Flex>
       </CollapsibleBoxPrimaryContentContainer>
-    </CollapsibleBox>
+    </div>
   )
 }
 

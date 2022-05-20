@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { Text } from '@/libs/uikit/components'
-
+import { Text } from '@banksea-finance/ui-kit'
 export const MarketPageContainer = styled.div`
   background: url(${require('@/images/market/marketBac.webp').default}) no-repeat;
   background-size: 100%;

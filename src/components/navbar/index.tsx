@@ -1,13 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { NavbarContainer } from './index.style'
 import Logo from '../logo'
-import { Flex } from '@react-css/flex'
-import { Link, useNavigate } from 'react-router-dom'
-import { AutoComplete, Text } from '@/libs/uikit/components'
-import { useResponsive } from '@/libs/uikit'
-import API from '@/api'
-import { BankseaApiPageResult } from '@/api/service'
-import { TokenOverview } from '@/hooks/queries/useCollectionTokensQuery'
+import { Link } from 'react-router-dom'
+import { Flex, useResponsive, Text } from '@banksea-finance/ui-kit'
 
 const navbarData = [
   { name: 'Market', link: '/market', inner: true },
@@ -16,63 +11,6 @@ const navbarData = [
   { name: 'Consumer', link: 'https://banksea-finance.gitbook.io/oracle/consumers/program-client' },
   { name: 'Cooperation', link: 'https://forms.gle/LMwWudrC8vSDV7pz7' }
 ]
-
-const Search: React.FC = () => {
-  const { isDesktop } = useResponsive()
-  const navigate = useNavigate()
-  const [search, setSearch] = useState('')
-  const [records, setRecords] = useState<{ label: string, value: string }[]>()
-
-  const [lastRequestTime, setLastRequestTime] = useState<number>(0)
-
-  const handleSearch = useCallback(() => {
-    API.core.getTokens({
-      search
-    }).then(r => {
-      const timestamp = Number(r.config.headers?.['request-timestamp'])
-
-      if (timestamp > lastRequestTime) {
-        const body: BankseaApiPageResult<TokenOverview> = r.data.data
-
-        setRecords(
-          body.records.map(
-            ({ nftTokenName, assetPublicKey }) => ({
-              label: nftTokenName, value: assetPublicKey
-            })
-          )
-        )
-        setLastRequestTime(timestamp)
-      }
-    })
-  }, [lastRequestTime, search])
-
-  useEffect(() => {
-    if (!search) {
-      return
-    }
-
-    handleSearch()
-  }, [search])
-
-  const onSearch = (val: string) => {
-    setSearch(val)
-  }
-
-  const onSelect = (value: any) => {
-    navigate(`/token/${value}`)
-  }
-
-  return (
-    <AutoComplete
-      allowClear
-      placeholder={'Search NFTs...'}
-      width={isDesktop ? '250px' : '30vw'}
-      options={records}
-      onSearch={onSearch}
-      onSelect={onSelect}
-    />
-  )
-}
 
 const Navbar: React.FC = () => {
   const { isDesktop } = useResponsive()
@@ -84,7 +22,7 @@ const Navbar: React.FC = () => {
       </Link>
       {
         isDesktop && (
-          <Flex justifySpaceBetween style={{ width: '620px', fontWeight: 'bold' }}>
+          <Flex jc={'space-between'} style={{ width: '620px', fontWeight: 'bold' }}>
             {
               navbarData.map(({ name, link, inner }, index) => (
                 inner ? (

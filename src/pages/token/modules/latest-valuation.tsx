@@ -1,7 +1,6 @@
 import React from 'react'
 import { CollapsibleBoxPrimaryContentContainer } from '@/pages/token/index.style'
-import { Flex } from '@react-css/flex'
-import { CollapsibleBox, Image, Text } from '@/libs/uikit/components'
+import { Text, Flex } from '@banksea-finance/ui-kit'
 import trustAnswerIcon from '@/images/icon/tokenDetail/trustAnswer.svg'
 import price from '@/images/icon/tokenDetail/price.svg'
 import { getCurrencyIcon } from '@/utils'
@@ -11,16 +10,11 @@ const LatestValuation: React.FC = () => {
   const { data } = useTokenDetailQuery()
 
   return (
-    <CollapsibleBox
-      title="Latest Valuation"
-      collapsible={false}
-      titleIcon={<img src={trustAnswerIcon} alt="detail" />}
-      style={{ marginTop: '14px' }}
-    >
+    <div >
       <CollapsibleBoxPrimaryContentContainer>
-        <Flex alignItemsCenter>
-          <Image src={price} width={'30px'} height={'30px'} mr={'10px'} />
-          <Flex row alignItemsCenter>
+        <Flex>
+          <img src={price} />
+          <Flex>
             <img src={getCurrencyIcon(data?.chainSource)} style={{ width: '20px', marginRight: '5px' }} />
             <Text fontSize={'40px'} bold>
               {data?.answer || '-'}
@@ -28,7 +22,7 @@ const LatestValuation: React.FC = () => {
           </Flex>
         </Flex>
       </CollapsibleBoxPrimaryContentContainer>
-    </CollapsibleBox>
+    </div>
   )
 }
 

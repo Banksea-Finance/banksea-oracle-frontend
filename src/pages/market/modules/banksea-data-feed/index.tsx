@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import useSummaryQuery from '@/hooks/queries/useSummaryQuery'
 import { GridContainer, RainbowBorderBox, SummaryContainer } from '@/pages/market/modules/banksea-data-feed/index.style'
 import CountUp from 'react-countup'
-import Flex from '@react-css/flex'
-import { Text } from '@/libs/uikit/components'
+import { Text, Flex } from '@banksea-finance/ui-kit'
 import { CountUpProps } from 'react-countup/build/CountUp'
 import ModuleTitle from '@/components/module-title'
 
@@ -37,7 +36,7 @@ const Statistic: React.FC<{ title: string, value?: number, decimals?: number }> 
 
   return (
     <RainbowBorderBox width={'100%'} height={'204px'}>
-      <Flex column alignItemsCenter justifyCenter style={{ width: '100%', background: 'white', height: '100%', borderRadius: '10px' }}>
+      <Flex style={{ width: '100%', background: 'white', height: '100%', borderRadius: '10px' }}>
         <Text fontSize={'18px'} color={'textDisabled'} bold mb={'15px'}>
           {title}
         </Text>

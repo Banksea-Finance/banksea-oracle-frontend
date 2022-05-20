@@ -1,13 +1,11 @@
 import React, { useMemo } from 'react'
 import solanaIcon from '@/images/icon/solana.png'
 import etnIcon from '@/images/icon/eth.png'
-import { Flex } from '@react-css/flex'
 import { CollectionFeed } from '@/hooks/queries/useCollectionFeedsQuery'
 
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
-import { Text } from '@/libs/uikit/components'
-
+import { Flex, Text } from '@banksea-finance/ui-kit'
 const CollectionFeedRowContainer = styled.div`
   width: 555px;
   padding: 11px 0 11px 30px;
@@ -61,9 +59,9 @@ const CollectionFeedRow: React.FC<CollectionFeed> = ({ chainSource, nftName, ima
     <div>
       <a data-for={`CollectionFeedRowContainer-${slug}`} data-tip={true}>
         <CollectionFeedRowContainer>
-          <Flex alignItemsCenter>
+          <Flex>
             <img className="avatar" src={image} />
-            <Flex column>
+            <Flex>
               <span className="nft-name">{nftName}</span>
               <span className="num">{announceNumber}</span>
             </Flex>
@@ -74,10 +72,6 @@ const CollectionFeedRow: React.FC<CollectionFeed> = ({ chainSource, nftName, ima
           </div>
         </CollectionFeedRowContainer>
       </a>
-
-      <ReactTooltip id={`CollectionFeedRowContainer-${slug}`} place="top" type="dark" effect="solid">
-        <Text color={'textContrary'}>Under-constructing</Text>
-      </ReactTooltip>
     </div>
   )
 }

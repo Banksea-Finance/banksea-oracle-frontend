@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import marketBac from '@/images/market/marketBac.webp'
-import { PageWrapper, Text } from '@/libs/uikit/components'
+import { Text } from '@banksea-finance/ui-kit'
 
 export const TokenDetailContainer = styled.div`
   background: url(${marketBac}) no-repeat;
@@ -20,7 +20,7 @@ export const TokenImage = styled.img`
   }
 `
 
-export const TokenDetailWrapper = styled(PageWrapper)`
+export const TokenDetailWrapper = styled.div`
   margin-top: 50px;
   margin-bottom: 50px;
 

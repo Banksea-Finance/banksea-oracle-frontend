@@ -9,16 +9,14 @@ import {
   GridContainer,
   StatisticsContainer
 } from './index.style'
-import { Flex } from '@react-css/flex'
 import useCollectionInfoQuery from '@/hooks/queries/useCollectionInfoQuery'
 import Redirect from '@/pages/redirect'
 import useCollectionTokensQuery from '@/hooks/queries/useCollectionTokensQuery'
 import usePageQuery from '@/hooks/usePageQuery'
-import { Input, Pagination, Select, Text } from '@/libs/uikit/components'
+import { Input, Text, Flex } from '@banksea-finance/ui-kit'
 import { Statistic, TokenCard } from './components'
 import { SkeletalTokenCard } from '@/pages/collection/components/token-card'
 import { getCurrencyIcon } from '@/utils'
-import { SearchOutlined } from '@ant-design/icons'
 
 const CollectionTokens: React.FC = () => {
   const { data: collection } = useCollectionInfoQuery()
@@ -30,12 +28,10 @@ const CollectionTokens: React.FC = () => {
 
   return (
     <CollectionTokenContainer>
-      <Flex justifySpaceBetween alignItemsCenter>
-        <Flex alignItemsCenter>
+      <Flex jc={'space-between'} ai={'center'}>
+        <Flex ai={'center'}>
           <Input
             width={'250px'}
-            prefix={<SearchOutlined />}
-            allowClear
             onKeyPress={v => {
               if (v.code === 'Enter') {
                 setSearch((v.target as any).value)
@@ -43,19 +39,6 @@ const CollectionTokens: React.FC = () => {
             }}
           />
 
-          <Select
-            style={{ marginLeft: '10px' }}
-            width={'200px'}
-            value={order}
-            onChange={v => setOrder(v as string)}
-          >
-            <Select.Option value={'{ "field": "price", "order": "ascend" }'}>
-              Price Ascend
-            </Select.Option>
-            <Select.Option value={'{ "field": "price", "order": "descend" }'}>
-              Price Descend
-            </Select.Option>
-          </Select>
         </Flex>
 
         <Text color={'primary'}>{collection?.totalSupply} Total {collection?.nftName}</Text>
@@ -70,17 +53,6 @@ const CollectionTokens: React.FC = () => {
           )
         }
       </GridContainer>
-      <Pagination
-        style={{ textAlign: 'center', marginTop: '10px' }}
-        showQuickJumper
-        showSizeChanger={false}
-        className={'pager'}
-        pageSizeOptions={['15', '20', '25', '30']}
-        pageSize={size}
-        total={data?.total}
-        current={current}
-        onChange={handleChange}
-      />
     </CollectionTokenContainer>
   )
 }
@@ -102,7 +74,7 @@ const CollectionDetailPage: React.FC = () => {
     <CollectionDetailContainer>
       <CollectionDetailWrapper>
         <CollectionImage src={bannerImageUrl} alt="" />
-        <Flex column>
+        <Flex flexDirection={'column'}>
           <CollectionName>
             {nftName}
           </CollectionName>

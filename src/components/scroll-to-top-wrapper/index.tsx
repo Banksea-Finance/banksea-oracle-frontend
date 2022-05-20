@@ -11,5 +11,4 @@ const ScrollToTopWrapper = ({ children }: any) => {
   return children
 }
 
-
 export default ScrollToTopWrapper

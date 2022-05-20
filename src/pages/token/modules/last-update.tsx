@@ -1,7 +1,6 @@
 import React from 'react'
-import lastUpdate from '@/images/icon/tokenDetail/lastUpdate.svg'
 import moment from 'moment'
-import { CollapsibleBox, Text } from '@/libs/uikit/components'
+import {  Text } from '@banksea-finance/ui-kit'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 import { DefaultTimeFormat } from '@/utils/constant'
 import {
@@ -14,12 +13,7 @@ const LastUpdate: React.FC = () => {
   const { data } = useTokenDetailQuery()
 
   return (
-    <CollapsibleBox
-      title="Last update"
-      collapsible={false}
-      titleIcon={<img src={lastUpdate} alt="detail" />}
-      style={{ marginTop: '20px', width: '100%' }}
-    >
+    <div >
       <CollapsibleBoxSecondaryContentContainer>
         <SecondaryText>
           {data?.latestUpdate ? moment(data?.latestUpdate).format(DefaultTimeFormat) : '-'}
@@ -31,7 +25,7 @@ const LastUpdate: React.FC = () => {
           {data?.latestUpdate ? moment(data?.latestUpdate).fromNow() : '-'}
         </Text>
       </CollapsibleBoxPrimaryContentContainer>
-    </CollapsibleBox>
+    </div>
   )
 }
 

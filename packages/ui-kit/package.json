@@ -1,0 +1,69 @@
+{
+  "name": "@banksea-finance/ui-kit",
+  "author": "banksea-finance",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "yarn storybook",
+    "build": "rimraf -rf ./dist && rollup -c && tsc -d --emitDeclarationOnly --declarationDir dist",
+    "watch": "rollup -c -w",
+    "build:storybook": "build-storybook",
+    "test": "jest",
+    "prepublishOnly": "yarn build",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.2",
+    "react-dom": ">=17.0.2",
+    "styled-components": "^5.2.3",
+    "styled-system": "^5.1.5"
+  },
+  "dependencies": {
+    "@mui/base": "^5.0.0-alpha.80",
+    "@types/react": "^17.0.5",
+    "lodash": "^4.17.21",
+    "rc-input": "^0.0.1-alpha.7",
+    "rc-notification": "^5.0.0-alpha.8",
+    "react-router-dom": "^6.3.0",
+    "react-spinners": "^0.11.0",
+    "react-transition-group": "^4.4.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@rollup/plugin-url": "^7.0.0",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-interactions": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/addons": "^6.4.22",
+    "@storybook/react": "^6.4.22",
+    "@storybook/testing-library": "^0.0.11",
+    "@storybook/theming": "^6.4.22",
+    "@types/lodash": "^4.14.182",
+    "@types/react-transition-group": "^4.4.4",
+    "@types/styled-components": "^5.1.15",
+    "@types/styled-system": "^5.1.15",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-storybook": "^0.5.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "rimraf": "^3.0.2",
+    "styled-components": "^5.2.3",
+    "styled-system": "^5.1.5",
+    "typescript": "^4.6.4"
+  }
+}

@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react'
-import { Flex } from '@react-css/flex'
-import { CollapsibleBox, Text } from '@/libs/uikit/components'
+import { Text, Flex } from '@banksea-finance/ui-kit'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 import { CollapsibleBoxPrimaryContentContainer } from '../index.style'
-import { LinkOutlined } from '@ant-design/icons'
 
 const AssetAddress: React.FC = () => {
   const { data } = useTokenDetailQuery()
@@ -17,23 +15,15 @@ const AssetAddress: React.FC = () => {
   }, [data])
 
   return (
-    <CollapsibleBox
-      title="Asset address"
-      collapsible={false}
-      titleIcon={<img src={require('@/images/icon/tokenDetail/contractAddress.svg').default} alt="detail" />}
-      style={{ marginTop: '20px' }}
-    >
-      <CollapsibleBoxPrimaryContentContainer>
-        <Flex alignItemsCenter>
-          <a href={reportUrl} target={'_blank'} rel="noreferrer">
-            <Flex alignItemsCenter>
-              <LinkOutlined />
-              <Text ml={'5px'} fontSize={'20px'} bold>{data?.asset}</Text>
-            </Flex>
-          </a>
-        </Flex>
-      </CollapsibleBoxPrimaryContentContainer>
-    </CollapsibleBox>
+    <CollapsibleBoxPrimaryContentContainer>
+      <Flex>
+        <a href={reportUrl} target={'_blank'} rel="noreferrer">
+          <Flex>
+            <Text ml={'5px'} fontSize={'20px'} bold>{data?.asset}</Text>
+          </Flex>
+        </a>
+      </Flex>
+    </CollapsibleBoxPrimaryContentContainer>
   )
 }
 
