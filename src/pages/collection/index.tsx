@@ -13,17 +13,17 @@ import useCollectionInfoQuery from '@/hooks/queries/useCollectionInfoQuery'
 import Redirect from '@/pages/redirect'
 import useCollectionTokensQuery from '@/hooks/queries/useCollectionTokensQuery'
 import usePageQuery from '@/hooks/usePageQuery'
-import { Input, Text, Flex } from '@banksea-finance/ui-kit'
+import { Flex, Input, Text } from '@banksea-finance/ui-kit'
 import { Statistic, TokenCard } from './components'
 import { SkeletalTokenCard } from '@/pages/collection/components/token-card'
 import { getCurrencyIcon } from '@/utils'
 
 const CollectionTokens: React.FC = () => {
   const { data: collection } = useCollectionInfoQuery()
-  const { current, size, handleChange } = usePageQuery({ size: 15 })
+  const { current, size, /*handleChange*/ } = usePageQuery({ size: 15 })
 
   const [search, setSearch] = useState('')
-  const [order, setOrder] = useState('')
+  const [order, /*setOrder*/] = useState('')
   const { data, isFetching } = useCollectionTokensQuery({ current, size, search, order })
 
   return (
@@ -57,7 +57,7 @@ const CollectionTokens: React.FC = () => {
   )
 }
 
-const CollectionDetailPage: React.FC = () => {
+export const CollectionDetailPage: React.FC = () => {
   const { data, isLoading } = useCollectionInfoQuery()
 
   if (isLoading) {
@@ -92,5 +92,3 @@ const CollectionDetailPage: React.FC = () => {
     </CollectionDetailContainer>
   )
 }
-
-export default CollectionDetailPage

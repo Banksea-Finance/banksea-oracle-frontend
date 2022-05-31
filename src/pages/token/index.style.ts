@@ -15,7 +15,7 @@ export const TokenImage = styled.img`
   object-fit: cover;
   height: 500px;
 
-  ${({ theme }) => theme.mediaQueries.xl} {
+  ${({ theme }) => theme.mediaQueries.maxXl} {
     height: 30vw;
   }
 `

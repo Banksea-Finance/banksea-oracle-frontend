@@ -4,7 +4,7 @@ const Logo: React.FC<{ width?: string }> = ({ width }) => {
   return (
     <div style={{ width: width || 'fit-content' }}>
       <img
-        src={require('@/images/logo.png').default}
+        src={require('@/images/logo.png')}
         style={{ width }}
       />
     </div>

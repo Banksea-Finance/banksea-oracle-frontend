@@ -1,8 +1,7 @@
 import React from 'react'
 import { TokenDetailContainer, TokenDetailWrapper, TokenImage } from '@/pages/token/index.style'
-import { Text, Flex } from '@banksea-finance/ui-kit'
+import { Flex, Text } from '@banksea-finance/ui-kit'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
-import useTokenFeedsQuery from '@/hooks/queries/useTokenFeedsQuery'
 
 import {
   AssetAddress,
@@ -15,14 +14,14 @@ import {
 } from './modules'
 
 const OracleDataTable: React.FC = () => {
-  const { data } = useTokenFeedsQuery()
+  // const { data } = useTokenFeedsQuery()
 
   return (
     <></>
   )
 }
 
-const CollectionTokenDetailPage: React.FC = () => {
+export const CollectionTokenDetailPage: React.FC = () => {
   const { data } = useTokenDetailQuery()
 
   return (
@@ -50,5 +49,3 @@ const CollectionTokenDetailPage: React.FC = () => {
     </TokenDetailContainer>
   )
 }
-
-export default CollectionTokenDetailPage

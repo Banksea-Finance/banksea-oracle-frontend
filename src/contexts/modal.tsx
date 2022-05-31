@@ -84,7 +84,7 @@ const ModalProvider: React.FC = ({ children }) => {
             <img
               alt={'close'}
               onClick={close}
-              src={require('@/images/close.png').default}
+              src={require('@/images/close.png')}
               style={{ position: 'absolute', right: '20px', top: '20px', cursor: 'pointer' }}
             />
           )

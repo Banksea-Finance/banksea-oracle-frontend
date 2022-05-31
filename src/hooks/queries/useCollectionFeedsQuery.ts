@@ -1,6 +1,7 @@
 import { useQuery, UseQueryResult } from 'react-query'
 import API from '@/api'
 import { BankseaApiPageQuery, BankseaApiPageResult } from '@/api/service'
+import { CSSProperties } from 'react'
 
 export type CollectionFeedFilterType = 'recent' | 'popular'
 
@@ -13,8 +14,8 @@ export interface CollectionFeed {
   valuation: number
   lastUpdate: number
   addTime: number
+  color?: CSSProperties['color']
 }
-
 
 const useCollectionFeedsQuery = (query: BankseaApiPageQuery, type: CollectionFeedFilterType): UseQueryResult<BankseaApiPageResult<CollectionFeed>> => {
   return useQuery(

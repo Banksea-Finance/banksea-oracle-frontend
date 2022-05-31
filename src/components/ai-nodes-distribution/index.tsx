@@ -2,9 +2,14 @@ import React, { useEffect, useMemo, useState } from 'react'
 import useFeedNodesQuery, { FeedNode } from '@/hooks/queries/useFeedNodesQuery'
 import ReactECharts from 'echarts-for-react'
 import useExecutingNodeQuery from '@/hooks/queries/useExecutingNodeQuery'
-import { Flex, Text } from '@banksea-finance/ui-kit'
-import { AvatarsContainer, ExecutingNodesContainer, MapContainer, MapMain } from './index.style'
-import ModuleTitle from '@/components/module-title'
+import { Flex, Grid, Text, useThemeWrapper } from '@banksea-finance/ui-kit'
+import { ExecutingNodesContainer, MapContainer, MapMain } from './index.style'
+import { ModuleTitle } from '@/components/module-title'
+import * as echarts from 'echarts'
+
+import world from '@/assets/world.json'
+
+echarts.registerMap('world', world as any)
 
 const ExecutingNodes: React.FC = () => {
   const { data: executingNode } = useExecutingNodeQuery()
@@ -17,7 +22,7 @@ const ExecutingNodes: React.FC = () => {
         Running node:
       </Text>
       <Flex ai={'center'}>
-        <img src={nodeInfo?.nodeImageUrl} />
+        <img src={nodeInfo?.nodeImageUrl} style={{ marginRight: '10px', width: '60px', borderRadius: '30px' }} />
         <Text ml={'10px'} bold fontSize={'20px'}>{nodeInfo?.nodeName}</Text>
       </Flex>
 
@@ -27,13 +32,13 @@ const ExecutingNodes: React.FC = () => {
             <Text bold fontSize={'20px'} mb={'10px'} mt={'15px'}>
               Supported collections:
             </Text>
-            <AvatarsContainer>
+            <Grid gridTemplateColumns={'repeat(auto-fill, 32px)'} gridGap={'5px 10px'}>
               {
                 nodeInfo?.nftCollectionImageUrl.map((src, index) => (
-                  <img src={src} key={index} style={{ marginRight: '10px' }} />
+                  <img src={src} key={index} style={{ marginRight: '10px', width: '32px', borderRadius: '16px' }} />
                 ))
               }
-            </AvatarsContainer>
+            </Grid>
           </div>
         )
       }
@@ -44,19 +49,12 @@ const ExecutingNodes: React.FC = () => {
 const NodesMap: React.FC = () => {
   const { data: allNodes } = useFeedNodesQuery()
   const { data: executingNode } = useExecutingNodeQuery()
+  const { themeInstance } = useThemeWrapper()
 
   const [scale, setScale] = useState(100)
 
   const option = useMemo(() => ({
     progressive: 20000,
-    // tooltip: {
-    //   trigger: 'item',
-    //   formatter: (v: any) => {
-    //     const { mapX, mapY } = v.data
-    //
-    //     return `${mapX}, ${mapY}`
-    //   }
-    // },
     geo: {
       center: [0, 0],
       zoom: 1,
@@ -109,18 +107,17 @@ const NodesMap: React.FC = () => {
             x: 0.5,
             y: 0.5,
             r: .98,
-            colorStops: [{
-              offset: 0, color: '#FFB4FF' // 0% 处的颜色
-            }, {
-              offset: 1, color: '#19F096' // 100% 处的颜色
-            }],
-            global: false // 缺省为 false
+            colorStops: [
+              { offset: 0, color: '#FFB4FF' },
+              { offset: 1, color: '#19F096' }
+            ],
+            global: false
           }
         },
         symbolSize: '30',
       },
     ],
-  }), [executingNode])
+  }), [executingNode, themeInstance])
 
   useEffect(() => {
     const handler = () => {
@@ -137,7 +134,8 @@ const NodesMap: React.FC = () => {
     handler()
 
     return () => {
-      window.removeEventListener('resize', () => {})
+      window.removeEventListener('resize', () => {
+      })
     }
   }, [])
 
@@ -148,7 +146,7 @@ const NodesMap: React.FC = () => {
   )
 }
 
-const AINodesDistribution: React.FC = () => {
+export const AINodesDistribution: React.FC = () => {
   return (
     <MapContainer>
       <ModuleTitle mb={'50px'}>
@@ -159,5 +157,3 @@ const AINodesDistribution: React.FC = () => {
     </MapContainer>
   )
 }
-
-export default AINodesDistribution

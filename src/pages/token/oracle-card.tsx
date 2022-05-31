@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Text } from '@banksea-finance/ui-kit'
+
 export type OracleCardProps = {
   logo: string
   price: number | string
@@ -53,7 +54,7 @@ const StatusTag: React.FC = () => {
 }
 
 const OracleCard: React.FC<OracleCardProps> = ({ logo, price }) => {
-  const defaultImage = require('@/images/icon/tokenDetail/banksea.svg').default
+  const defaultImage = require('@/images/icon/tokenDetail/banksea.svg')
 
   return (
     <OracleCardContainer>

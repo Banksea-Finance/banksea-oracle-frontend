@@ -1,0 +1,6 @@
+export { AnalyticsPage } from './analytics'
+export { CollectionDetailPage } from './collection'
+export { CollectionsListPage } from './collections'
+export { DevelopPage } from './develop'
+export { HomePage } from './home'
+export { CollectionTokenDetailPage } from './token'

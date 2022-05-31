@@ -41,7 +41,6 @@ export const CollectionName = styled.div`
   font-weight: bolder;
   letter-spacing: 1px;
   border-radius: 10px;
-  font-family: 'orbitron';
   color: ${({ theme }) => theme.colors.primary};
   margin-bottom: 50px;
 `
@@ -128,7 +127,6 @@ export const StatisticsContainer = styled.div`
 
 export const StatisticContainer = styled.div`
   width: 291px;
-  background: ${({ theme }) => theme.colors.rainbow};
   padding: 3px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -146,7 +144,6 @@ export const StatisticContainer = styled.div`
 
   .value {
     font-size: 35px;
-    font-family: orbitron;
   }
 
   .title {
@@ -158,7 +155,6 @@ export const StatisticContainer = styled.div`
     height: 3px;
     width: 70px;
     margin: 10px 0 14px 0;
-    background: ${({ theme }) => theme.colors.rainbow}
   }
 `
 
