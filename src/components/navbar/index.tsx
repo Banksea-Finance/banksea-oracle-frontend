@@ -14,7 +14,7 @@ const navbarData = [
   { name: 'Develop', link: 'https://banksea-finance.gitbook.io/oracle/' },
   { name: 'Data Providers', link: 'https://banksea-finance.gitbook.io/oracle/data-providers/running-node' },
   { name: 'Consumer', link: 'https://banksea-finance.gitbook.io/oracle/consumers/program-client' },
-  { name: 'Cooperation', link: 'https://forms.gle/LMwWudrC8vSDV7pz7' }
+  { name: 'API', link: 'https://banksea-finance.gitbook.io/banksea-oracle-api/' }
 ]
 
 const Search: React.FC = () => {
