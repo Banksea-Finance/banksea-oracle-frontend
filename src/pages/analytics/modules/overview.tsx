@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { ModuleTitle } from '../components/ModuleTitle'
+import { ModuleTitle } from '../../../components/ModuleTitle'
 import { Box, Flex, Grid, Text } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { useAnalyticsOverviewQuery } from '@/hooks/queries'

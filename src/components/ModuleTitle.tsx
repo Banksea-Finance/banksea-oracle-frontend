@@ -6,15 +6,17 @@ import styled from 'styled-components'
 
 export type ModuleTitleProps = {
   title: string
-  description: React.ReactNode
+  description?: React.ReactNode
 }
 
 const Container = styled.div`
+  margin-bottom: 40px;
+  
   .custom-tooltip {
     max-width: 350px;
     background: ${({ theme }) => theme.colors.backgroundSecondary};
     border-radius: 10px;
-    
+
     &:after {
       border-top-color: ${({ theme }) => theme.colors.backgroundSecondary} !important;
     }
@@ -29,16 +31,20 @@ export const ModuleTitle: React.FC<ModuleTitleProps> = ({ title, description }) 
         <Text fontSize={'36px'} mx={'8px'} bold>
           {title}
         </Text>
-        <a data-tip="true" data-for={'description'}>
-          <QuestionMarkSvg  />
-        </a>
-        <ReactTooltip
-          id="description"
-          className={'custom-tooltip'}
-          aria-haspopup="true"
-        >
-          <Text>{description}</Text>
-        </ReactTooltip>
+        {description && (
+          <a data-tip="true" data-for={'description'}>
+            <QuestionMarkSvg />
+          </a>
+        )}
+        {description && (
+          <ReactTooltip
+            id="description"
+            className={'custom-tooltip'}
+            aria-haspopup="true"
+          >
+            <Text>{description}</Text>
+          </ReactTooltip>
+        )}
       </Flex>
     </Container>
   )

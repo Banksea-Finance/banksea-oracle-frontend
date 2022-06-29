@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import useTokenPriceHistoryQuery from '@/hooks/queries/useTokenPriceHistoryQuery'
 import moment from 'moment'
 import * as echarts from 'echarts'
-import historyPrice from '@/images/icon/tokenDetail/historyPrice.svg'
 import EChartsReact from 'echarts-for-react'
 import { DefaultTimeFormat } from '@/utils/constant'
 

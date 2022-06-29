@@ -5,6 +5,8 @@ import App from './App'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RefreshControllerProvider } from './contexts'
 import { GlobalStyles, ThemeWrapperProvider } from '@banksea-finance/ui-kit'
+import dayjs from 'dayjs'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,6 +16,8 @@ const queryClient = new QueryClient({
     }
   }
 })
+
+dayjs.extend(LocalizedFormat)
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
@@ -31,7 +35,9 @@ ReactDOM.render(
           },
           colors: {
             primary: '#7864e6',
+            secondary: '#5A82D2',
             background: '#050f1e',
+            backgroundDisabled: '#1e1e32',
             backgroundSecondary: '#0a143c',
             text: '#fff',
             disabled: '#999999',

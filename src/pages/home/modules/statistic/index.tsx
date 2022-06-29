@@ -1,10 +1,10 @@
-import { Box, Card, Flex, Text, useThemeWrapper } from '@banksea-finance/ui-kit'
+import { Box, Card, Flex, Text, useTheme } from '@banksea-finance/ui-kit'
 import React from 'react'
 
 const Item: React.FC<{ label: string, value: string, float: number }> = ({
   label, value, float
 }) => {
-  const { themeInstance } = useThemeWrapper()
+  const { theme } = useTheme()
 
   return (
     <Flex flexDirection={'column'} alignItems={'center'} width={'100%'}>
@@ -20,7 +20,7 @@ const Item: React.FC<{ label: string, value: string, float: number }> = ({
           </Text>
         </Box>
       </Text>
-      <Box width={'30px'} height={'1px'} background={themeInstance.colors.primary} mb={'12px'} />
+      <Box width={'30px'} height={'1px'} background={theme.colors.primary} mb={'12px'} />
       <Text color={'disabled'}>{label}</Text>
     </Flex>
   )

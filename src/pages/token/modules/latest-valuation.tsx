@@ -1,7 +1,6 @@
 import React from 'react'
 import { CollapsibleBoxPrimaryContentContainer } from '@/pages/token/index.style'
-import { Text, Flex } from '@banksea-finance/ui-kit'
-import trustAnswerIcon from '@/images/icon/tokenDetail/trustAnswer.svg'
+import { Flex, Text } from '@banksea-finance/ui-kit'
 import price from '@/images/icon/tokenDetail/price.svg'
 import { getCurrencyIcon } from '@/utils'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'

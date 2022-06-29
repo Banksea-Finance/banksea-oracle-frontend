@@ -1,6 +1,5 @@
 import React from 'react'
 import useTokenFeedsQuery from '@/hooks/queries/useTokenFeedsQuery'
-import oracle from '@/images/icon/tokenDetail/oracle.svg'
 import { OracleBoxContent } from '@/pages/token/index.style'
 import OracleCard from '@/pages/token/oracle-card'
 import { Flex } from '@banksea-finance/ui-kit'

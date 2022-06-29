@@ -1,8 +1,9 @@
-import { API_HOST, BankseaApiPageQuery, Service } from '@/api/service'
+import { API_HOST, BankseaApiPageQuery, Service, ServiceV2 } from '@/api/service'
 import { TokensOfCollectionQuery } from '@/hooks/queries/useTokensOfCollectionQuery'
 import { CollectionFeedFilterType } from '@/hooks/queries/useCollectionFeedsQuery'
 import { CollectionTokensQuery } from '@/hooks/queries/useCollectionTokensQuery'
 import axios from 'axios'
+import { CollectionAggregateHistoriesQuery } from './types'
 
 const API = {
   core: {
@@ -43,6 +44,32 @@ const API = {
         }
       })
     }
+  },
+  v2: {
+    FreeFeeds: {
+      getFreeFeeds: (data?: BankseaApiPageQuery) => {
+        return ServiceV2.post('/collection/page', data)
+      },
+      getCollectionFreeFeedInfo: (symbol: string) => {
+        return ServiceV2.post('/collection/info', { symbol })
+      },
+      getCollectionAggregateHistories({
+        symbol,
+        startTime = '0',
+        endTime = Date.now().toString()
+      }: CollectionAggregateHistoriesQuery) {
+        return ServiceV2.post('/collection/aggregate', { symbol, startTime, endTime })
+      },
+      getCollectionFeedActivities({
+        symbol,
+        startTime = '0',
+        endTime = Date.now().toString()
+      }: CollectionAggregateHistoriesQuery) {
+        return ServiceV2.post('/node/history ', { symbol, startTime, endTime })
+
+      }
+    }
+
   }
 }
 

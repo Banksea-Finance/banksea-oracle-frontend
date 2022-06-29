@@ -1,13 +1,12 @@
 import React from 'react'
-import triggerParameters from '@/images/icon/tokenDetail/triggerParameters.svg'
 import {
   CollapsibleBoxPrimaryContentContainer,
   CollapsibleBoxSecondaryContentContainer,
   SecondaryText
-} from '@/pages/token/index.style'
+} from '../index.style'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 import moment from 'moment'
-import { Text, Flex } from '@banksea-finance/ui-kit'
+import { Flex, Text } from '@banksea-finance/ui-kit'
 
 const TriggerParameters: React.FC = () => {
   const { data } = useTokenDetailQuery()

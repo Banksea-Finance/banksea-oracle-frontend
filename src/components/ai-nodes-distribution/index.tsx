@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import useFeedNodesQuery, { FeedNode } from '@/hooks/queries/useFeedNodesQuery'
 import ReactECharts from 'echarts-for-react'
 import useExecutingNodeQuery from '@/hooks/queries/useExecutingNodeQuery'
-import { Flex, Grid, Text, useThemeWrapper } from '@banksea-finance/ui-kit'
+import { Flex, Grid, Text, useTheme } from '@banksea-finance/ui-kit'
 import { ExecutingNodesContainer, MapContainer, MapMain } from './index.style'
 import { ModuleTitle } from '@/components/module-title'
 import * as echarts from 'echarts'
@@ -49,7 +49,7 @@ const ExecutingNodes: React.FC = () => {
 const NodesMap: React.FC = () => {
   const { data: allNodes } = useFeedNodesQuery()
   const { data: executingNode } = useExecutingNodeQuery()
-  const { themeInstance } = useThemeWrapper()
+  const { theme } = useTheme()
 
   const [scale, setScale] = useState(100)
 
@@ -117,7 +117,7 @@ const NodesMap: React.FC = () => {
         symbolSize: '30',
       },
     ],
-  }), [executingNode, themeInstance])
+  }), [executingNode, theme])
 
   useEffect(() => {
     const handler = () => {

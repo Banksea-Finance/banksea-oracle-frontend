@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Grid, Text, useThemeWrapper } from '@banksea-finance/ui-kit'
+import { Flex, Grid, Text, useTheme } from '@banksea-finance/ui-kit'
 import { FeaturesSvg } from '@/components/svgs'
 import { ModuleTitle } from '@/components/module-title'
 
@@ -14,13 +14,13 @@ export type FeatureKey = keyof typeof features
 
 const DESCRIPTION_BY_FEATURES: Record<FeatureKey, string> = {
   aiDrive: 'The valuation of NFT from all Aspects by artificial intelligence.',
-  decentralize: 'Distributed node price feed to guar-antee the safety of valuation data.',
+  decentralize: 'Distributed node price feed to guarantee the safety of valuation data.',
   massiveData: 'Banksea Oracle extract massive data on-chain for develop to guarantee the quality of valuation data.',
   realtime: 'The Valuation of NFT is realtime.'
 }
 
 const FeatureItem: React.FC<{ svg: () => JSX.Element, name: string, description: string }> = ({ svg: Svg, name, description }) => {
-  const { themeInstance } = useThemeWrapper()
+  const { theme } = useTheme()
 
   return (
     <Flex alignItems={'center'} flexDirection={'column'} width={'233px'}>
@@ -30,7 +30,7 @@ const FeatureItem: React.FC<{ svg: () => JSX.Element, name: string, description:
         borderRadius={'50%'}
         width={{ md: '200px', _: '160px' }}
         height={{ md: '200px', _: '160px' }}
-        background={themeInstance.colors.backgroundSecondary}
+        background={theme.colors.backgroundSecondary}
       >
         <Svg />
       </Flex>

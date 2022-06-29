@@ -1,5 +1,4 @@
 import React from 'react'
-import oracleResponses from '@/images/icon/tokenDetail/oracleResponses.svg'
 import { Text } from '@banksea-finance/ui-kit'
 import useTokenDetailQuery from '@/hooks/queries/useTokenDetailQuery'
 import useTokenFeedsQuery from '@/hooks/queries/useTokenFeedsQuery'

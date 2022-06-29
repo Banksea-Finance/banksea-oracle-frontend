@@ -1,12 +1,6 @@
-export interface OpenBlindBoxRequest {
-  wallet: string
-  requestId: string
-  boxId: string
-  status: unknown
-  sign: string
-}
 
-
-export interface OpenBlindBoxResponse {
-  requestId: string
+export type CollectionAggregateHistoriesQuery = {
+  symbol?: string
+  startTime?: string
+  endTime?: string
 }
