@@ -65,7 +65,7 @@ Service.interceptors.response.use(
 )
 
 const ServiceV2 = axios.create({
-  baseURL: 'http://119.45.201.48:25580/api/web/v1/'
+  baseURL: 'https://dev-api.banksea.finance/api/web/v1/'
 })
 
 ServiceV2.interceptors.response.use(
