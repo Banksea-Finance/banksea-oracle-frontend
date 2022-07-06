@@ -25,6 +25,11 @@ import { shortenAddress } from '@/utils'
 import ReactECharts from 'echarts-for-react'
 import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
 import { LAMPORTS_PER_SOL } from '@solana/web3.js'
+import { BN } from '@project-serum/anchor'
+import BigNumber from 'bignumber.js'
+import {
+  useQueryCollectionTaskConfigAccount
+} from '@/hooks/programs/oracle/queries/useQueryCollectionTaskConfigAccount'
 
 const OverviewItemContainer = styled(Box)`
   &:nth-of-type(1) {
@@ -70,7 +75,7 @@ const FeedHistory: React.FC = () => {
   const options: EChartsOption = useMemo(() => {
     return {
       darkMode: true,
-      grid: { top: 50, right: 48, bottom: 24, left: 80 },
+      grid: { top: 24, right: 48, bottom: 48, left: 80 },
       tooltip: {
         trigger: 'axis',
         axisPointer: {
@@ -78,14 +83,21 @@ const FeedHistory: React.FC = () => {
         }
       },
       dataset: [
-        { source: data?.map(o => ({ ...o, time: o.time * 1000 })) || [] }
+        { source: data?.map(o => ({ ...o, time: o.time * 1000 }))?.filter(o => o.avgPrice && o.floorPrice) || [] }
       ],
-      color: ['#8200FF'],
+      color: ['#7864e6', '#d25ae6'],
+      legend: {
+        orient: 'horizontal',
+        bottom: '0',
+        textStyle: {
+          color: '#ccc',
+        }
+      },
       xAxis: {
         type: 'time',
         axisLabel: {
           color: '#808080'
-        }
+        },
       },
       yAxis: [
         {
@@ -96,7 +108,7 @@ const FeedHistory: React.FC = () => {
           },
           splitLine: {
             show: false,
-          }
+          },
         }
       ],
       dataZoom: [{
@@ -123,7 +135,7 @@ const FeedHistory: React.FC = () => {
           datasetIndex: 0,
           encode: {
             x: 'time',
-            y: 'avgPrice24h'
+            y: 'avgPrice'
           },
           showSymbol: false,
         }
@@ -156,17 +168,36 @@ const OverviewSection: React.FC = () => {
   const info = useCollectionFreeFeedInfoQuery(collection)
 
   const collectionTaskAccount = useQueryCollectionTaskAccount(info.data?.collectionTask)
+  const collectionTaskConfigAccount = useQueryCollectionTaskConfigAccount(info.data?.collectionTask)
+
+  const fromLamports = (lamports: BN | string | number, decimals = Math.log10(LAMPORTS_PER_SOL)) => {
+    return new BigNumber(lamports.toString()).shiftedBy(-decimals)
+  }
 
   return (
     <section>
       <ModuleTitle title={'Overview'} description={'Overview description'} />
 
       <Card flexDirection={'row'} p={'20px 0 20px 40px'} mb={'80px'}>
-        <OverviewItem title={'Feed Account'} value={info} displayFunction={({ collectionTask }) => collectionTask} />
-        <OverviewItem title={'Floor Price'} value={collectionTaskAccount} displayFunction={({ floorPrice }) => floorPrice ? `${(floorPrice.toNumber() / LAMPORTS_PER_SOL)} SOL` : '-'} />
-        <OverviewItem title={'Avg Price(24h)'} value={collectionTaskAccount} displayFunction={({ avgPrice }) => avgPrice ? `${(avgPrice.toNumber() / LAMPORTS_PER_SOL)} SOL` : '-'} />
+        <OverviewItem
+          title={'Feed Account'}
+          value={info}
+          displayFunction={({ collectionTask: value }) => (
+            <Flex ai={'center'} gap={'8px'}>
+              <Text textAlign={'end'}>{value}</Text>
+              <a href={`https://solscan.io/account/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
+                <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
+              </a>
+              <a href={`https://explorer.solana.com/account/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
+                <img src="https://explorer.solana.com/favicon.ico" alt="Solana Explorer" style={{ width: '20px', height: '20px' }} />
+              </a>
+            </Flex>
+          )}
+        />
+        <OverviewItem title={'Floor Price'} value={collectionTaskAccount} displayFunction={({ floorPrice }) => floorPrice ? `${fromLamports(floorPrice)} SOL` : '-'} />
+        <OverviewItem title={'Avg Price(24h)'} value={collectionTaskAccount} displayFunction={({ avgPrice }) => avgPrice ? `${fromLamports(avgPrice)} SOL` : '-'} />
         <OverviewItem title={'Aggregation Time'} value={collectionTaskAccount} displayFunction={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')} />
-        <OverviewItem title={'Feed Cycle'} value={collectionTaskAccount} displayFunction={({ feedInterval }) => feedInterval ? `${feedInterval.toNumber() / 60} MINUTES` : '-'} />
+        <OverviewItem title={'Feed Cycle'} value={collectionTaskConfigAccount} displayFunction={({ feedInterval }) => feedInterval ? `${feedInterval.toNumber() / 60} MINUTES` : '-'} />
       </Card>
 
       <FeedHistory />

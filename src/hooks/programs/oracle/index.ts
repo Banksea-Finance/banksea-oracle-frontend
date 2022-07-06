@@ -4,6 +4,7 @@ import { IDL, Oracle } from './idl'
 import React, { useCallback } from 'react'
 import { useAnchorProvider } from '@/hooks/useAnchorProvider'
 import { PublicKey } from '@solana/web3.js'
+import { getCollectionTaskConfig } from '@/hooks/programs/oracle/helpers/accounts'
 
 export const useOracle = () => {
   const { provider } = useAnchorProvider()
@@ -14,17 +15,18 @@ export const useOracle = () => {
     provider
   ), [provider])
 
-  const queryCollection = useCallback((collectionTask: PublicKey) => {
+  const fetchCollectionTask = useCallback((collectionTask: PublicKey) => {
     return program.account.collectionTask.fetchNullable(collectionTask).then(r => !r ? undefined : r)
-    // const [ ] = PublicKey.findProgramAddressSync(
-    //   [Buffer.from('collection_task'), code]
-    // )
   }, [program])
 
+  const fetchCollectionTaskConfig = useCallback((collectionTask: PublicKey) => {
+    return program.account.collectionTaskConfig.fetchNullable(getCollectionTaskConfig(collectionTask)).then(r => !r ? undefined : r)
+  }, [program])
 
   return {
     program,
-    queryCollection
+    fetchCollectionTask,
+    fetchCollectionTaskConfig
   }
 }
 

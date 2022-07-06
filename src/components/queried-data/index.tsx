@@ -5,7 +5,7 @@ import { Text, TextProps } from '@banksea-finance/ui-kit'
 
 export interface QueriedDataProps<DataType> extends TextProps {
   value: UseQueryResult<DataType | undefined>
-  displayFunction?: (data: DataType) => string
+  displayFunction?: (data: DataType) => React.ReactNode
 }
 
 const QueriedData = <T,>({ value, displayFunction, ...textProps }: QueriedDataProps<T>): JSX.Element => {
