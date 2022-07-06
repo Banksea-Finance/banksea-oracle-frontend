@@ -4,13 +4,11 @@ import { Outlet, useLocation } from 'react-router'
 import { Box, Text } from '@banksea-finance/ui-kit'
 import { PageWrapper } from '@/components/page-wrapper'
 import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
-import usePageQuery from '@/hooks/usePageQuery'
 
 export const FreeFeedsPage = () => {
   const { collection } = useParams()
   const { pathname } = useLocation()
-  const pageQuery = usePageQuery()
-  const { data: feeds } = useFreeFeedsQuery(pageQuery)
+  const { data: feeds } = useFreeFeedsQuery({ current: 1, size: 999 })
 
   const collectionName = useMemo(() => {
     return feeds?.records?.find(o => o.id === collection)?.nftName
@@ -37,5 +35,5 @@ export const FreeFeedsPage = () => {
   )
 }
 
-export { AllFreeFeedsPage } from './all'
-export { CollectionFreeFeedsPages } from './collection'
+export { AllFreeFeedsPage } from './AllFreeFeedsPage'
+export { CollectionFreeFeedsPages } from './CollectionFreeFeedsPages'

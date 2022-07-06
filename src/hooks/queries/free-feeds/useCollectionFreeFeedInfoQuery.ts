@@ -3,6 +3,7 @@ import API from '@/api'
 
 export interface CollectionFreeFeedInfo {
   id: string
+  collectionTask: string
   imageUrl: string
   nftName: string
   floorPrice: number

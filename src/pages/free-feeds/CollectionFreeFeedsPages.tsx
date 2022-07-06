@@ -23,6 +23,8 @@ import { useCollectionFeedActivitiesQuery } from '@/hooks/queries/free-feeds/use
 import usePageQuery from '@/hooks/usePageQuery'
 import { shortenAddress } from '@/utils'
 import ReactECharts from 'echarts-for-react'
+import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
+import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 
 const OverviewItemContainer = styled(Box)`
   &:nth-of-type(1) {
@@ -153,16 +155,18 @@ const OverviewSection: React.FC = () => {
   const { collection } = useParams()
   const info = useCollectionFreeFeedInfoQuery(collection)
 
+  const collectionTaskAccount = useQueryCollectionTaskAccount(info.data?.collectionTask)
+
   return (
     <section>
       <ModuleTitle title={'Overview'} description={'Overview description'} />
 
       <Card flexDirection={'row'} p={'20px 0 20px 40px'} mb={'80px'}>
-        <OverviewItem title={'Feed Account'} value={info} displayFunction={() => 'GmbEn9VtEjBHieksfq6jNVxQpL7LxV9LDzcV2GQB5NNT'} />
-        <OverviewItem title={'Floor Price'} value={info} displayFunction={({ floorPrice }) => floorPrice ? `${floorPrice} SOL` : '-'} />
-        <OverviewItem title={'Avg Price(24h)'} value={info} displayFunction={({ avgPrice }) => avgPrice ? `${avgPrice} SOL` : '-'} />
-        <OverviewItem title={'Feed Time'} value={info} displayFunction={value => dayjs(value.time * 1000).format('YYYY/MM/DD HH:mm:ss')} />
-        <OverviewItem title={'Feed Cycle'} value={info} displayFunction={() => '60min'} />
+        <OverviewItem title={'Feed Account'} value={info} displayFunction={({ collectionTask }) => collectionTask} />
+        <OverviewItem title={'Floor Price'} value={collectionTaskAccount} displayFunction={({ floorPrice }) => floorPrice ? `${(floorPrice.toNumber() / LAMPORTS_PER_SOL)} SOL` : '-'} />
+        <OverviewItem title={'Avg Price(24h)'} value={collectionTaskAccount} displayFunction={({ avgPrice }) => avgPrice ? `${(avgPrice.toNumber() / LAMPORTS_PER_SOL)} SOL` : '-'} />
+        <OverviewItem title={'Aggregation Time'} value={collectionTaskAccount} displayFunction={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')} />
+        <OverviewItem title={'Feed Cycle'} value={collectionTaskAccount} displayFunction={({ feedInterval }) => feedInterval ? `${feedInterval.toNumber() / 60} MINUTES` : '-'} />
       </Card>
 
       <FeedHistory />
@@ -201,7 +205,7 @@ const FeedActivities: React.FC = () => {
     },
     {
       title: 'Avg Price(24h)',
-      dataIndex: 'avgPrice24h',
+      dataIndex: 'avgPrice',
       align: 'center',
       width: '20%',
       render: value => value ? `${value} SOL` : '-'

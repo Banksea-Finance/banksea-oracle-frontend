@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, ColumnsType, Flex, Table, Text } from '@banksea-finance/ui-kit'
+import { Box, Button, ColumnsType, Flex, Pagination, Table, Text } from '@banksea-finance/ui-kit'
 import { FeedInfo, useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
@@ -8,7 +8,8 @@ import usePageQuery from '@/hooks/usePageQuery'
 const columns: ColumnsType<FeedInfo> = [
   {
     title: '#',
-    render: (value, record: FeedInfo, index) => <Text minWidth={'48px'}>{index}</Text>,
+    render: value => <Text minWidth={'48px'}>{value}</Text>,
+    dataIndex: 'index',
     align: 'center',
     width: 70
   },
@@ -18,7 +19,7 @@ const columns: ColumnsType<FeedInfo> = [
     render: (value, record: FeedInfo) => (
       <Flex ai={'center'} jc={'center'}>
         <img src={record.imageUrl} style={{ width: '50px', height: '50px', borderRadius: '25px' }} alt={''} />
-        <Text ml={'4px'}>{record.nftName}</Text>
+        <Text ml={'8px'}>{record.nftName}</Text>
       </Flex>
     )
   },
@@ -58,11 +59,11 @@ const columns: ColumnsType<FeedInfo> = [
 ]
 
 export const AllFreeFeedsPage: React.FC = () => {
-  const pageQuery = usePageQuery()
-  const { data } = useFreeFeedsQuery(pageQuery)
+  const { current, size, handleChange } = usePageQuery({ size: 5 })
+  const { data } = useFreeFeedsQuery({ current, size })
 
   return (
-    <Flex jc={'center'}>
+    <Box>
       <Box overflowX={'auto'} width={'100%'}>
         <Table
           scroll={{ x: 600 }}
@@ -73,6 +74,17 @@ export const AllFreeFeedsPage: React.FC = () => {
           data={data?.records}
         />
       </Box>
-    </Flex>
+
+      <Flex mt={'16px'} jc={'flex-end'}>
+        <Pagination
+          showSizeChanger
+          pageSizeOptions={[5, 10, 20]}
+          current={current}
+          pageSize={size}
+          total={data?.total}
+          onChange={handleChange}
+        />
+      </Flex>
+    </Box>
   )
 }
