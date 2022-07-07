@@ -27,7 +27,7 @@ export const useFreeFeedsQuery = (data: BankseaApiPageQuery) => {
             index: index + (current - 1) * size + 1
           }))
         }))
-
-    }
+    },
+    { refetchOnWindowFocus: false, refetchInterval: false }
   )
 }

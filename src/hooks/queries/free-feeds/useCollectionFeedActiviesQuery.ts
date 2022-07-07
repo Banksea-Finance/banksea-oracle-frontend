@@ -14,6 +14,7 @@ export const useCollectionFeedActivitiesQuery = (data: CollectionAggregateHistor
     ['COLLECTION_FEED_ACTIVITIES', data],
     () => {
       return API.v2.FreeFeeds.getCollectionFeedActivities(data) as any
-    }
+    },
+    { refetchInterval: false, refetchOnWindowFocus: false }
   )
 }

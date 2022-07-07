@@ -12,6 +12,10 @@ export type ModuleTitleProps = {
 const Container = styled.div`
   margin-bottom: 40px;
   
+  ${({ theme }) => theme.mediaQueries.maxSm} {
+    margin-bottom: 16px;
+  }
+  
   .custom-tooltip {
     max-width: 350px;
     background: ${({ theme }) => theme.colors.backgroundSecondary};

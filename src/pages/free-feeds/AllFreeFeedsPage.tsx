@@ -1,9 +1,9 @@
 import React from 'react'
-import { Box, Button, ColumnsType, Flex, Pagination, Table, Text } from '@banksea-finance/ui-kit'
+import { Box, ColumnsType, Flex, Pagination, Skeleton, Table, Text } from '@banksea-finance/ui-kit'
 import { FeedInfo, useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import dayjs from 'dayjs'
-import { Link } from 'react-router-dom'
 import usePageQuery from '@/hooks/usePageQuery'
+import { useNavigate } from 'react-router-dom'
 
 const columns: ColumnsType<FeedInfo> = [
   {
@@ -15,11 +15,16 @@ const columns: ColumnsType<FeedInfo> = [
   },
   {
     title: 'Collection',
-    align: 'center',
+    align: 'left',
     render: (value, record: FeedInfo) => (
-      <Flex ai={'center'} jc={'center'}>
+      <Flex ai={'center'} width={'max(160px, 26vw)'} ml={'-12px'}>
         <img src={record.imageUrl} style={{ width: '50px', height: '50px', borderRadius: '25px' }} alt={''} />
-        <Text ml={'8px'}>{record.nftName}</Text>
+        <Text
+          ml={'8px'}
+          style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+        >
+          {record.nftName}
+        </Text>
       </Flex>
     )
   },
@@ -44,7 +49,7 @@ const columns: ColumnsType<FeedInfo> = [
     width: 180,
     render: value => value ? dayjs(value * 1000).format('YYYY/MM/DD HH:mm:ss') : '-',
   },
-  {
+  /* {
     dataIndex: 'id',
     align: 'center',
     width: 140,
@@ -55,24 +60,41 @@ const columns: ColumnsType<FeedInfo> = [
         </Button>
       </Flex>
     ): undefined,
-  },
+  },*/
 ]
 
 export const AllFreeFeedsPage: React.FC = () => {
-  const { current, size, handleChange } = usePageQuery({ size: 5 })
-  const { data } = useFreeFeedsQuery({ current, size })
+  const navigate = useNavigate()
+  const { current, size, handleChange } = usePageQuery({ size: 5 }, { keepInSearch: true })
+  const { data, isFetching } = useFreeFeedsQuery({ current, size })
 
   return (
     <Box>
       <Box overflowX={'auto'} width={'100%'}>
-        <Table
-          scroll={{ x: 600 }}
-          rowStyle={{
-            height: '100px'
-          }}
-          columns={columns as any}
-          data={data?.records}
-        />
+        {
+          isFetching ? (
+            <Skeleton width={'100%'} height={'500px'} />
+          ) : (
+            <Table
+              scroll={{ x: 850 }}
+              columns={columns as any}
+              data={data?.records}
+              rowKey={data => data.id}
+              rowStyle={{
+                height: '100px',
+                hoverBackground: '#7864e699'
+              }}
+              onRow={data => ({
+                onClick: () => navigate(`/free-feeds/${data.id}`)
+              })}
+              components={{
+                body: {
+                  row: (props: any) => <tr {...props} style={{ ...props.style, cursor: 'pointer' }} />
+                }
+              }}
+            />
+          )
+        }
       </Box>
 
       <Flex mt={'16px'} jc={'flex-end'}>

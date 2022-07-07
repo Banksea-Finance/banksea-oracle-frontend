@@ -24,8 +24,8 @@ ReactDOM.render(
     <RefreshControllerProvider>
       <ThemeWrapperProvider
         componentsOverride={{
-          Card: {
-
+          Table: {
+            rowHoverBackground: '#7864e699'
           }
         }}
         configOverride={{

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Box } from '@banksea-finance/ui-kit'
 
 export const PageWrapper = styled(Box)`
-  width: 90vw;
+  width: 96vw;
   min-height: 70vh;
   max-width: ${({ theme }) => theme.siteWidth};
   display: flex;

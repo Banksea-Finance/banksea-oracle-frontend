@@ -52,7 +52,7 @@ export const PartnershipsModule: React.FC = () => {
       <Flex ai={'center'} jc={'center'} flexWrap={'wrap'} gap={'64px'}>
         {
           PARTNERSHIPS.map(({ scale = 1.0, url, image, text }) => (
-            <a href={url} target={'_blank'} rel="noreferrer" key={'p.url'}>
+            <a href={url} target={'_blank'} rel="noreferrer" key={url}>
               <Flex ai={'center'}>
                 <img src={image} alt="" style={{ height: `calc(${heightBase} * ${scale})`, width: '100%' }} />
                 <Text important fontSize={'28px'} ml={'8px'}>{text}</Text>

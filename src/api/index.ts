@@ -56,7 +56,7 @@ const API = {
       getCollectionAggregateHistories({
         symbol,
         startTime = '0',
-        endTime = Date.now().toString()
+        endTime = (Date.now() / 1000).toFixed(0)
       }: CollectionAggregateHistoriesQuery) {
         return ServiceV2.post('/collection/aggregate', { symbol, startTime, endTime })
       },
