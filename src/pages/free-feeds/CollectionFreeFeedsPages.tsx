@@ -8,7 +8,7 @@ import {
   Flex,
   Grid,
   Pagination,
-  scales,
+  scales, Skeleton,
   Table,
   Text, useMatchBreakpoints
 } from '@banksea-finance/ui-kit'
@@ -18,20 +18,19 @@ import { useParams } from 'react-router-dom'
 import QueriedData, { QueriedDataProps } from '@/components/queried-data'
 import dayjs from 'dayjs'
 import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
-import { LAMPORTS_PER_SOL } from '@solana/web3.js'
 import { BN } from '@project-serum/anchor'
-import BigNumber from 'bignumber.js'
 import {
   useQueryCollectionTaskConfigAccount
 } from '@/hooks/programs/oracle/queries/useQueryCollectionTaskConfigAccount'
 import usePageQuery from '@/hooks/usePageQuery'
-import { shortenAddress } from '@/utils'
+import { fromLamports, shortenAddress } from '@/utils'
 import { useCollectionFeedActivitiesQuery } from '@/hooks/queries/free-feeds/useCollectionFeedActiviesQuery'
 import ReactECharts from 'echarts-for-react'
 import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds/useCollectionAggregateHistoriesQuery'
 import { EChartsOption } from 'echarts'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { CopySvg } from '@/components/svgs'
+import { CopySvg, QuestionMarkSvg } from '@/components/svgs'
+import ReactTooltip from 'react-tooltip'
 
 const OverviewItemContainer = styled(Box)`
   white-space: nowrap;
@@ -141,10 +140,22 @@ const OverviewsContainer = styled(Card)`
   }
 `
 
-function OverviewItem<DataType>({ title, ...rest }: { title: string } & QueriedDataProps<DataType>) {
+function OverviewItem<DataType>({ title, description, ...rest }: { title: React.ReactNode, description: React.ReactNode } & QueriedDataProps<DataType>) {
   return (
     <OverviewItemContainer>
-      <Text color={'primary'} bold>{title}</Text>
+      <Flex ai={'center'}>
+        <Text color={'primary'} bold mr={'4px'}>{title}</Text>
+        <a data-tip="true" data-for={`overview-${title}`}>
+          <QuestionMarkSvg size={'14'} />
+        </a>
+        <ReactTooltip
+          id={`overview-${title}`}
+          className={'custom-tooltip'}
+          aria-haspopup="true"
+        >
+          <Text>{description}</Text>
+        </ReactTooltip>
+      </Flex>
 
       <QueriedData {...rest} />
     </OverviewItemContainer>
@@ -158,10 +169,6 @@ const OverviewSection: React.FC = () => {
   const collectionTaskAccount = useQueryCollectionTaskAccount(info.data?.collectionTask)
   const collectionTaskConfigAccount = useQueryCollectionTaskConfigAccount(info.data?.collectionTask)
 
-  const fromLamports = (lamports: BN | string | number, decimals = Math.log10(LAMPORTS_PER_SOL)) => {
-    return new BigNumber(lamports.toString()).shiftedBy(-decimals)
-  }
-
   return (
     <section>
       <ModuleTitle title={'Overview'} description={'Overview description'} />
@@ -169,6 +176,7 @@ const OverviewSection: React.FC = () => {
       <OverviewsContainer>
         <OverviewItem
           title={'Feed Account'}
+          description={'....'}
           value={info}
           dataRender={({ collectionTask: value }) => (
             <Grid gridTemplateColumns={'repeat(4, auto)'} ai={'center'} gap={'4px'} width={'min(460px, 78vw)'}>
@@ -201,21 +209,25 @@ const OverviewSection: React.FC = () => {
         />
         <OverviewItem
           title={'Floor Price'}
+          description={'....'}
           value={collectionTaskAccount}
           dataRender={({ floorPrice }) => floorPrice?.gt(new BN(0)) ? `${fromLamports(floorPrice)} SOL` : '-'}
         />
         <OverviewItem
           title={'Avg Price(24h)'}
+          description={'....'}
           value={collectionTaskAccount}
           dataRender={({ avgPrice }) => avgPrice?.gt(new BN(0)) ? `${fromLamports(avgPrice)} SOL` : '-'}
         />
         <OverviewItem
-          title={'Aggregation Time'}
+          title={'Update Time'}
+          description={'....'}
           value={collectionTaskAccount}
           dataRender={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')}
         />
         <OverviewItem
-          title={'Feed Cycle'}
+          title={'Update Interval'}
+          description={'....'}
           value={collectionTaskConfigAccount}
           dataRender={({ feedInterval }) => feedInterval ? `${feedInterval.toNumber() / 60} MINUTES` : '-'}
         />
@@ -345,7 +357,7 @@ const FeedHistorySection: React.FC = () => {
 const FeedActivitiesSection: React.FC = () => {
   const { collection } = useParams()
   const { current, size, handleChange } = usePageQuery()
-  const { data } = useCollectionFeedActivitiesQuery({ symbol: collection })
+  const { data, isFetching } = useCollectionFeedActivitiesQuery({ symbol: collection })
 
   const columns: ColumnsType = [
     {
@@ -397,15 +409,16 @@ const FeedActivitiesSection: React.FC = () => {
     <section>
       <ModuleTitle title={'Feed Activities'} description={'Overview description'} />
 
-      <Box width={'100%'} overflowX={'hidden'}>
-        <Table
-          scroll={{ x: 650 }}
-          columns={columns as any}
-          rowKey={(data, index) => `${index}`}
-          data={data?.slice((current - 1) * size, current * size)}
-          rowStyle={{ height: '64px' }}
-        />
-      </Box>
+      <Table
+        pageSize={size}
+        loading={isFetching}
+        width={'100%'}
+        scroll={{ x: 650 }}
+        columns={columns as any}
+        rowKey={(data, index)  => `${index}`}
+        data={data?.slice((current - 1) * size, current * size)}
+        rowStyle={{ height: '64px' }}
+      />
 
       <Flex mt={'16px'} jc={'flex-end'}>
         <Pagination
@@ -422,8 +435,14 @@ const FeedActivitiesSection: React.FC = () => {
 }
 
 export const CollectionFreeFeedsPages: React.FC = () => {
+  const { collection } = useParams()
+  const { data } = useCollectionFreeFeedInfoQuery(collection)
+
   return (
     <Box>
+      <Text gradient important bold fontSize={'min(48px, 7.5vw)'} mb={'24px'}>
+        { data ? `${data.nftName} Feeds` : <Skeleton width={'400px'} height={'72px'} /> }
+      </Text>
       <Grid gridTemplateColumns={'100%'} gap={'36px'}>
         <OverviewSection />
         <FeedHistorySection />

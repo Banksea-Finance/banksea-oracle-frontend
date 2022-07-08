@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js'
 import SolanaIcon from '@/images/icon/solana.png'
 import EthIcon from '@/images/icon/eth.png'
-import { PublicKey } from '@solana/web3.js'
+import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
+import { BN } from '@project-serum/anchor'
 
 export const shortenAddress = (address?: string | PublicKey, length = 6) => {
   const str = address?.toString()
@@ -152,4 +153,10 @@ export function getCurrencyIcon(chainSource?: string): string | undefined {
     'Solana': SolanaIcon,
     'Ethereum': EthIcon,
   }[chainSource]
+}
+
+export const fromLamports = (lamports?: BN | string | number, decimals = Math.log10(LAMPORTS_PER_SOL)) => {
+  if (lamports === undefined) return undefined
+
+  return new BigNumber(lamports.toString()).shiftedBy(-decimals)
 }
