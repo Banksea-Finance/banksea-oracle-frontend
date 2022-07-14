@@ -18,10 +18,8 @@ import { useParams } from 'react-router-dom'
 import QueriedData, { QueriedDataProps } from '@/components/queried-data'
 import dayjs from 'dayjs'
 import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
-import { BN } from '@project-serum/anchor'
-import {
-  useQueryCollectionTaskConfigAccount
-} from '@/hooks/programs/oracle/queries/useQueryCollectionTaskConfigAccount'
+
+
 import usePageQuery from '@/hooks/usePageQuery'
 import { fromLamports, shortenAddress } from '@/utils'
 import { useCollectionFeedActivitiesQuery } from '@/hooks/queries/free-feeds/useCollectionFeedActiviesQuery'
@@ -167,7 +165,6 @@ const OverviewSection: React.FC = () => {
   const info = useCollectionFreeFeedInfoQuery(collection)
 
   const collectionTaskAccount = useQueryCollectionTaskAccount(info.data?.collectionTask)
-  const collectionTaskConfigAccount = useQueryCollectionTaskConfigAccount(info.data?.collectionTask)
 
   return (
     <section>
@@ -211,25 +208,25 @@ const OverviewSection: React.FC = () => {
           title={'Floor Price'}
           description={'....'}
           value={collectionTaskAccount}
-          dataRender={({ floorPrice }) => floorPrice?.gt(new BN(0)) ? `${fromLamports(floorPrice)} SOL` : '-'}
+          dataRender={({ floorPrice }) => !floorPrice?.isZero() ? `${fromLamports(floorPrice)} SOL` : '-'}
+        />
+        <OverviewItem
+          title={'AI Floor Price'}
+          description={'....'}
+          value={collectionTaskAccount}
+          dataRender={({ aiFloorPrice }) => !aiFloorPrice?.isZero() ? `${fromLamports(aiFloorPrice)} SOL` : '-'}
         />
         <OverviewItem
           title={'Avg Price(24h)'}
           description={'....'}
           value={collectionTaskAccount}
-          dataRender={({ avgPrice }) => avgPrice?.gt(new BN(0)) ? `${fromLamports(avgPrice)} SOL` : '-'}
+          dataRender={({ avgPrice }) => !avgPrice?.isZero() ? `${fromLamports(avgPrice)} SOL` : '-'}
         />
         <OverviewItem
           title={'Update Time'}
           description={'....'}
           value={collectionTaskAccount}
           dataRender={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')}
-        />
-        <OverviewItem
-          title={'Update Interval'}
-          description={'....'}
-          value={collectionTaskConfigAccount}
-          dataRender={({ feedInterval }) => feedInterval ? `${feedInterval.toNumber() / 60} MINUTES` : '-'}
         />
       </OverviewsContainer>
     </section>
@@ -263,14 +260,11 @@ const FeedHistorySection: React.FC = () => {
       grid: { top: 24, right: 48, bottom: 48, left: 48 },
       tooltip: {
         trigger: 'axis',
-        axisPointer: {
-          animation: false
-        }
       },
       dataset: [
-        { source: data?.map(o => ({ ...o, time: o.time * 1000 }))?.filter(o => o.avgPrice && o.floorPrice) || [] }
+        { source: data?.map(o => ({ ...o, time: o.time * 1000 }))?.filter(o => o.avgPrice || o.floorPrice || o.aiFloorPrice) || [] }
       ],
-      color: ['#7864e6', '#d25ae6'],
+      color: ['#7864e6', '#d25ae6', 'rgb(2,182,142)'],
       legend: {
         orient: 'horizontal',
         bottom: '0',
@@ -310,6 +304,17 @@ const FeedHistorySection: React.FC = () => {
           encode: {
             x: 'time',
             y: 'floorPrice'
+          },
+          showSymbol: false,
+        },
+        {
+          name: 'AI Floor Price',
+          type: 'line',
+          smooth: true,
+          datasetIndex: 0,
+          encode: {
+            x: 'time',
+            y: 'aiFloorPrice'
           },
           showSymbol: false,
         },
@@ -383,6 +388,13 @@ const FeedActivitiesSection: React.FC = () => {
     {
       title: 'Floor Price',
       dataIndex: 'floorPrice',
+      align: 'center',
+      width: 140,
+      render: value => value ? `${value} SOL` : '-'
+    },
+    {
+      title: 'AI Floor Price',
+      dataIndex: 'aiFloorPrice',
       align: 'center',
       width: 140,
       render: value => value ? `${value} SOL` : '-'

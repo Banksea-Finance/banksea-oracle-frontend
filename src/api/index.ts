@@ -3,7 +3,7 @@ import { TokensOfCollectionQuery } from '@/hooks/queries/useTokensOfCollectionQu
 import { CollectionFeedFilterType } from '@/hooks/queries/useCollectionFeedsQuery'
 import { CollectionTokensQuery } from '@/hooks/queries/useCollectionTokensQuery'
 import axios from 'axios'
-import { CollectionAggregateHistoriesQuery } from './types'
+import { CollectionAggregateHistoriesQuery, FreeFeedsCollectionQuery } from './types'
 
 const API = {
   core: {
@@ -47,7 +47,7 @@ const API = {
   },
   v2: {
     FreeFeeds: {
-      getFreeFeeds: (data?: BankseaApiPageQuery) => {
+      getFreeFeeds: (data?: FreeFeedsCollectionQuery) => {
         return ServiceV2.post('/collection/page', data)
       },
       getCollectionFreeFeedInfo: (symbol: string) => {

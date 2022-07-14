@@ -583,6 +583,10 @@ export interface Oracle {
           'type': 'u64'
         },
         {
+          'name': 'aiFloorPrice'
+          'type': 'u64'
+        },
+        {
           'name': 'avgPrice'
           'type': 'u64'
         }
@@ -669,14 +673,6 @@ export interface Oracle {
             'type': 'string'
           },
           {
-            'name': 'floorPrice'
-            'type': 'u64'
-          },
-          {
-            'name': 'avgPrice'
-            'type': 'u64'
-          },
-          {
             'name': 'unit'
             'type': 'string'
           },
@@ -693,11 +689,23 @@ export interface Oracle {
             'type': 'u64'
           },
           {
+            'name': 'floorPrice'
+            'type': 'u64'
+          },
+          {
+            'name': 'aiFloorPrice'
+            'type': 'u64'
+          },
+          {
+            'name': 'avgPrice'
+            'type': 'u64'
+          },
+          {
             'name': 'reserve'
             'type': {
               'array': [
-                'u8',
-                128
+                'u64',
+                16
               ]
             }
           }
@@ -874,15 +882,19 @@ export interface Oracle {
             'type': 'publicKey'
           },
           {
+            'name': 'time'
+            'type': 'u64'
+          },
+          {
             'name': 'floorPrice'
             'type': 'u64'
           },
           {
-            'name': 'avgPrice'
+            'name': 'aiFloorPrice'
             'type': 'u64'
           },
           {
-            'name': 'time'
+            'name': 'avgPrice'
             'type': 'u64'
           },
           {
@@ -1078,16 +1090,6 @@ export interface Oracle {
           'index': false
         },
         {
-          'name': 'floorPrice'
-          'type': 'u64'
-          'index': false
-        },
-        {
-          'name': 'avgPrice'
-          'type': 'u64'
-          'index': false
-        },
-        {
           'name': 'time'
           'type': 'u64'
           'index': false
@@ -1095,6 +1097,21 @@ export interface Oracle {
         {
           'name': 'code'
           'type': 'string'
+          'index': false
+        },
+        {
+          'name': 'floorPrice'
+          'type': 'u64'
+          'index': false
+        },
+        {
+          'name': 'aiFloorPrice'
+          'type': 'u64'
+          'index': false
+        },
+        {
+          'name': 'avgPrice'
+          'type': 'u64'
           'index': false
         }
       ]
@@ -1118,16 +1135,6 @@ export interface Oracle {
           'index': false
         },
         {
-          'name': 'floorPrice'
-          'type': 'u64'
-          'index': false
-        },
-        {
-          'name': 'avgPrice'
-          'type': 'u64'
-          'index': false
-        },
-        {
           'name': 'time'
           'type': 'u64'
           'index': false
@@ -1135,6 +1142,21 @@ export interface Oracle {
         {
           'name': 'code'
           'type': 'string'
+          'index': false
+        },
+        {
+          'name': 'floorPrice'
+          'type': 'u64'
+          'index': false
+        },
+        {
+          'name': 'aiFloorPrice'
+          'type': 'u64'
+          'index': false
+        },
+        {
+          'name': 'avgPrice'
+          'type': 'u64'
           'index': false
         }
       ]
@@ -1774,6 +1796,10 @@ export const IDL: Oracle = {
           type: 'u64'
         },
         {
+          name: 'aiFloorPrice',
+          type: 'u64'
+        },
+        {
           name: 'avgPrice',
           type: 'u64'
         }
@@ -1860,14 +1886,6 @@ export const IDL: Oracle = {
             type: 'string'
           },
           {
-            name: 'floorPrice',
-            type: 'u64'
-          },
-          {
-            name: 'avgPrice',
-            type: 'u64'
-          },
-          {
             name: 'unit',
             type: 'string'
           },
@@ -1884,11 +1902,23 @@ export const IDL: Oracle = {
             type: 'u64'
           },
           {
+            name: 'floorPrice',
+            type: 'u64'
+          },
+          {
+            name: 'aiFloorPrice',
+            type: 'u64'
+          },
+          {
+            name: 'avgPrice',
+            type: 'u64'
+          },
+          {
             name: 'reserve',
             type: {
               array: [
-                'u8',
-                128
+                'u64',
+                16
               ]
             }
           }
@@ -2065,15 +2095,19 @@ export const IDL: Oracle = {
             type: 'publicKey'
           },
           {
+            name: 'time',
+            type: 'u64'
+          },
+          {
             name: 'floorPrice',
             type: 'u64'
           },
           {
-            name: 'avgPrice',
+            name: 'aiFloorPrice',
             type: 'u64'
           },
           {
-            name: 'time',
+            name: 'avgPrice',
             type: 'u64'
           },
           {
@@ -2269,16 +2303,6 @@ export const IDL: Oracle = {
           index: false
         },
         {
-          name: 'floorPrice',
-          type: 'u64',
-          index: false
-        },
-        {
-          name: 'avgPrice',
-          type: 'u64',
-          index: false
-        },
-        {
           name: 'time',
           type: 'u64',
           index: false
@@ -2286,6 +2310,21 @@ export const IDL: Oracle = {
         {
           name: 'code',
           type: 'string',
+          index: false
+        },
+        {
+          name: 'floorPrice',
+          type: 'u64',
+          index: false
+        },
+        {
+          name: 'aiFloorPrice',
+          type: 'u64',
+          index: false
+        },
+        {
+          name: 'avgPrice',
+          type: 'u64',
           index: false
         }
       ]
@@ -2309,16 +2348,6 @@ export const IDL: Oracle = {
           index: false
         },
         {
-          name: 'floorPrice',
-          type: 'u64',
-          index: false
-        },
-        {
-          name: 'avgPrice',
-          type: 'u64',
-          index: false
-        },
-        {
           name: 'time',
           type: 'u64',
           index: false
@@ -2326,6 +2355,21 @@ export const IDL: Oracle = {
         {
           name: 'code',
           type: 'string',
+          index: false
+        },
+        {
+          name: 'floorPrice',
+          type: 'u64',
+          index: false
+        },
+        {
+          name: 'aiFloorPrice',
+          type: 'u64',
+          index: false
+        },
+        {
+          name: 'avgPrice',
+          type: 'u64',
           index: false
         }
       ]

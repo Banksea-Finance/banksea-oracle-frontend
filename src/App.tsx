@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppContainer } from '@/App.style'
 import Navbar from '@/components/navbar'
-import { BrowserRouter, Routes } from 'react-router-dom'
+import { Routes } from 'react-router-dom'
 
 import ScrollToTopWrapper from '@/components/scroll-to-top-wrapper'
 import { Route } from 'react-router'
@@ -16,29 +16,29 @@ import {
   FreeFeedsPage,
   HomePage
 } from '@/pages'
+import { ProductPage } from '@/pages/product'
 
 const App: React.FC = () => {
   return (
     <AppContainer>
-      <BrowserRouter>
-        <ScrollToTopWrapper>
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path={'/'} element={<HomePage />} />
-              <Route path={'/develop'} element={<DevelopPage />} />
-              <Route path={'/free-feeds'} element={<FreeFeedsPage />}>
-                <Route index element={<AllFreeFeedsPage />} />
-                <Route path={':collection'} element={<CollectionFreeFeedsPages />} />
-              </Route>
-              <Route path={'/analytics'} element={<AnalyticsPage />} />
-              <Route path={'/collection'} element={<CollectionsListPage />} />
-              <Route path={'*'} element={<Redirect to={''} />} />
-            </Routes>
-          </main>
-          <Footer />
-        </ScrollToTopWrapper>
-      </BrowserRouter>
+      <ScrollToTopWrapper>
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path={'/'} element={<HomePage />} />
+            <Route path={'/develop'} element={<DevelopPage />} />
+            <Route path={'/free-feeds'} element={<FreeFeedsPage />}>
+              <Route index element={<AllFreeFeedsPage />} />
+              <Route path={':collection'} element={<CollectionFreeFeedsPages />} />
+            </Route>
+            <Route path={'/analytics'} element={<AnalyticsPage />} />
+            <Route path={'/collection'} element={<CollectionsListPage />} />
+            <Route path={'/product'} element={<ProductPage />} />
+            <Route path={'*'} element={<Redirect to={''} />} />
+          </Routes>
+        </main>
+        <Footer />
+      </ScrollToTopWrapper>
     </AppContainer>
   )
 }

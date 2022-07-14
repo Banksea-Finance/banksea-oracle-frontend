@@ -8,8 +8,34 @@ const Container = styled(Box)`
   width: 100%;
   background-repeat: no-repeat;
   background-size: 100%;
-  min-height: 52vw;
+`
 
+const ImageContainer = styled.div`
+  --mobile-image-height: 80vw;
+  --mobile-image-width: calc(var(--mobile-image-height) * 2.529);
+
+  img {
+    width: 100%;
+  }
+  
+  ${({ theme }) => theme.mediaQueries.maxLg} {
+    display: flex;
+    justify-content: center;
+    
+    height: var(--mobile-image-width);
+    width: var(--mobile-image-height);
+    
+    img {
+      transform: rotate(90deg);
+      transform-origin: 50% 50%;
+      
+      height: var(--mobile-image-height);
+      width: var(--mobile-image-width);
+      
+      position: relative;
+      top: calc((var(--mobile-image-width) - var(--mobile-image-height)) / 2);
+    }
+  }
 `
 
 export const ArchitectureModule: React.FC = () => {
@@ -20,12 +46,15 @@ export const ArchitectureModule: React.FC = () => {
       </ModuleTitle>
 
       <Text fontSize={'min(28px, 3.5vw)'} textAlign={'center'} mb={'32px'}>
-        Powerful AI <span className="primary">Architecture</span> ensure highly
-        reliable NFT valuation
+        Powerful AI
+        <span className="gradient"> Architecture </span>
+        Ensure Highly Reliable NFT Valuation
       </Text>
 
       <Flex width={'100%'} jc={'center'}>
-        <img style={{ width: '80%' }} src={require('@/assets/images/pages/develop/architecture.webp')} />
+        <ImageContainer>
+          <img src={require('@/assets/images/pages/develop/architecture.webp')} />
+        </ImageContainer>
       </Flex>
     </Container>
   )

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Flex, Grid, Text, useTheme } from '@banksea-finance/ui-kit'
-import { FeaturesSvg } from '@/components/svgs'
+import { Flex } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
+import styled from 'styled-components'
 
 export const features = {
   massiveData: 'Massive Data',
@@ -12,47 +12,46 @@ export const features = {
 
 export type FeatureKey = keyof typeof features
 
-const DESCRIPTION_BY_FEATURES: Record<FeatureKey, string> = {
-  aiDrive: 'The valuation of NFT from all Aspects by artificial intelligence.',
-  decentralize: 'Distributed node price feed to guarantee the safety of valuation data.',
-  massiveData: 'Banksea Oracle extract massive data on-chain for develop to guarantee the quality of valuation data.',
-  realtime: 'The Valuation of NFT is realtime.'
-}
+const ImageContainer = styled.div`
+  --mobile-image-height: 80vw;
+  --mobile-image-width: calc(var(--mobile-image-height) * 2.05);
+  
+  width: min(1042px, 96vw);
 
-const FeatureItem: React.FC<{ svg: () => JSX.Element, name: string, description: string }> = ({ svg: Svg, name, description }) => {
-  const { theme } = useTheme()
-
-  return (
-    <Flex alignItems={'center'} flexDirection={'column'} width={'233px'}>
-      <Flex
-        ai={'center'}
-        jc={'center'}
-        borderRadius={'50%'}
-        width={{ md: '200px', _: '160px' }}
-        height={{ md: '200px', _: '160px' }}
-        background={theme.colors.backgroundSecondary}
-      >
-        <Svg />
-      </Flex>
-      <Text color={'white'} fontSize={'24px'} m={{ md: '43px 0 18px 0', _: '12px 0' }}>{name}</Text>
-      <Text color={'disabled'} width={'100%'} textAlign={'center'}>{description}</Text>
-    </Flex>
-  )
-}
+  img {
+    width: 100%;
+  }
+  
+  ${({ theme }) => theme.mediaQueries.maxLg} {
+    display: flex;
+    justify-content: center;
+    
+    height: var(--mobile-image-width);
+    width: var(--mobile-image-height);
+    
+    img {
+      transform: rotate(90deg);
+      transform-origin: 50% 50%;
+      
+      height: var(--mobile-image-height);
+      width: var(--mobile-image-width);
+      
+      position: relative;
+      top: calc((var(--mobile-image-width) - var(--mobile-image-height)) / 2);
+    }
+  }
+`
 
 export const FeaturesModule: React.FC = () => {
   return (
-    <Flex flexDirection={'column'} ai={'center'} width={'100%'}>
+    <Flex flexDirection={'column'} ai={'center'} overflowX={'hidden'}>
       <ModuleTitle>
         Features
       </ModuleTitle>
-      <Grid gridTemplateColumns={{ xl: 'repeat(4, 1fr)', md: 'repeat(2, 1fr)' }} gridGap={'16px 0'} jc={'space-between'} justifyItems={'center'} width={'100%'}>
-        {
-          Object.keys(features).map(key => (
-            <FeatureItem svg={FeaturesSvg[key as FeatureKey]} name={features[key as FeatureKey]} description={DESCRIPTION_BY_FEATURES[key as FeatureKey]} key={key} />
-          ))
-        }
-      </Grid>
+
+      <ImageContainer>
+        <img src={require('@/assets/images/pages/home/features.png')} alt="" />
+      </ImageContainer>
     </Flex>
   )
 }

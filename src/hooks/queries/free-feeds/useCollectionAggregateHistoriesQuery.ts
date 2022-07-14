@@ -4,6 +4,7 @@ import { CollectionAggregateHistoriesQuery } from '@/api/types'
 
 export type CollectionAggregateHistory = {
   floorPrice: number
+  aiFloorPrice?: number
   avgPrice?: number
   time: number
   signature: string

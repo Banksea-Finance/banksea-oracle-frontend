@@ -93,11 +93,11 @@ const INVESTORS: Investor[] = [
 export const InvestorsModule: React.FC = () => {
   const { isMobile } = useResponsive()
 
-  const heightBase = useMemo(() => isMobile ? '60px' : '90px', [isMobile])
+  const heightBase = useMemo<number>(() => isMobile ? 40 : 90, [isMobile])
 
   return (
     <Flex width={'100%'} flexDirection={'column'} ai={'center'}>
-      <ModuleTitle>Investors</ModuleTitle>
+      <ModuleTitle fontSize={'min(38px, 11vw)'}>Investors</ModuleTitle>
 
       <Flex ai={'center'} jc={'center'} flexWrap={'wrap'} gap={{ _: '32px', md: '32px 64px' }}>
         {
@@ -106,7 +106,7 @@ export const InvestorsModule: React.FC = () => {
               <img
                 src={image}
                 alt=""
-                style={{ height: `calc(${heightBase} * ${scale})`, width: '100%' }}
+                style={{ height: `${heightBase * (scale as number)}px` }}
                 data-aos="zoomin"
               />
             </a>

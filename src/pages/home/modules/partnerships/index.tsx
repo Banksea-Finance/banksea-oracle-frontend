@@ -44,18 +44,24 @@ const PARTNERSHIPS: Partnership[] = [
 export const PartnershipsModule: React.FC = () => {
   const { isMobile } = useResponsive()
 
-  const heightBase = useMemo(() => isMobile ? '60px' : '90px', [isMobile])
+  const heightBase = useMemo(() => isMobile ? '40px' : '90px', [isMobile])
 
   return (
     <Flex width={'100%'} flexDirection={'column'} ai={'center'}>
-      <ModuleTitle>Partnerships</ModuleTitle>
-      <Flex ai={'center'} jc={'center'} flexWrap={'wrap'} gap={'64px'}>
+      <ModuleTitle fontSize={'min(38px, 8vw)'}>Partnerships</ModuleTitle>
+
+      <Flex ai={'center'} jc={'center'} flexWrap={'wrap'} gap={{ _: '32px', md: '32px 64px' }}>
         {
           PARTNERSHIPS.map(({ scale = 1.0, url, image, text }) => (
             <a href={url} target={'_blank'} rel="noreferrer" key={url}>
               <Flex ai={'center'}>
-                <img src={image} alt="" style={{ height: `calc(${heightBase} * ${scale})`, width: '100%' }} />
-                <Text important fontSize={'28px'} ml={'8px'}>{text}</Text>
+                <img
+                  src={image}
+                  alt=""
+                  style={{ height: `calc(${heightBase} * ${scale})`, width: '100%' }}
+                  data-aos="zoomin"
+                />
+                <Text important fontSize={'28px'} ml={'8px'} data-aos="zoomin">{text}</Text>
               </Flex>
             </a>
           ))

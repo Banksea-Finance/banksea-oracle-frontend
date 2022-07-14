@@ -1,91 +1,60 @@
-import React from 'react'
-import { Box, ColumnsType, Flex, Pagination, scales, Skeleton, Table, Tag, Text } from '@banksea-finance/ui-kit'
-import { FeedInfo, useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
+import React, { useState } from 'react'
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  Pagination,
+  scales,
+  Skeleton,
+  Tag,
+  Text, useMatchBreakpoints
+} from '@banksea-finance/ui-kit'
+import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import usePageQuery from '@/hooks/usePageQuery'
-import { useNavigate } from 'react-router-dom'
-import { fromLamports } from '@/utils'
-import dayjs from 'dayjs'
-
-const columns: ColumnsType<FeedInfo> = [
-  {
-    title: '#',
-    dataIndex: 'index',
-    render: value => <Text minWidth={'48px'}>{value}</Text>,
-    align: 'center',
-    width: 70
-  },
-  {
-    title: 'Collection',
-    align: 'left',
-    render: (value, record: FeedInfo) => (
-      <Flex ai={'center'} width={'max(160px, 26vw)'} ml={'-12px'}>
-        <img src={record.imageUrl} style={{ width: '50px', height: '50px', borderRadius: '25px' }} alt={''} />
-        <Text
-          ml={'8px'}
-          style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-        >
-          {record.nftName}
-        </Text>
-      </Flex>
-    )
-  },
-  {
-    title: 'Floor Price',
-    dataIndex: ['account', 'floorPrice'],
-    align: 'center',
-    width: 140,
-    render: value => value ? `${fromLamports(value)} SOL` : '-',
-  },
-  {
-    title: 'Avg Price(24h)',
-    dataIndex: ['account', 'avgPrice'],
-    align: 'center',
-    width: 180,
-    render: value => value ? `${fromLamports(value)} SOL` : '-',
-  },
-  {
-    title: 'Feed Time',
-    dataIndex: ['account', 'aggregateTime'],
-    align: 'center',
-    width: 180,
-    render: value => dayjs(value.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')
-  },
-]
+import { AiOutlineSearch } from 'react-icons/ai'
+import { FreeFeedsTable } from '@/components/free-feeds-table'
 
 export const AllFreeFeedsPage: React.FC = () => {
-  const navigate = useNavigate()
+  const { isXs, isSm } = useMatchBreakpoints()
+  const [search, setSearch] = useState('')
   const { current, size, handleChange } = usePageQuery({ size: 5 }, { keepInSearch: true })
-  const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size })
+  const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size, search })
 
   return (
     <Box>
-      <Flex ai={'center'} gap={'12px'} mb={'24px'}>
-        <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
-          Collections
-        </Text>
-        {feeds ? <Tag scale={scales.S} gradient>Support {feeds.total} collections</Tag> : <Skeleton width={'171px'} height={'32px'} />}
+      <Flex jc={'space-between'} ai={'center'} mb={'24px'} flexWrap={'wrap'} gap={'4px 24px'}>
+        <Flex ai={'center'} gap={'12px'}>
+          <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+            Collections
+          </Text>
+          {
+            feeds
+              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'12px'}>Support {feeds.total} collections</Tag>
+              : <Skeleton width={'171px'} height={'32px'} />
+          }
+        </Flex>
+
+        <Input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder={'Search by collection name or slug...'}
+          endAdornment={
+            <Button ml={'8px'} p={'12px'} style={{ background: 'linear-gradient(180deg, rgb(120, 100, 230) 0%, rgb(210, 90, 230) 55%)' }}>
+              <AiOutlineSearch size={18} />
+            </Button>
+          }
+          suffixGap={'0'}
+        />
       </Flex>
 
-      <Table
+      <FreeFeedsTable
         pageSize={size}
         loading={isFetching}
-        width={'100%'}
-        scroll={{ x: 800 }}
-        columns={columns as any}
         data={feeds?.records}
-        rowKey={data => data.id}
-        rowStyle={{ height: '100px', hoverBackground: '#7864e699' }}
-        onRow={data => ({
-          onClick: () => navigate(`/free-feeds/${data.id}`)
-        })}
-        components={{
-          body: {
-            row: (props: any) => <tr {...props} style={{ ...props.style, cursor: 'pointer' }} />
-          }
-        }}
       />
 
-      <Flex mt={'16px'} jc={'space-between'} flexWrap={'wrap'}>
+      <Flex mt={'16px'} jc={'space-between'} flexWrap={'wrap'} gap={'8px 0'}>
         <a href="">
           <Text fontSize={'14px'} color={'secondary'} style={{ textDecoration: 'underline' }}>
             Need more collections feeding?
@@ -93,12 +62,13 @@ export const AllFreeFeedsPage: React.FC = () => {
         </a>
 
         <Pagination
-          showSizeChanger
+          showSizeChanger={!isXs}
           pageSizeOptions={[5, 10, 20]}
           current={current}
           pageSize={size}
           total={feeds?.total}
           onChange={handleChange}
+          showLessItems={isXs || isSm}
         />
       </Flex>
     </Box>
