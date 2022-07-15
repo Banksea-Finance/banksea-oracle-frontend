@@ -17,6 +17,7 @@ import {
   HomePage
 } from '@/pages'
 import { ProductPage } from '@/pages/product'
+import { RoadmapPage } from '@/pages/roadmap'
 
 const App: React.FC = () => {
   return (
@@ -31,6 +32,8 @@ const App: React.FC = () => {
               <Route index element={<AllFreeFeedsPage />} />
               <Route path={':collection'} element={<CollectionFreeFeedsPages />} />
             </Route>
+
+            <Route path={'/roadmap'} element={<RoadmapPage />} />
             <Route path={'/analytics'} element={<AnalyticsPage />} />
             <Route path={'/collection'} element={<CollectionsListPage />} />
             <Route path={'/product'} element={<ProductPage />} />

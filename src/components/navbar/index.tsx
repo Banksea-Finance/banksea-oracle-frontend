@@ -17,6 +17,7 @@ const NAVBAR_ITEMS = [
   { name: 'Product', link: '/product', inner: true },
   { name: 'Free Feeds', link: '/free-feeds', match: /^\/free-feeds/, inner: true },
   { name: 'Develop', link: '/develop', inner: true },
+  { name: 'Roadmap', link: '/roadmap', inner: true },
   { name: 'Docs', link: 'https://banksea-finance.gitbook.io/oracle/data-providers/running-node' },
   { name: 'Resource', link: 'https://banksea-finance.gitbook.io/oracle/consumers/program-client' },
 ]
