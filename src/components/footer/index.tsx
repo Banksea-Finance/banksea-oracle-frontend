@@ -16,6 +16,25 @@ const SOCIAL_MEDIA: SocialMedium[] = [
   { to: 'mailto://contact@banksea.finance', icon: require('@/images/social-media-logos/email.png') },
 ]
 
+const CATEGORIES = {
+  'Banksea': {
+    'Home': 'https://banksea.finance/',
+    'Roadmap': 'https://banksea.finance/roadmap',
+    'Doc': 'https://banksea-finance.gitbook.io/banksea-finance/',
+    'Medium': 'https://medium.com/@BankseaFinance',
+  },
+  'Information': {
+    'FAQ': '',
+    'Blog': '',
+    'Videos': ''
+  },
+  'Other': {
+    'Banksea Token': '',
+    'Disclaimer': '',
+    'Brand Guidelines': '',
+  }
+}
+
 const SocialMediumContainer = styled.a`
   color: #BABAC0;
   user-select: none;
@@ -60,25 +79,6 @@ const StyledFooter = styled.div`
 `
 
 const Footer: React.FC = () => {
-  const CATEGORIES = {
-    'Banksea': {
-      'Home': 'https://banksea.finance/',
-      'Roadmap': 'https://banksea.finance/roadmap',
-      'Doc': 'https://banksea-finance.gitbook.io/banksea-finance/',
-      'Medium': 'https://medium.com/@BankseaFinance',
-    },
-    'Information': {
-      'FAQ': '',
-      'Blog': '',
-      'Videos': ''
-    },
-    'Other': {
-      'Banksea Token': '',
-      'Disclaimer': '',
-      'Brand Guidelines': '',
-    }
-  }
-
   return (
     <StyledFooter>
       <Box background={'transparent'} p={'48px 10%'}>
@@ -95,7 +95,7 @@ const Footer: React.FC = () => {
             <Flex jc={'space-between'} width={'100%'}>
               {
                 SOCIAL_MEDIA.map(({ icon, to }, index) => (
-                  <SocialMediumContainer href={to} key={index}>
+                  <SocialMediumContainer href={to} target={'_blank'} rel={'noreferrer'} key={index}>
                     <img src={icon} alt={to} />
                   </SocialMediumContainer>
                 ))

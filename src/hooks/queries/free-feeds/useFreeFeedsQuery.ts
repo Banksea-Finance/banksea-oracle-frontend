@@ -24,9 +24,9 @@ export const useFreeFeedsQuery = (data?: FreeFeedsCollectionQuery) => {
   return useQuery<BankseaApiPageResult<FeedInfo>>(
     ['FREE_FEEDS', data],
     async () => {
-      const { current = 1, size = 10 } = data || {}
+      const { current = 1, size = 10, search } = data || {}
 
-      const r = (await API.v2.FreeFeeds.getFreeFeeds({ current, size }) ) as unknown as BankseaApiPageResult<FeedInfo>
+      const r = (await API.v2.FreeFeeds.getFreeFeeds({ current, size, search }) ) as unknown as BankseaApiPageResult<FeedInfo>
 
       const tasks = r.records.map(o => new PublicKey(o.collectionTask))
 

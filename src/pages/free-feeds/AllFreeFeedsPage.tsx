@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useRef, useState, KeyboardEvent, MouseEvent } from 'react'
 import {
   Box,
   Button,
@@ -14,12 +14,32 @@ import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import usePageQuery from '@/hooks/usePageQuery'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { FreeFeedsTable } from '@/components/free-feeds-table'
+import { useLocation } from 'react-router'
+import { useStoredUrlQuery } from '@/hooks/useStoredUrlQuery'
 
 export const AllFreeFeedsPage: React.FC = () => {
+  const searchParams = new URLSearchParams(useLocation().search)
+
   const { isXs, isSm } = useMatchBreakpoints()
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(searchParams.get('search') || '')
+
+  const inputRef = useRef<any>()
   const { current, size, handleChange } = usePageQuery({ size: 5 }, { keepInSearch: true })
   const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size, search })
+
+  const onSearch = useCallback((event: KeyboardEvent<HTMLDivElement> | MouseEvent) => {
+    if ('code' in event && !inputRef.current) {
+      inputRef.current = event.target
+    }
+
+    if (!('code' in event) || (event.code === 'Enter' || event.code === 'NumpadEnter')) {
+      const val = inputRef.current.value
+      setSearch(val)
+
+    }
+  }, [inputRef])
+
+  useStoredUrlQuery({ search })
 
   return (
     <Box>
@@ -36,11 +56,16 @@ export const AllFreeFeedsPage: React.FC = () => {
         </Flex>
 
         <Input
-          value={search}
-          onChange={e => setSearch(e.target.value)}
+          defaultValue={search}
+          onKeyDown={onSearch}
           placeholder={'Search by collection name or slug...'}
           endAdornment={
-            <Button ml={'8px'} p={'12px'} style={{ background: 'linear-gradient(180deg, rgb(120, 100, 230) 0%, rgb(210, 90, 230) 55%)' }}>
+            <Button
+              ml={'8px'}
+              p={'12px'}
+              onClick={onSearch}
+              style={{ background: 'linear-gradient(180deg, rgb(120, 100, 230) 0%, rgb(210, 90, 230) 55%)' }}
+            >
               <AiOutlineSearch size={18} />
             </Button>
           }

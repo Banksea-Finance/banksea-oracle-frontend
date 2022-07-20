@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Flex, Grid, Text } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { BinanceSvg, EthereumSvg, PolkadotSvg, SolanaSvg } from '@/components/svgs'
+import { EthereumSvg, PolkadotSvg, SolanaSvg } from '@/components/svgs'
 
 const FirstScreenModuleContainer = styled.div`
   display: flex;
@@ -22,7 +22,8 @@ const FirstScreenModuleContainer = styled.div`
 `
 
 const Image = styled.img`
-  width: min(851px, 45vw);
+  width: min(722px, 50vw);
+  z-index: 1;
 
   ${({ theme }) => theme.mediaQueries.maxXl} {
     width: 60vw;
@@ -33,35 +34,39 @@ export const FirstScreenModule: React.FC = () => {
   return (
     <FirstScreenModuleContainer>
       <Flex
-        width={'min(2000px, 96vw)'}
+        width={'min(1440px, 96vw)'}
         pt={'2%'}
         height={'fit-content'}
         flexDirection={{ xl: 'row-reverse', _: 'column' }}
         ai={{ _: 'center' }}
         jc={{ xl: 'space-between' }}
+        position={'relative'}
       >
         <Image src={require('@/assets/images/pages/home/fs.png')} alt="" />
 
-        <Flex flexDirection={'column'} ai={{ xl: 'start', _: 'center' }}>
+        <Flex
+          flexDirection={'column'}
+          ai={{ xl: 'start', _: 'center' }}
+          width={'90vw'}
+          position={{ xl: 'absolute', _: 'relative' }}
+          left={'0'}
+          zIndex={'11'}
+        >
           <Text
             as={'span'}
             fontSize={{ xl: 'min(75px, 4vw)', _: 'min(60px, 8vw)' }}
             important
             bold
-            lineHeight={'1'}
+            lineHeight={'1.5'}
             textAlign={{ xl: 'start', _: 'center' }}
+            width={'100%'}
           >
             {'The First '}
-            <Text
-              as={'span'}
-              gradient
-              fontSize={{ xl: 'min(75px, 4vw)', _: 'min(60px, 8vw)' }}
-              important
-              bold
-            >
+            <span className={'gradient'}>
               AI-Driven
-            </Text>
-            <br /> NFT Oracle
+            </span>
+            <br />
+            NFT Oracle
           </Text>
 
           <Text color={'disabled'} mb={{ lg: '42px', _: '36px' }} mt={{ lg: '36px', _: '24px' }}>
@@ -88,7 +93,6 @@ export const FirstScreenModule: React.FC = () => {
             <PolkadotSvg />
             <SolanaSvg />
             <EthereumSvg />
-            <BinanceSvg />
           </Grid>
         </Flex>
       </Flex>
