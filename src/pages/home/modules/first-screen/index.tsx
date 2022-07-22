@@ -11,6 +11,7 @@ const FirstScreenModuleContainer = styled.div`
   height: max(calc(100vh - 100px), fit-content);
   position: relative;
   z-index: 1;
+  min-height: 50vh;
 
   background: url(${require('@/assets/images/pages/home/fs-bg.png')}) 0 0 no-repeat;
   background-position-y: 80%;
@@ -42,7 +43,7 @@ export const FirstScreenModule: React.FC = () => {
         jc={{ xl: 'space-between' }}
         position={'relative'}
       >
-        <Image src={require('@/assets/images/pages/home/fs.png')} alt="" />
+        <Image src={require('@/assets/images/pages/home/fs.webp')} alt="" />
 
         <Flex
           flexDirection={'column'}
@@ -74,10 +75,10 @@ export const FirstScreenModule: React.FC = () => {
           </Text>
 
           <Flex gap={'16px'} mb={{ lg: '100px', _: '48px' }}>
-            <Button as={Link} autoScale to={'/develop'} width={'min(170px, 30vw)'}>
+            <Button as={Link} autoScale to={'/product/oracle'} width={'min(170px, 30vw)'}>
               Oracle
             </Button>
-            <Button as={Link} autoScale to={'/develop'} width={'min(170px, 30vw)'} variant={'outlined'}>
+            <Button as={Link} autoScale to={'/product/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
               API
             </Button>
           </Flex>

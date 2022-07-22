@@ -4,12 +4,10 @@ import {
   Box,
   ButtonMenu,
   Card,
-  ColumnsType,
   Flex,
   Grid,
   Pagination,
   scales, Skeleton,
-  Table,
   Text, useMatchBreakpoints
 } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
@@ -21,7 +19,7 @@ import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
 
 
 import usePageQuery from '@/hooks/usePageQuery'
-import { fromLamports, shortenAddress } from '@/utils'
+import { fromLamports } from '@/utils'
 import { useCollectionFeedActivitiesQuery } from '@/hooks/queries/free-feeds/useCollectionFeedActiviesQuery'
 import ReactECharts from 'echarts-for-react'
 import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds/useCollectionAggregateHistoriesQuery'
@@ -29,6 +27,9 @@ import { EChartsOption } from 'echarts'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { CopySvg, QuestionMarkSvg } from '@/components/svgs'
 import ReactTooltip from 'react-tooltip'
+import { FeedActivitiesTable } from '@/pages/free-feeds/collection-free-feeds/FeedActivitiesTable'
+import Redirect from '@/pages/redirect'
+import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 
 const OverviewItemContainer = styled(Box)`
   white-space: nowrap;
@@ -257,7 +258,7 @@ const FeedHistorySection: React.FC = () => {
   const options: EChartsOption = useMemo(() => {
     return {
       darkMode: true,
-      grid: { top: 24, right: 48, bottom: 48, left: 48 },
+      grid: { top: 24, right: 24, bottom: 48 },
       tooltip: {
         trigger: 'axis',
       },
@@ -364,72 +365,16 @@ const FeedActivitiesSection: React.FC = () => {
   const { current, size, handleChange } = usePageQuery()
   const { data, isFetching } = useCollectionFeedActivitiesQuery({ symbol: collection })
 
-  const columns: ColumnsType = [
-    {
-      title: 'Tx Hash',
-      dataIndex: 'signature',
-      align: 'center',
-      minWidth: '220px',
-      render: value => (
-        <Flex ai={'center'} jc={'center'} gap={'8px'}>
-          <Text width={'110px'} textAlign={'end'}>{shortenAddress(value)}</Text>
-          <a href={`https://solscan.io/tx/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
-            <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
-          </a>
-          <a href={`https://explorer.solana.com/tx/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
-            <img src="https://explorer.solana.com/favicon.ico"
-              alt="Solana Explorer"
-              style={{ width: '20px', height: '20px' }}
-            />
-          </a>
-        </Flex>
-      )
-    },
-    {
-      title: 'Floor Price',
-      dataIndex: 'floorPrice',
-      align: 'center',
-      width: 140,
-      render: value => value ? `${value} SOL` : '-'
-    },
-    {
-      title: 'AI Floor Price',
-      dataIndex: 'aiFloorPrice',
-      align: 'center',
-      width: 140,
-      render: value => value ? `${value} SOL` : '-'
-    },
-    {
-      title: 'Avg Price(24h)',
-      dataIndex: 'avgPrice',
-      align: 'center',
-      width: 140,
-      render: value => value ? `${value} SOL` : '-'
-    },
-    {
-      title: 'Feed Time',
-      dataIndex: 'time',
-      align: 'center',
-      width: 140,
-      render: value => value ? dayjs(value * 1000).format('MM/DD HH:mm:ss') : '-',
-    },
-  ]
-
   const { isXs, isSm, isMd } = useMatchBreakpoints()
 
   return (
     <section>
       <ModuleTitle title={'Feed Activities'} description={'Overview description'} />
 
-      <Table
+      <FeedActivitiesTable
         pageSize={size}
         loading={isFetching}
-        width={'100%'}
-        scroll={{ x: 650 }}
-        columns={columns as any}
-        rowKey={(data, index)  => `${index}`}
         data={data?.slice((current - 1) * size, current * size)}
-        rowStyle={{ height: '64px' }}
       />
 
       <Flex mt={'16px'} jc={'flex-end'}>
@@ -446,7 +391,13 @@ const FeedActivitiesSection: React.FC = () => {
   )
 }
 
-export const CollectionFreeFeedsPages: React.FC = () => {
+export const CollectionFreeFeedsPage: React.FC = () => {
+  const { accessToken } = useSolanaWalletBasedAuthentication()
+
+  if (!accessToken) {
+    return <Redirect to={'/free-feeds'} />
+  }
+
   const { collection } = useParams()
   const { data } = useCollectionFreeFeedInfoQuery(collection)
 

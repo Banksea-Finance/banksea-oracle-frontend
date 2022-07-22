@@ -14,4 +14,4 @@ export const FreeFeedsPage = () => {
 }
 
 export { AllFreeFeedsPage } from './AllFreeFeedsPage'
-export { CollectionFreeFeedsPages } from './CollectionFreeFeedsPages'
+export { CollectionFreeFeedsPage } from './collection-free-feeds'

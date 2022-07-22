@@ -4,12 +4,14 @@ import './index.css'
 import App from './App'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RefreshControllerProvider } from './contexts'
-import { GlobalStyles, ThemeWrapperProvider, ModalProvider } from '@banksea-finance/ui-kit'
+import { GlobalStyles, ThemeWrapperProvider, ModalProvider, NotifyProvider } from '@banksea-finance/ui-kit'
 import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import { BrowserRouter } from 'react-router-dom'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { SolanaWeb3Provider } from '@/contexts/solana-web3'
+import { SolanaWalletBasedAuthenticationProvider } from '@/contexts/solana-wallet-based-authtication'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,7 +63,13 @@ ReactDOM.render(
         >
           <GlobalStyles />
           <ModalProvider>
-            <App />
+            <NotifyProvider>
+              <SolanaWeb3Provider>
+                <SolanaWalletBasedAuthenticationProvider>
+                  <App />
+                </SolanaWalletBasedAuthenticationProvider>
+              </SolanaWeb3Provider>
+            </NotifyProvider>
           </ModalProvider>
         </ThemeWrapperProvider>
       </RefreshControllerProvider>

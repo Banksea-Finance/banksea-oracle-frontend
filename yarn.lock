@@ -2606,6 +2606,18 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@tanstack/react-table@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.npmjs.org/@tanstack/react-table/-/react-table-8.3.0.tgz#55e8a5dbe65f8e56dbeeb5033e1c679219d5991a"
+  integrity sha512-SIMorxHQ68glcoYZO7KSqvyy5ldlCKRTvYBSnWbWvy4xSgRa2D7GGWq8rLPsMerNUYoEljokun3/mf7kP8FQQA==
+  dependencies:
+    "@tanstack/table-core" "8.3.0"
+
+"@tanstack/table-core@8.3.0":
+  version "8.3.0"
+  resolved "https://registry.npmjs.org/@tanstack/table-core/-/table-core-8.3.0.tgz#2dae537cc335a0da4ec4ddc60e8e868f3d9aca4a"
+  integrity sha512-xcspAAv+GN+WMrX6qaFrPxBVYxlFfyu4qddiTwXOaTQOLdgLP/3GbipDoL7gC2l3Iz9KFCDXWjhW79xta3w5rg==
+
 "@testing-library/dom@^7.28.1":
   version "7.31.2"
   resolved "https://registry.npmjs.org/@testing-library/dom/-/dom-7.31.2.tgz"
@@ -10676,6 +10688,16 @@ rc-align@^4.0.0:
     rc-util "^5.3.0"
     resize-observer-polyfill "^1.5.1"
 
+rc-dropdown@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/rc-dropdown/-/rc-dropdown-4.0.1.tgz#f65d9d3d89750241057db59d5a75e43cd4576b68"
+  integrity sha512-OdpXuOcme1rm45cR0Jzgfl1otzmU4vuBVb+etXM8vcaULGokAKVpKlw8p6xzspG7jGd/XxShvq+N3VNEfk/l5g==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    classnames "^2.2.6"
+    rc-trigger "^5.3.1"
+    rc-util "^5.17.0"
+
 rc-motion@^2.0.0, rc-motion@^2.0.1, rc-motion@^2.6.0:
   version "2.6.0"
   resolved "https://registry.npmjs.org/rc-motion/-/rc-motion-2.6.0.tgz"
@@ -10747,7 +10769,7 @@ rc-table@^7.24.2:
     rc-util "^5.14.0"
     shallowequal "^1.1.0"
 
-rc-trigger@^5.0.4:
+rc-trigger@^5.0.4, rc-trigger@^5.3.1:
   version "5.3.1"
   resolved "https://registry.npmjs.org/rc-trigger/-/rc-trigger-5.3.1.tgz#acafadf3eaf384e7f466c303bfa0f34c8137d7b8"
   integrity sha512-5gaFbDkYSefZ14j2AdzucXzlWgU2ri5uEjkHvsf1ynRhdJbKxNOnw4PBZ9+FVULNGFiDzzlVF8RJnR9P/xrnKQ==
@@ -10762,6 +10784,15 @@ rc-util@^5.14.0, rc-util@^5.15.0, rc-util@^5.16.1, rc-util@^5.19.2, rc-util@^5.3
   version "5.22.5"
   resolved "https://registry.npmmirror.com/rc-util/-/rc-util-5.22.5.tgz#d4d6d886c5ecb6a2a51dde1840d780a2b70f5179"
   integrity sha512-awD2TGMGU97OZftT2R3JwrHWjR8k/xIwqjwcivPskciweUdgXE7QsyXkBKVSBHXS+c17AWWMDWuKWsJSheQy8g==
+  dependencies:
+    "@babel/runtime" "^7.18.3"
+    react-is "^16.12.0"
+    shallowequal "^1.1.0"
+
+rc-util@^5.17.0:
+  version "5.23.0"
+  resolved "https://registry.npmjs.org/rc-util/-/rc-util-5.23.0.tgz#a583b1ec3e1832a80eced7a700a494af0b590743"
+  integrity sha512-lgm6diJ/pLgyfoZY59Vz7sW4mSoQCgozqbBye9IJ7/mb5w5h4T7h+i2JpXAx/UBQxscBZe68q0sP7EW+qfkKUg==
   dependencies:
     "@babel/runtime" "^7.18.3"
     react-is "^16.12.0"

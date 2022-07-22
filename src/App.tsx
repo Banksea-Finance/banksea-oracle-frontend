@@ -10,8 +10,7 @@ import Footer from '@/components/footer'
 import {
   AllFreeFeedsPage,
   AnalyticsPage,
-  CollectionFreeFeedsPages,
-  CollectionsListPage,
+  CollectionFreeFeedsPage,
   DevelopPage,
   FreeFeedsPage,
   HomePage
@@ -30,13 +29,13 @@ const App: React.FC = () => {
             <Route path={'/develop'} element={<DevelopPage />} />
             <Route path={'/free-feeds'} element={<FreeFeedsPage />}>
               <Route index element={<AllFreeFeedsPage />} />
-              <Route path={':collection'} element={<CollectionFreeFeedsPages />} />
+              <Route path={':collection'} element={<CollectionFreeFeedsPage />} />
             </Route>
 
             <Route path={'/roadmap'} element={<RoadmapPage />} />
             <Route path={'/analytics'} element={<AnalyticsPage />} />
-            <Route path={'/collection'} element={<CollectionsListPage />} />
-            <Route path={'/product'} element={<ProductPage />} />
+            <Route path={'/product/api'} element={<ProductPage />} />
+            <Route path={'/product/oracle'} element={<DevelopPage />} />
             <Route path={'*'} element={<Redirect to={''} />} />
           </Routes>
         </main>

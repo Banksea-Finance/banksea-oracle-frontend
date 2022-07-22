@@ -4,6 +4,7 @@ import API from '@/api'
 import { useOracle } from '@/hooks/programs/oracle'
 import { PublicKey } from '@solana/web3.js'
 import { FreeFeedsCollectionQuery } from '@/api/types'
+import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 
 export interface FeedInfo {
   index: number
@@ -11,22 +12,27 @@ export interface FeedInfo {
   imageUrl: string
   nftName: string
   floorPrice: number
-  avgPrice: any
+  aiFloorPrice?: number
+  avgPrice?: number
   time: number
   collectionTask: string
 
   account?: any
 }
 
-export const useFreeFeedsQuery = (data?: FreeFeedsCollectionQuery) => {
+export const useFreeFeedsQuery = (data?: FreeFeedsCollectionQuery, refetchInterval: false | number = false) => {
   const { program } = useOracle()
+  const { accessToken } = useSolanaWalletBasedAuthentication()
 
-  return useQuery<BankseaApiPageResult<FeedInfo>>(
-    ['FREE_FEEDS', data],
+  return useQuery<BankseaApiPageResult<FeedInfo> | undefined>(
+    ['FREE_FEEDS', data, accessToken],
     async () => {
-      const { current = 1, size = 10, search } = data || {}
+      console.log(accessToken)
+      if (!accessToken) return undefined
 
-      const r = (await API.v2.FreeFeeds.getFreeFeeds({ current, size, search }) ) as unknown as BankseaApiPageResult<FeedInfo>
+      const { current = 1, size = 10, search, orders } = data || {}
+
+      const r = (await API.v2.FreeFeeds.getFreeFeeds({ current, size, search, orders }) ) as unknown as BankseaApiPageResult<FeedInfo>
 
       const tasks = r.records.map(o => new PublicKey(o.collectionTask))
 
@@ -44,6 +50,6 @@ export const useFreeFeedsQuery = (data?: FreeFeedsCollectionQuery) => {
         }))
       }
     },
-    { refetchOnWindowFocus: false, refetchInterval: false }
+    { refetchOnWindowFocus: false, refetchInterval }
   )
 }

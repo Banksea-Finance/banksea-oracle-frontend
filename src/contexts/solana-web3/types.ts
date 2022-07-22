@@ -13,8 +13,7 @@ export type SolanaWallet = {
 }
 
 export type WalletContextValues = {
-  adapter: BaseMessageSignerWalletAdapter | undefined
-  select: (name: SupportWalletNames) => void
+  connect: (name: SupportWalletNames) => Promise<SolanaWallet>
   wallet: SolanaWallet | undefined
   account?: PublicKey
   disconnect: () => void

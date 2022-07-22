@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 import API from '@/api'
 import { CollectionAggregateHistoriesQuery } from '@/api/types'
+import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 
 export type CollectionAggregateHistory = {
   floorPrice: number
@@ -11,10 +12,12 @@ export type CollectionAggregateHistory = {
 }
 
 export const useCollectionAggregateHistoriesQuery = (data: CollectionAggregateHistoriesQuery) => {
+  const { accessToken } = useSolanaWalletBasedAuthentication()
+
   return useQuery<CollectionAggregateHistory[]>(
-    ['COLLECTION_AGGREGATE_HISTORIES', data],
+    ['COLLECTION_AGGREGATE_HISTORIES', data, accessToken],
     () => {
-      if (!data.symbol) return undefined
+      if (!data.symbol || !accessToken) return undefined
 
       return API.v2.FreeFeeds.getCollectionAggregateHistories(data) as any
     }

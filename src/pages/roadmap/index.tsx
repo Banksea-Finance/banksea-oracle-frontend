@@ -23,7 +23,7 @@ export const RoadmapPage: React.FC = () => {
         Roadmap
       </Text>
 
-      <img src={require('@/assets/images/pages/roadmap/roadmap.png')} alt="" style={{ width: 'min(900px, 100%)' }} />
+      <img src={require('@/assets/images/pages/roadmap/roadmap.webp')} alt="" style={{ width: 'min(700px, 100%)' }} />
     </Container>
   )
 }

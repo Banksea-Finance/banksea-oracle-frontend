@@ -155,8 +155,8 @@ export function getCurrencyIcon(chainSource?: string): string | undefined {
   }[chainSource]
 }
 
-export const fromLamports = (lamports?: BN | string | number, decimals = Math.log10(LAMPORTS_PER_SOL)) => {
+export const fromLamports = (lamports?: BN | string | number, decimals = Math.log10(LAMPORTS_PER_SOL), formarttedDecimals = 4) => {
   if (lamports === undefined) return undefined
 
-  return new BigNumber(lamports.toString()).shiftedBy(-decimals)
+  return new BigNumber(lamports.toString()).shiftedBy(-decimals).toFixed(formarttedDecimals)
 }

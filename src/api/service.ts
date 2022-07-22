@@ -56,11 +56,11 @@ function onRejected(error: any) {
 
 export const API_HOST = process.env.REACT_APP_API_BASE
 
-const Service = axios.create({
-  baseURL: `${API_HOST}/analysis/web/v1/`
+const BaseService = axios.create({
+  baseURL: `${API_HOST}/`
 })
 
-Service.interceptors.response.use(
+BaseService.interceptors.response.use(
   onFulfilled, onRejected
 )
 
@@ -72,4 +72,4 @@ ServiceV2.interceptors.response.use(
   onFulfilled, onRejected
 )
 
-export { Service, ServiceV2 }
+export { BaseService, ServiceV2 }

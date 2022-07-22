@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Button, Flex, Grid, Text, useScale } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const FirstScreenModuleContainer = styled(Box)`
   width: 100vw;
@@ -8,7 +9,12 @@ const FirstScreenModuleContainer = styled(Box)`
   background-size: 100%;
   position: relative;
   padding-left: 10vw;
-
+  
+  ${({ theme }) => theme.mediaQueries.minXl} {
+    display: flex;
+    justify-content: center;
+  }
+  
   ${({ theme }) => theme.mediaQueries.maxXl} {
     padding-left: 0;
     height:  fit-content;
@@ -23,7 +29,7 @@ const FirstScreenModuleContainer = styled(Box)`
 `
 
 const Image = styled.img`
-  width: 80vw;
+  width: min(1800px, 80vw);
   position: absolute;
   right: 0;
   top: 10%;
@@ -52,7 +58,7 @@ const Title: React.FC = () => {
       fontSize={{ xl: 'min(50px, 3.33vw)', _: 'min(50px, 5.0vw)' }}
       important
       bold
-      lineHeight={'1'}
+      lineHeight={'1.5'}
       textAlign={{ xl: 'start', _: 'center' }}
     >
       {children}
@@ -67,18 +73,14 @@ const Title: React.FC = () => {
       width={'100%'}
     >
       <CommonText>Provide Comprehensive NFT</CommonText>
-      <Flex ai={'center'} gap={{ xl: 'min(25px, 1.7vw)', _: 'min(25px, 2.5vw)' }}>
-        <CommonText>Financial</CommonText>
-        <Text
-          as={'span'}
-          gradient
-          fontSize={{ xl: 'min(60px, 4vw)', _: 'min(60px, 7.5vw)' }}
-          important
-          bold
-        >
-          Service Data
-        </Text>
-      </Flex>
+      <CommonText>
+        <span className="gradient">
+          {'Analysis Service '}
+        </span>
+        <span>
+          On-chain
+        </span>
+      </CommonText>
     </Grid>
   )
 }
@@ -88,10 +90,10 @@ export const FirstScreenModule: React.FC = () => {
 
   return (
     <FirstScreenModuleContainer>
-      <Image src={require('@/assets/images/pages/develop/fs.png')} />
+      <Image src={require('@/assets/images/pages/develop/fs.webp')} />
 
       <Flex
-        width={'min(2000px, 96vw)'}
+        width={'min(1800px, 96vw)'}
         ai={{ xl: 'center', _: 'center' }}
         jc={{ xl: 'flex-start', _: 'center' }}
         height={{ xl: '100%', _: 'fit-content' }}
@@ -100,8 +102,7 @@ export const FirstScreenModule: React.FC = () => {
           <Title />
 
           <Flex gap={'32px'} mt={'32px'} jc={{ xl: 'start', _: 'center' }}>
-            <Button scale={scale}>Explorer</Button>
-            <Button scale={scale} variant={'outlined'}>Analysis</Button>
+            <Button scale={scale} as={Link} to={'/free-feeds'}>Free Feeds</Button>
           </Flex>
         </Box>
       </Flex>

@@ -1,4 +1,4 @@
-import useLocalStorage from '@/hooks/useLocalStorage'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { Cluster, clusterApiUrl, Connection } from '@solana/web3.js'
 import React, { useContext, useMemo } from 'react'
 

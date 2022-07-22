@@ -6,16 +6,16 @@ import {
   Input,
   Pagination,
   scales,
-  Skeleton,
   Tag,
   Text, useMatchBreakpoints
 } from '@banksea-finance/ui-kit'
 import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import usePageQuery from '@/hooks/usePageQuery'
 import { AiOutlineSearch } from 'react-icons/ai'
-import { FreeFeedsTable } from '@/components/free-feeds-table'
+import { FakeFreeFeedsData, FreeFeedsTable } from '@/components/free-feeds-table'
 import { useLocation } from 'react-router'
 import { useStoredUrlQuery } from '@/hooks/useStoredUrlQuery'
+import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
 
 export const AllFreeFeedsPage: React.FC = () => {
   const searchParams = new URLSearchParams(useLocation().search)
@@ -24,7 +24,7 @@ export const AllFreeFeedsPage: React.FC = () => {
   const [search, setSearch] = useState(searchParams.get('search') || '')
 
   const inputRef = useRef<any>()
-  const { current, size, handleChange } = usePageQuery({ size: 5 }, { keepInSearch: true })
+  const { current, size, handleChange } = usePageQuery({ size: 10 }, { keepInSearch: true })
   const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size, search })
 
   const onSearch = useCallback((event: KeyboardEvent<HTMLDivElement> | MouseEvent) => {
@@ -46,12 +46,12 @@ export const AllFreeFeedsPage: React.FC = () => {
       <Flex jc={'space-between'} ai={'center'} mb={'24px'} flexWrap={'wrap'} gap={'4px 24px'}>
         <Flex ai={'center'} gap={'12px'}>
           <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
-            Collections
+            Free Feeds Explorer
           </Text>
           {
             feeds
-              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'12px'}>Support {feeds.total} collections</Tag>
-              : <Skeleton width={'171px'} height={'32px'} />
+              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
+              : <></>
           }
         </Flex>
 
@@ -73,10 +73,18 @@ export const AllFreeFeedsPage: React.FC = () => {
         />
       </Flex>
 
-      <FreeFeedsTable
-        pageSize={size}
-        loading={isFetching}
-        data={feeds?.records}
+      <WhitelistRequiredContentWrapper
+        suspendHeight={'890px'}
+        content={
+          <FreeFeedsTable
+            pageSize={size}
+            loading={isFetching}
+            data={feeds?.records}
+          />
+        }
+        suspense={
+          <FreeFeedsTable data={FakeFreeFeedsData} />
+        }
       />
 
       <Flex mt={'16px'} jc={'space-between'} flexWrap={'wrap'} gap={'8px 0'}>

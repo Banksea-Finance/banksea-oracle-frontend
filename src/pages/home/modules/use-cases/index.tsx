@@ -140,32 +140,32 @@ export const UseCasesModule: React.FC = () => {
     {
       id: 'game-fi',
       label: 'Game Fi',
-      description: '...'
+      description: 'The game and Defi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.'
     },
     {
       id: 'lending',
       label: 'Lending',
-      description: '...'
+      description: 'Banksea provides safe and reasonable solutions for NFT lending with the valuation of NFTs and Collections, and monitors the market in real time to minimize the risk of lending.'
     },
     {
       id: 'marketplace',
       label: 'Marketplace',
-      description: '...'
+      description: 'Banksea provides secure, objective, and real-time data analysis and NFT valuation for users to formulate better trading strategies in the marketplace.'
     },
     {
       id: 'music',
       label: 'Music',
-      description: '...'
+      description: 'Banksea is exploring and researching music NFT and can customize the data analysis and valuation services for music NFTs.'
     },
     {
       id: 'meta-verse',
       label: 'MetaVerse',
-      description: '...'
+      description: 'As the infrastructure in the metaverse, Banksea will build a bridge between the virtual and real world for value measurement, providing more connections and possibilities for the two worlds.'
     },
     {
       id: 'wallet',
       label: 'Wallet',
-      description: '...'
+      description: 'Banksea has established in-depth cooperation with NFT wallet project to provide comprehensive analysis of NFTs, such as traits analysis, rarity analysis, popularity analysis, transaction analysis, real-time valuation, etc. It is convenient for users to analyze the status of assets directly on the wallet.'
     },
     {
       id: 'banksea-oracle',
@@ -181,7 +181,7 @@ export const UseCasesModule: React.FC = () => {
       </ModuleTitle>
 
       <UseCasesContainer>
-        <img src={require('@/assets/images/pages/home/use-cases-bg.png')} alt="" id={'bg'} />
+        <img src={require('@/assets/images/pages/home/use-cases-bg.webp')} alt="" id={'bg'} />
 
         {
           items.map(({ id, label, description }) => (

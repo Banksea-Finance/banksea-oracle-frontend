@@ -49,8 +49,9 @@ const INVESTORS: Investor[] = [
     url: 'https://www.drf.ee/',
   },
   {
-    image: require('@/assets/images/pages/home/investors/zonff.png'),
+    image: require('@/assets/images/pages/home/investors/zonff.svg').default,
     url: 'https://www.zonff.partners',
+    scale: 1.5
   },
   {
     image: require('@/assets/images/pages/home/investors/xt.png'),

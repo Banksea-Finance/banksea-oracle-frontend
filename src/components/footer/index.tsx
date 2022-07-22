@@ -73,7 +73,7 @@ const StyledFooter = styled.div`
     width: 100vw;
     height: 62.5vw;
     z-index: -1;
-    background: url(${require('@/assets/images/footer-bg.png')}) no-repeat;
+    background: url(${require('@/assets/images/footer-bg.webp')}) no-repeat;
     background-size: 100%;
   }
 `
@@ -90,7 +90,7 @@ const Footer: React.FC = () => {
           <Flex ai={'start'} flexDirection={'column'} width={'262px'} mb={{ xl: '0', _: '32px' }}>
             <BankseaLogoSvg />
             <Text color={'disabled'} my={'16px'}>
-              Securely and Fast, Financialize your NFT.
+              Safe, objective, and real-time NFT valuation
             </Text>
             <Flex jc={'space-between'} width={'100%'}>
               {
@@ -154,7 +154,8 @@ const Footer: React.FC = () => {
           </Grid>
         </Flex>
 
-        <Box my={'32px'}
+        <Box
+          my={'32px'}
           height={'2px'}
           width={'100%'}
           background={'linear-gradient(to right, #7864e600, #7864e6, #7864e600)'}

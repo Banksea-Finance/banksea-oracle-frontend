@@ -1,11 +1,15 @@
 import React from 'react'
 import { ModuleTitle } from '@/components/module-title'
-import { FreeFeedsTable } from '@/components/free-feeds-table'
+import { FakeFreeFeedsData, FreeFeedsTable } from '@/components/free-feeds-table'
 import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import { Box } from '@banksea-finance/ui-kit'
+import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
 
 export const RecentFeedsSection: React.FC = () => {
-  const { data: feeds, isFetching } = useFreeFeedsQuery({ size: 5 })
+  const { data: feeds, isLoading } = useFreeFeedsQuery({
+    size: 5,
+    orders: [{ field: 'time', order: 'descend' }]
+  }, 5000)
 
   return (
     <Box width={'100%'}>
@@ -13,10 +17,18 @@ export const RecentFeedsSection: React.FC = () => {
         Recent Feeds
       </ModuleTitle>
 
-      <FreeFeedsTable
-        pageSize={5}
-        loading={isFetching}
-        data={feeds?.records}
+      <WhitelistRequiredContentWrapper
+        suspendHeight={'890px'}
+        content={
+          <FreeFeedsTable
+            pageSize={5}
+            loading={isLoading}
+            data={feeds?.records}
+          />
+        }
+        suspense={
+          <FreeFeedsTable data={FakeFreeFeedsData} />
+        }
       />
     </Box>
   )

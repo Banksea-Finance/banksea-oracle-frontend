@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react'
 
 export const LOCAL_STORAGE_WALLET_KEY = 'WALLET'
+export const SOLANA_WALLET_BASED_ACCESS_TOKEN = 'SOLANA_WALLET_BASED_ACCESS_TOKEN'
 
-function useLocalStorage<T>(key: string, defaultState?: T): [T | undefined, (arg?: T) => void] {
+export function useLocalStorage<T>(key: string, defaultState?: T): [T | undefined, (arg?: T) => void] {
   const [state, setState] = useState<T | undefined>(() => {
     // NOTE: Not sure if this is ok
     const storedState = localStorage.getItem(key)
@@ -32,5 +33,3 @@ function useLocalStorage<T>(key: string, defaultState?: T): [T | undefined, (arg
 
   return [state, setLocalStorageState]
 }
-
-export default useLocalStorage

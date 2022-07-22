@@ -1,15 +1,14 @@
 import type { PublicKey } from '@solana/web3.js'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { shortenAddress } from '@/utils'
 import { SUPPORT_WALLETS } from './constant'
 import { BaseMessageSignerWalletAdapter, WalletReadyState } from '@solana/wallet-adapter-base'
-import useLocalStorage from '@/hooks/useLocalStorage'
+import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { useNotify } from '@banksea-finance/ui-kit'
 import { SolanaWallet, SupportWalletNames, WalletContextValues } from './types'
 
 const SolanaWeb3Context = React.createContext<WalletContextValues>({
-  adapter: undefined,
-  select: (_name: SupportWalletNames) => {},
+  connect: (_name: SupportWalletNames) => undefined as any,
   wallet: undefined,
   account: undefined,
   disconnect: () => {}
@@ -24,18 +23,6 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
   const [wallet, setWallet] = useState<SolanaWallet | undefined>(eagerWallet ? SUPPORT_WALLETS[eagerWallet] : undefined)
   const [account, setAccount] = useState<PublicKey>()
 
-  const select = (key: SupportWalletNames) => {
-    setWallet(SUPPORT_WALLETS[key])
-  }
-
-  const adapter = useMemo(() => {
-    if (!wallet) {
-      return undefined
-    }
-
-    return wallet.adapter
-  }, [wallet])
-
   const handleConnect = async (adapter?: BaseMessageSignerWalletAdapter) => {
     if (!adapter) return
 
@@ -47,7 +34,7 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
       })
     }))
 
-    adapter
+    return adapter
       .connect()
       .then(() => {
         const publicKey = adapter.publicKey
@@ -77,29 +64,33 @@ export const SolanaWeb3Provider: React.FC = ({ children }) => {
       })
   }
 
-  useEffect(() => {
-    handleConnect(adapter)
-  }, [adapter])
+  const connect = (key: SupportWalletNames) => {
+    const wallet = SUPPORT_WALLETS[key]
+    setWallet(wallet)
+
+    return handleConnect(wallet.adapter).then(() => wallet)
+  }
 
   const disconnect = useCallback(() => {
     setWallet(undefined)
     setAccount(undefined)
     setEagerWallet(undefined)
 
-    if (!adapter) return
+    if (!wallet) return
+
+    const { adapter } = wallet
 
     adapter.disconnect()
     notify({
       title: 'Wallet disconnect',
       description: `Disconnected from ${adapter.name} wallet`
     })
-  }, [adapter])
+  }, [wallet])
 
   return (
     <SolanaWeb3Context.Provider
       value={{
-        adapter,
-        select,
+        connect,
         wallet,
         account,
         disconnect

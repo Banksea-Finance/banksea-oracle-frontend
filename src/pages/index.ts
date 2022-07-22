@@ -1,7 +1,4 @@
 export { AnalyticsPage } from './analytics'
-export { CollectionDetailPage } from './collection'
-export { CollectionsListPage } from './collections'
 export { DevelopPage } from './develop'
-export { FreeFeedsPage, AllFreeFeedsPage, CollectionFreeFeedsPages } from './free-feeds'
+export { FreeFeedsPage, AllFreeFeedsPage, CollectionFreeFeedsPage } from './free-feeds'
 export { HomePage } from './home'
-export { CollectionTokenDetailPage } from './token'
