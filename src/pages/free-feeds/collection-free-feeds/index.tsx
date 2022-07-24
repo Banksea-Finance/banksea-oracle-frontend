@@ -25,7 +25,7 @@ import ReactECharts from 'echarts-for-react'
 import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds/useCollectionAggregateHistoriesQuery'
 import { EChartsOption } from 'echarts'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import { CopySvg, QuestionMarkSvg } from '@/components/svgs'
+import { QuestionMarkSvg } from '@/components/svgs'
 import ReactTooltip from 'react-tooltip'
 import { FeedActivitiesTable } from '@/pages/free-feeds/collection-free-feeds/FeedActivitiesTable'
 import Redirect from '@/pages/redirect'
@@ -139,21 +139,27 @@ const OverviewsContainer = styled(Card)`
   }
 `
 
-function OverviewItem<DataType>({ title, description, ...rest }: { title: React.ReactNode, description: React.ReactNode } & QueriedDataProps<DataType>) {
+function OverviewItem<DataType>({ title, description, ...rest }: { title: React.ReactNode, description?: React.ReactNode } & QueriedDataProps<DataType>) {
   return (
     <OverviewItemContainer>
       <Flex ai={'center'}>
         <Text color={'primary'} bold mr={'4px'}>{title}</Text>
-        <a data-tip="true" data-for={`overview-${title}`}>
-          <QuestionMarkSvg size={'14'} />
-        </a>
-        <ReactTooltip
-          id={`overview-${title}`}
-          className={'custom-tooltip'}
-          aria-haspopup="true"
-        >
-          <Text>{description}</Text>
-        </ReactTooltip>
+        {
+          description && (
+            <>
+              <a data-tip="true" data-for={`overview-${title}`}>
+                <QuestionMarkSvg size={'14'} />
+              </a>
+              <ReactTooltip
+                id={`overview-${title}`}
+                className={'custom-tooltip'}
+                aria-haspopup="true"
+              >
+                <Text>{description}</Text>
+              </ReactTooltip>
+            </>
+          )
+        }
       </Flex>
 
       <QueriedData {...rest} />
@@ -169,24 +175,23 @@ const OverviewSection: React.FC = () => {
 
   return (
     <section>
-      <ModuleTitle title={'Overview'} description={'Overview description'} />
+      <ModuleTitle title={'Overview'} />
 
       <OverviewsContainer>
         <OverviewItem
           title={'Feed Account'}
-          description={'....'}
+          description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
           value={info}
           dataRender={({ collectionTask: value }) => (
             <Grid gridTemplateColumns={'repeat(4, auto)'} ai={'center'} gap={'4px'} width={'min(460px, 78vw)'}>
-              <Text
-                textAlign={'center'}
-                width={{ _: '160px', sm: 'fit-content' }}
-                style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-              >
-                {value}
-              </Text>
               <CopyToClipboard text={value}>
-                <div style={{ cursor: 'pointer' }}><CopySvg /></div>
+                <Text
+                  textAlign={'center'}
+                  width={{ _: '160px', sm: 'fit-content' }}
+                  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', cursor: 'pointer' }}
+                >
+                  {value}
+                </Text>
               </CopyToClipboard>
               <a href={`https://solscan.io/account/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
                 <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
@@ -207,25 +212,25 @@ const OverviewSection: React.FC = () => {
         />
         <OverviewItem
           title={'Floor Price'}
-          description={'....'}
+          description={'Minimum listing price of this collection on marketplace.'}
           value={collectionTaskAccount}
-          dataRender={({ floorPrice }) => !floorPrice?.isZero() ? `${fromLamports(floorPrice)} SOL` : '-'}
+          dataRender={({ floorPrice }) => !floorPrice?.isZero() ? `${fromLamports(floorPrice)} SOL` : '0'}
         />
         <OverviewItem
           title={'AI Floor Price'}
-          description={'....'}
+          description={'The minimum AI valuation of this collection.'}
           value={collectionTaskAccount}
-          dataRender={({ aiFloorPrice }) => !aiFloorPrice?.isZero() ? `${fromLamports(aiFloorPrice)} SOL` : '-'}
+          dataRender={({ aiFloorPrice }) => !aiFloorPrice?.isZero() ? `${fromLamports(aiFloorPrice)} SOL` : '0'}
         />
         <OverviewItem
           title={'Avg Price(24h)'}
-          description={'....'}
+          description={'Average price traded in 24 hours'}
           value={collectionTaskAccount}
-          dataRender={({ avgPrice }) => !avgPrice?.isZero() ? `${fromLamports(avgPrice)} SOL` : '-'}
+          dataRender={({ avgPrice }) => !avgPrice?.isZero() ? `${fromLamports(avgPrice)} SOL` : '0'}
         />
         <OverviewItem
           title={'Update Time'}
-          description={'....'}
+          description={'Time of Oracle data aggregation.'}
           value={collectionTaskAccount}
           dataRender={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')}
         />
@@ -289,6 +294,9 @@ const FeedHistorySection: React.FC = () => {
           splitLine: {
             show: false,
           },
+          min: ({ max, min }) => {
+            return Math.min(max / 2, 0.8 * min)
+          }
         }
       ],
       dataZoom: [{
@@ -336,7 +344,7 @@ const FeedHistorySection: React.FC = () => {
 
   return (
     <section>
-      <ModuleTitle title={'Feed Histories'} description={'Overview description'} />
+      <ModuleTitle title={'Feed Histories'} />
 
       <Card p={'28px'} flexDirection={'column'} width={'inherit'}>
         <Flex jc={'flex-end'} width={'inherit'}>
@@ -369,7 +377,7 @@ const FeedActivitiesSection: React.FC = () => {
 
   return (
     <section>
-      <ModuleTitle title={'Feed Activities'} description={'Overview description'} />
+      <ModuleTitle title={'Feed Activities'} />
 
       <FeedActivitiesTable
         pageSize={size}
@@ -404,7 +412,7 @@ export const CollectionFreeFeedsPage: React.FC = () => {
   return (
     <Box>
       <Text gradient important bold fontSize={'min(48px, 7.5vw)'} mb={'24px'}>
-        { data ? `${data.nftName} Feeds` : <Skeleton width={'400px'} height={'72px'} /> }
+        { data ? data.nftName : <Skeleton width={'400px'} height={'72px'} /> }
       </Text>
       <Grid gridTemplateColumns={'100%'} gap={'36px'}>
         <OverviewSection />

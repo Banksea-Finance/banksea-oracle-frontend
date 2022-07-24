@@ -1,8 +1,7 @@
 import React from 'react'
-import { Box, Button, Flex, Grid, Input, Text } from '@banksea-finance/ui-kit'
+import { Box, Flex, Grid, Text } from '@banksea-finance/ui-kit'
 import { BankseaLogoSvg } from '@/components/svgs'
 import styled from 'styled-components'
-import { AiOutlineSend } from 'react-icons/ai'
 
 export type SocialMedium = {
   icon: string
@@ -18,20 +17,23 @@ const SOCIAL_MEDIA: SocialMedium[] = [
 
 const CATEGORIES = {
   'Banksea': {
-    'Home': 'https://banksea.finance/',
-    'Roadmap': 'https://banksea.finance/roadmap',
-    'Doc': 'https://banksea-finance.gitbook.io/banksea-finance/',
-    'Medium': 'https://medium.com/@BankseaFinance',
+    'Home': '/',
+    'Roadmap': '/roadmap',
+    'Oracle': '/product/oracle',
+    'API': '/product/api',
+  },
+  'Docs': {
+    'White Paper': 'https://banksea-finance.gitbook.io/banksea-finance/',
+    'Oracle': 'https://banksea-finance.gitbook.io/oracle/',
+    'API': 'https://banksea-finance.gitbook.io/banksea-oracle-api/',
+  },
+  'Resource': {
+    'CitizenOne': 'https://nft.banksea.finance/',
+    'Staking': 'https://app.banksea.finance/staking',
   },
   'Information': {
-    'FAQ': '',
-    'Blog': '',
-    'Videos': ''
-  },
-  'Other': {
-    'Banksea Token': '',
-    'Disclaimer': '',
-    'Brand Guidelines': '',
+    'Video': 'https://www.youtube.com/channel/UC-XfgMJ9E0SjPHr9dxURdmg',
+    'Medium': 'https://medium.com/@BankseaFinance'
   }
 }
 
@@ -75,6 +77,14 @@ const StyledFooter = styled.div`
     z-index: -1;
     background: url(${require('@/assets/images/footer-bg.webp')}) no-repeat;
     background-size: 100%;
+  }
+`
+
+const FooterText = styled(Text)`
+  transition: color 0.28s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
   }
 `
 
@@ -122,7 +132,7 @@ const Footer: React.FC = () => {
                     {
                       Object.entries(items).map(([item, link]) => (
                         <a href={link} key={item}>
-                          <Text color={'disabled'} style={{ whiteSpace: 'nowrap' }}>{item}</Text>
+                          <FooterText color={'disabled'} style={{ whiteSpace: 'nowrap' }}>{item}</FooterText>
                         </a>
                       ))
                     }
@@ -131,7 +141,7 @@ const Footer: React.FC = () => {
               ))
             }
 
-            <Box width={'220px'}>
+            {/*<Box width={'220px'}>
               <CategoryTitle>Subscribe Us</CategoryTitle>
               <Input
                 scale={'S'}
@@ -149,7 +159,7 @@ const Footer: React.FC = () => {
                   </Button>
                 }
               />
-            </Box>
+            </Box>*/}
 
           </Grid>
         </Flex>

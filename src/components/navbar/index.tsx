@@ -32,7 +32,6 @@ const NAVBAR_ITEMS: NavbarItemProps[] = [
   {
     name: 'Product',
     match: /^\/product/,
-    inner: true,
     children: [
       {
         name: 'Oracle',
@@ -47,8 +46,36 @@ const NAVBAR_ITEMS: NavbarItemProps[] = [
     ]
   },
   { name: 'Roadmap', path: '/roadmap', inner: true },
-  { name: 'Docs', path: 'https://banksea-finance.gitbook.io/oracle/data-providers/running-node' },
-  { name: 'Resource', path: 'https://banksea-finance.gitbook.io/oracle/consumers/program-client' },
+  {
+    name: 'Docs',
+    children: [
+      {
+        name: 'White Paper',
+        path: 'https://banksea-finance.gitbook.io/banksea-finance/',
+      },
+      {
+        name: 'Oracle Docs',
+        path: 'https://banksea-finance.gitbook.io/oracle/',
+      },
+      {
+        name: 'API Docs',
+        path: 'https://banksea-finance.gitbook.io/banksea-oracle-api/',
+      },
+    ]
+  },
+  {
+    name: 'Resource',
+    children: [
+      {
+        name: 'CitizenOne',
+        path: 'https://nft.banksea.finance/',
+      },
+      {
+        name: 'Staking',
+        path: 'https://app.banksea.finance/staking',
+      },
+    ]
+  },
 ]
 
 const NavbarLinkText = styled(Text)`

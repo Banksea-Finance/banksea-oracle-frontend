@@ -89,7 +89,7 @@ export const AllFreeFeedsPage: React.FC = () => {
 
       <Flex mt={'16px'} jc={'space-between'} flexWrap={'wrap'} gap={'8px 0'}>
         <a href="">
-          <Text fontSize={'14px'} color={'secondary'} style={{ textDecoration: 'underline' }}>
+          <Text fontSize={'16px'} color={'secondary'} style={{ textDecoration: 'underline' }}>
             Need more collections feeding?
           </Text>
         </a>

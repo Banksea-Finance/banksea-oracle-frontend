@@ -11,19 +11,20 @@ const EXAMPLE_CODE = `
     <code>
   
   import { 
-    getBankseaOracleProgram, 
-    fetchTokenReport, 
-    ReportAccount 
+    CollectionTaskAccount, 
+    getFreeFeedData,
+    SupportedFreeFeedCollectionCode
   } from '@banksea-finance/oracle-client'
-  
-  const program = getBankseaOracleProgram('devnet')
-  
-  const report = await fetchTokenReport(program, {
-    contractAddress: '0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb',
-    tokenId: 3421
-  })
-  
-  console.log(report.convert())
+
+  const code: SupportedFreeFeedCollectionCode = 'degods'
+
+  getFreeFeedData(code, 'devnet')
+    .then((data: CollectionTaskAccount | null) => {
+      if (data) {
+        const { avgPrice, aiFloorPrice, floorPrice } = data
+        console.log(avgPrice.toNumber(), aiFloorPrice.toNumber(), floorPrice.toNumber())
+      }
+    })
     </code>
   </pre>
 `

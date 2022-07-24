@@ -2,11 +2,12 @@ import React from 'react'
 import { ModuleTitle } from '@/components/module-title'
 import { FakeFreeFeedsData, FreeFeedsTable } from '@/components/free-feeds-table'
 import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
-import { Box } from '@banksea-finance/ui-kit'
+import { Box, Flex, Text } from '@banksea-finance/ui-kit'
 import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
+import { Link } from 'react-router-dom'
 
 export const RecentFeedsSection: React.FC = () => {
-  const { data: feeds, isLoading } = useFreeFeedsQuery({
+  const { data: feeds } = useFreeFeedsQuery({
     size: 5,
     orders: [{ field: 'time', order: 'descend' }]
   }, 5000)
@@ -18,16 +19,23 @@ export const RecentFeedsSection: React.FC = () => {
       </ModuleTitle>
 
       <WhitelistRequiredContentWrapper
-        suspendHeight={'890px'}
+        suspendHeight={'445px'}
         content={
-          <FreeFeedsTable
-            pageSize={5}
-            loading={isLoading}
-            data={feeds?.records}
-          />
+          <Flex ai={'flex-end'} flexDirection={'column'}>
+            <FreeFeedsTable
+              pageSize={5}
+              loading={!feeds?.records.length}
+              data={feeds?.records}
+            />
+            <Link to={'/free-feeds'}>
+              <Text color={'primary'} fontSize={'16px'}>
+                View more
+              </Text>
+            </Link>
+          </Flex>
         }
         suspense={
-          <FreeFeedsTable data={FakeFreeFeedsData} />
+          <FreeFeedsTable data={FakeFreeFeedsData.slice(0, 5)} />
         }
       />
     </Box>

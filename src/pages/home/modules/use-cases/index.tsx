@@ -140,37 +140,99 @@ export const UseCasesModule: React.FC = () => {
     {
       id: 'game-fi',
       label: 'Game Fi',
-      description: 'The game and Defi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.'
+      description: (
+        <>
+          <p>
+            The game and de-fi will be better combined through Banksea valuation
+          </p>
+          <p>
+            service that provide more possibilities for the liquidity of virtual assets.
+          </p>
+        </>
+      )
     },
     {
       id: 'lending',
       label: 'Lending',
-      description: 'Banksea provides safe and reasonable solutions for NFT lending with the valuation of NFTs and Collections, and monitors the market in real time to minimize the risk of lending.'
+      description: (
+        <>
+          <p>
+            Banksea provides safe and reasonable solutions for NFT lending with the valuation of
+          </p>
+          <p>
+            NFTs and Collections, and monitors the market in real time to minimize the risk of lending.
+          </p>
+        </>
+      )
     },
     {
       id: 'marketplace',
       label: 'Marketplace',
-      description: 'Banksea provides secure, objective, and real-time data analysis and NFT valuation for users to formulate better trading strategies in the marketplace.'
+      description: (
+        <>
+          <p>
+            Banksea provides secure, objective, and real-time data analysis and NFT valuation
+          </p>
+          <p>
+            for users to formulate better trading strategies in the marketplace.
+          </p>
+        </>
+      )
     },
     {
       id: 'music',
       label: 'Music',
-      description: 'Banksea is exploring and researching music NFT and can customize the data analysis and valuation services for music NFTs.'
+      description: (
+        <>
+          <p>
+            Banksea is exploring and researching music NFT and can customize
+          </p>
+          <p>
+            the data analysis and valuation services for music NFTs.
+          </p>
+        </>
+      )
     },
     {
       id: 'meta-verse',
       label: 'MetaVerse',
-      description: 'As the infrastructure in the metaverse, Banksea will build a bridge between the virtual and real world for value measurement, providing more connections and possibilities for the two worlds.'
+      description: (
+        <>
+          <p>
+            As the infrastructure in the metaverse, Banksea will build
+          </p>
+          <p>
+            a bridge between the virtual and real world for value measurement,
+          </p>
+          <p>
+            providing more connections and possibilities for the two worlds.
+          </p>
+        </>
+      )
     },
     {
       id: 'wallet',
       label: 'Wallet',
-      description: 'Banksea has established in-depth cooperation with NFT wallet project to provide comprehensive analysis of NFTs, such as traits analysis, rarity analysis, popularity analysis, transaction analysis, real-time valuation, etc. It is convenient for users to analyze the status of assets directly on the wallet.'
+      description: (
+        <>
+          <p>
+            Banksea has established in-depth cooperation with NFT wallet project to provide
+          </p>
+          <p>
+            comprehensive analysis of NFTs, such as traits analysis, rarity analysis,
+          </p>
+          <p>
+            popularity analysis, transaction analysis, real-time valuation, etc.
+          </p>
+          <p>
+            It is convenient for users to analyze the status of assets directly on the wallet.
+          </p>
+        </>
+      )
     },
     {
       id: 'banksea-oracle',
-      label: 'Banskea Oracle',
-      description: '...'
+      label: 'Banksea Oracle',
     }
   ]
 
@@ -191,13 +253,20 @@ export const UseCasesModule: React.FC = () => {
                   {label}
                 </span>
               </a>
-              <ReactTooltip
-                id={`${id}-tooltip`}
-                className={'custom-tooltip'}
-                aria-haspopup="true"
-              >
-                <Text>{description}</Text>
-              </ReactTooltip>
+              {
+                description && (
+                  <>
+                    <ReactTooltip
+                      id={`${id}-tooltip`}
+                      className={'custom-tooltip'}
+                      aria-haspopup="true"
+                    >
+                      <Text>{description}</Text>
+                    </ReactTooltip>
+                  </>
+                )
+              }
+
             </Fragment>
           ))
         }

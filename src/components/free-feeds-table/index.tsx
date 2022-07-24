@@ -5,7 +5,6 @@ import { BN } from '@project-serum/anchor'
 import { fromLamports } from '@/utils'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
 import { createColumnHelper, flexRender, getCoreRowModel, Table, useReactTable } from '@tanstack/react-table'
 import { range } from 'lodash'
 
@@ -147,7 +146,7 @@ export const FakeFreeFeedsData: FeedInfo[] = [
 
 const columnHelper = createColumnHelper<FeedInfo>()
 
-const priceRender = (value: BN) => !value?.isZero() ? `${fromLamports(value)} SOL` : '-'
+const priceRender = (value: BN) => !value?.isZero() ? `${fromLamports(value)} SOL` : '0'
 
 const _columns = [
   columnHelper.accessor('index', {
@@ -261,8 +260,6 @@ const renderTableHeaders = (table: Table<FeedInfo>) => {
 }
 
 const TableBody: React.FC<{ table: Table<FeedInfo> }> = ({ table }) => {
-  const navigate = useNavigate()
-
   return (
     <Grid gridTemplateColumns={'100%'} gap={'16px 0'} pb={'16px'}>
       {
@@ -270,7 +267,7 @@ const TableBody: React.FC<{ table: Table<FeedInfo> }> = ({ table }) => {
           <TableRow
             width={'100%'}
             key={row.id}
-            onClick={() => navigate(`/free-feeds/${row.original.id}`)}
+            onClick={() => window.open(`/free-feeds/${row.original.id}`, '_blank')}
             {...rowGridProps}
           >
             {
