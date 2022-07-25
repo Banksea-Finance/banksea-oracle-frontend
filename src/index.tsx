@@ -52,7 +52,8 @@ ReactDOM.render(
               backgroundSecondary: 'rgb(10, 20, 60)',
               text: '#fff',
               card: 'rgb(30, 40, 100)',
-              disabled: '#c0c0c0',
+              disabled: '#999999',
+              textDisabled: '#c0c0c0',
               gradient: 'linear-gradient(90deg, #7864E6 0%, #D25AE6 55%)'
             },
             fontFamilies: {

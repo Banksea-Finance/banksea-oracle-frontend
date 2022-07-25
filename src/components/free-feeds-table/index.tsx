@@ -162,7 +162,7 @@ const priceRender = (value?: BN | number) => {
 const _columns = [
   columnHelper.accessor('index', {
     header: '#',
-    cell: props => <Text>{props.getValue()}</Text>,
+    cell: props => <Text fontSize={'18px'}>{props.getValue()}</Text>,
   }),
   columnHelper.accessor(row => row, {
     header: 'Collection',
@@ -173,6 +173,7 @@ const _columns = [
         <Flex ai={'center'}>
           <img src={row.imageUrl} style={{ width: '50px', height: '50px', borderRadius: '25px' }} alt={''} />
           <Text
+            fontSize={'18px'}
             ml={'8px'}
             style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
           >
@@ -184,21 +185,21 @@ const _columns = [
   }),
   columnHelper.accessor('floorPrice', {
     header: 'Floor Price',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>,
+    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>,
     meta: {
       field: 'floorPrice'
     }
   }),
   columnHelper.accessor('aiFloorPrice', {
     header: 'AI Floor Price',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>,
+    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>,
     meta: {
       field: 'aiFloorPrice'
     }
   }),
   columnHelper.accessor('avgPrice', {
     header: 'Avg Price(24h)',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>,
+    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>,
     meta: {
       field: 'avgPrice'
     }
@@ -208,7 +209,7 @@ const _columns = [
     cell: props => {
       const value = props.getValue()
       return (
-        <Text>
+        <Text fontSize={'18px'} width={'150px'}>
           {value ? dayjs(value * 1000).format('YYYY/MM/DD HH:mm:ss') : '-'}
         </Text>
       )
@@ -239,7 +240,7 @@ const TableRow = styled(Grid)`
 
 const rowGridProps = {
   gridTemplateColumns: {
-    sm: '48px 1fr repeat(3, 120px) 140px',
+    sm: '48px minmax(270px, 1fr) repeat(3, 120px) 140px',
     _: '24px 160px repeat(3, 120px) 140px'
   },
   gap: '0 16px'
@@ -295,7 +296,7 @@ const renderTableHeaders = (
                 }
 
                 const columnTitle = (
-                  <Text color={'disabled'} fontSize={'14px'} bold>
+                  <Text color={'textDisabled'} fontSize={'14px'} bold>
                     {header.isPlaceholder
                       ? null
                       : flexRender(

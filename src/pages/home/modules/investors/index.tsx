@@ -27,7 +27,7 @@ const INVESTORS: Investor[] = [
   {
     image: require('@/assets/images/pages/home/investors/mexc.svg').default,
     url: 'https://www.mexc.com/',
-    scale: 0.6
+    scale: 0.4
   },
   {
     image: require('@/assets/images/pages/home/investors/solar.png'),

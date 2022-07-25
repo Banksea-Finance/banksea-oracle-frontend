@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState, KeyboardEvent, MouseEvent } from 'react'
 import {
   Box, Button,
-  Flex, Input,
+  Flex, Grid, Input,
   Pagination,
   scales,
   Tag,
@@ -11,7 +11,6 @@ import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import usePageQuery from '@/hooks/usePageQuery'
 import { FakeFreeFeedsData, FreeFeedsTable } from '@/components/free-feeds-table'
 import { useLocation } from 'react-router'
-import { useStoredUrlQuery } from '@/hooks/useStoredUrlQuery'
 import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
 import { Element, scroller } from 'react-scroll'
 import { FreeFeedsCollectionQueryOrder } from '@/api/types'
@@ -24,7 +23,7 @@ export const AllFreeFeedsPage: React.FC = () => {
   const [search, setSearch] = useState(searchParams.get('search') || '')
 
   const inputRef = useRef<any>()
-  const { current, size, handleChange } = usePageQuery({ size: 10 }, { keepInSearch: true })
+  const { current, size, handleChange } = usePageQuery({ size: 10 })
 
   const [orders, setOrders] = useState<FreeFeedsCollectionQueryOrder[]>([{ order: 'descend', field: 'aiFloorPrice' }])
 
@@ -42,18 +41,16 @@ export const AllFreeFeedsPage: React.FC = () => {
 
     if (!('code' in event) || (event.code === 'Enter' || event.code === 'NumpadEnter')) {
       const val = inputRef.current.value
+      handleChange(1)
       setSearch(val)
-
     }
   }, [inputRef])
 
-  useStoredUrlQuery({ search })
-
   return (
-    <Box>
-      <Element name={'free-feeds-explorer-title'}>
-        <Flex ai={'center'} gap={'12px'}>
-          <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+    <Box width={'100%'}>
+      <Element name={'free-feeds-explorer-title'} width={'100%'}>
+        <Grid ai={'center'} jc={'space-between'} gap={'4px 12px'} gridTemplateColumns={{ _: 'max-content', md: 'auto auto' }} mb={'8px'} width={'100%'}>
+          <Text gradient important bold fontSize={'max(20px, min(48px, 6vw))'}>
             Free Feeds Explorer
           </Text>
           {
@@ -61,7 +58,7 @@ export const AllFreeFeedsPage: React.FC = () => {
               ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
               : <></>
           }
-        </Flex>
+        </Grid>
       </Element>
 
       <Flex jc={'flex-end'} mb={'24px'}>
@@ -100,7 +97,7 @@ export const AllFreeFeedsPage: React.FC = () => {
       />
 
       <Flex mt={'16px'} jc={'space-between'} flexWrap={'wrap'} gap={'8px 0'}>
-        <a href="">
+        <a href="https://c2dtw7wmuwa.typeform.com/to/k4yiiPHi" target={'_blank'} rel="noreferrer">
           <Text fontSize={'16px'} color={'secondary'} style={{ textDecoration: 'underline' }}>
             Need more collections feeding?
           </Text>

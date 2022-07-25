@@ -30,6 +30,7 @@ import { FeedActivitiesTable } from '@/pages/free-feeds/collection-free-feeds/Fe
 import Redirect from '@/pages/redirect'
 import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 import { Element, scroller } from 'react-scroll'
+import BigNumber from 'bignumber.js'
 
 const OverviewItemContainer = styled(Box)`
   white-space: nowrap;
@@ -162,7 +163,7 @@ function OverviewItem<DataType>({ title, description, ...rest }: { title: React.
         }
       </Flex>
 
-      <QueriedData {...rest} />
+      <QueriedData {...rest} fontSize={'18px'} />
     </OverviewItemContainer>
   )
 }
@@ -184,12 +185,13 @@ const OverviewSection: React.FC = () => {
           description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
           value={info}
           dataRender={({ collectionTask: value }) => (
-            <Grid gridTemplateColumns={'auto 20px 20px'} jc={{ _: 'center', sm: 'flex-start' }} ai={'center'} gap={'8px'} width={'min(420px, 78vw)'}>
+            <Grid gridTemplateColumns={'auto 20px 20px'} jc={{ _: 'center', sm: 'flex-start' }} ai={'center'} gap={'8px'} width={'min(430px, 78vw)'}>
               <CopyToClipboard
                 text={value}
                 onCopy={() => ReactTooltip.show(copyTooltipRef.current)}
               >
                 <Text
+                  fontSize={'18px'}
                   ref={ref => copyTooltipRef.current = ref}
                   data-tip="true"
                   data-for={`copy-for-${value}`}
@@ -318,7 +320,7 @@ const FeedHistorySection: React.FC = () => {
             show: false,
           },
           min: ({ max, min }) => {
-            return Math.min(max / 2, 0.8 * min)
+            return BigNumber.min(new BigNumber(max), new BigNumber(min).multipliedBy(0.8)).toFixed()
           }
         }
       ],

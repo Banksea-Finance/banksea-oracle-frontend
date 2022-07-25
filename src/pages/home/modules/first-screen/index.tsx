@@ -70,7 +70,13 @@ export const FirstScreenModule: React.FC = () => {
             NFT Oracle
           </Text>
 
-          <Text color={'disabled'} mb={{ lg: '42px', _: '36px' }} mt={{ lg: '36px', _: '24px' }}>
+          <Text
+            bold
+            color={'primary'}
+            mb={{ lg: '42px', _: '36px' }}
+            mt={{ lg: '36px', _: '24px' }}
+            fontSize={'min(24px, 5vw)'}
+          >
             Objective, safe and real-time NFT valuation
           </Text>
 
@@ -84,15 +90,15 @@ export const FirstScreenModule: React.FC = () => {
           </Flex>
 
           <Grid
-            gap={'16px'}
+            gap={'24px'}
             jc={'start'}
             ai={'center'}
             flexWrap={'wrap'}
             justifyItems={'center'}
-            gridTemplateColumns={{ md: 'repeat(4, max-content)', _: 'repeat(2, max-content)' }}
+            gridTemplateColumns={{ sm: 'repeat(3, max-content)', _: 'repeat(1, max-content)' }}
           >
-            <PolkadotSvg />
             <SolanaSvg />
+            <PolkadotSvg />
             <EthereumSvg />
           </Grid>
         </Flex>

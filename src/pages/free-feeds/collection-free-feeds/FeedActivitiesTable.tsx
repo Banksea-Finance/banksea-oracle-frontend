@@ -34,29 +34,29 @@ const _columns = [
               style={{ width: '20px', height: '20px' }}
             />
           </a>
-          <Text textAlign={'end'}>{shortenAddress(value)}</Text>
+          <Text textAlign={'end'} fontSize={'18px'}>{shortenAddress(value)}</Text>
         </Flex>
       )
     }
   }),
   columnHelper.accessor('floorPrice', {
     header: 'Floor Price',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>
+    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>
   }),
   columnHelper.accessor('aiFloorPrice', {
     header: 'AI Floor Price',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>
+    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>
   }),
   columnHelper.accessor('avgPrice', {
     header: 'Avg Price(24h)',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>
+    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>
   }),
   columnHelper.accessor('time', {
     header: 'Feed Time',
     cell: props => {
       const value = props.getValue()
       return (
-        <Text>
+        <Text fontSize={'18px'}>
           {value ? dayjs(value * 1000).format('MM/DD HH:mm:ss') : '-'}
         </Text>
       )
@@ -103,9 +103,8 @@ const renderTableHeaders = (table: Table<CollectionFeedActivity>) => {
               headerGroup.headers.map(header => (
                 <Text
                   key={header.id}
-                  color={'disabled'}
                   fontSize={'14px'}
-                  fontWeight={400}
+                  fontWeight={'bold'}
                 >
                   {header.isPlaceholder
                     ? null
@@ -137,7 +136,7 @@ const TableBody: React.FC<{ table: Table<CollectionFeedActivity> }> = ({ table }
               row.getVisibleCells().map(cell => (
                 flexRender(cell.column.columnDef.cell, {
                   ...cell.getContext(),
-                  key: cell.id
+                  key: cell.id,
                 })
               ))
             }

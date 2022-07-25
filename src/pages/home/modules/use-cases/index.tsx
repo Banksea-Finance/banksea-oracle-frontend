@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Flex, Text } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 import styled from 'styled-components'
@@ -139,53 +139,70 @@ const UseCasesContainer = styled.div`
   }
 `
 
+const ids = [
+  'game-fi', 'lending', 'marketplace', 'wallet', 'music', 'meta-verse',
+]
+
+const items = [
+  {
+    id: 'game-fi',
+    label: 'Game Fi',
+    description: 'The game and de-fi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.',
+    tooltipPosition: 'bottom',
+  },
+  {
+    id: 'lending',
+    label: 'Lending',
+    description: 'Banksea provides safe and reasonable solutions for NFT lending with the valuation of NFTs and Collections, and monitors the market in real time to minimize the risk of lending.',
+    tooltipPosition: 'bottom',
+    offsetX: -100
+  },
+  {
+    id: 'marketplace',
+    label: 'Marketplace',
+    description: 'Banksea provides secure, objective, and real-time data analysis and NFT valuation for users to formulate better trading strategies in the marketplace.',
+    tooltipPosition: 'bottom',
+    offsetX: 100
+  },
+  {
+    id: 'music',
+    label: 'Music',
+    description: 'Banksea is exploring and researching music NFT and can customize the data analysis and valuation services for music NFTs.',
+    tooltipPosition: 'top',
+    offsetX: 120
+  },
+  {
+    id: 'meta-verse',
+    label: 'MetaVerse',
+    description: 'As the infrastructure in the metaverse, Banksea will build a bridge between the virtual and real world for value measurement, providing more connections and possibilities for the two worlds.',
+    tooltipPosition: 'top',
+  },
+  {
+    id: 'wallet',
+    label: 'Wallet',
+    description: 'Banksea has established in-depth cooperation with NFT wallet project to provide comprehensive analysis of NFTs, such as traits analysis, rarity analysis, popularity analysis, transaction analysis, real-time valuation, etc. It is convenient for users to analyze the status of assets directly on the wallet.',
+    tooltipPosition: 'top',
+    offsetX: -80
+  },
+  {
+    id: 'banksea-oracle',
+    label: 'Banksea Oracle',
+  }
+]
+
 export const UseCasesModule: React.FC = () => {
-  const items = [
-    {
-      id: 'game-fi',
-      label: 'Game Fi',
-      description: 'The game and de-fi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.',
-      tooltipPosition: 'bottom',
-    },
-    {
-      id: 'lending',
-      label: 'Lending',
-      description: 'Banksea provides safe and reasonable solutions for NFT lending with the valuation of NFTs and Collections, and monitors the market in real time to minimize the risk of lending.',
-      tooltipPosition: 'bottom',
-      offsetX: -100
-    },
-    {
-      id: 'marketplace',
-      label: 'Marketplace',
-      description: 'Banksea provides secure, objective, and real-time data analysis and NFT valuation for users to formulate better trading strategies in the marketplace.',
-      tooltipPosition: 'bottom',
-      offsetX: 100
-    },
-    {
-      id: 'music',
-      label: 'Music',
-      description: 'Banksea is exploring and researching music NFT and can customize the data analysis and valuation services for music NFTs.',
-      tooltipPosition: 'top',
-      offsetX: 120
-    },
-    {
-      id: 'meta-verse',
-      label: 'MetaVerse',
-      description: 'As the infrastructure in the metaverse, Banksea will build a bridge between the virtual and real world for value measurement, providing more connections and possibilities for the two worlds.',
-      tooltipPosition: 'top',
-    },
-    {
-      id: 'wallet',
-      label: 'Wallet',
-      description: 'Banksea has established in-depth cooperation with NFT wallet project to provide comprehensive analysis of NFTs, such as traits analysis, rarity analysis, popularity analysis, transaction analysis, real-time valuation, etc. It is convenient for users to analyze the status of assets directly on the wallet.',
-      tooltipPosition: 'top',
-      offsetX: -80
-    },
-    {
-      id: 'banksea-oracle',
-      label: 'Banksea Oracle',
+  const [hoveredId, setHoveredId] = useState<string>()
+  const [visibleIndex, setVisibleIndex] = useState(0)
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setVisibleIndex(prev => (prev + 1) % 6)
+    }, 3000)
+
+    return () => {
+      clearInterval(intervalId)
     }
-  ]
+  }, [])
 
   return (
     <Flex flexDirection={'column'} ai={'center'} width={'100%'} overflowX={'hidden'}>
@@ -206,17 +223,26 @@ export const UseCasesModule: React.FC = () => {
 
             if (description) {
               child = (
-                <Tooltip overlay={<Text maxWidth={'min(350px, 90vw)'}>{description}</Text>}>
-                  {child}
-                </Tooltip>
+                <div
+                  onMouseEnter={() => {
+                    setVisibleIndex(ids.indexOf(id))
+                    setHoveredId(id)
+                  }}
+                  onMouseLeave={() => setHoveredId(undefined)}
+                >
+                  <Tooltip
+                    visible={hoveredId === id || (hoveredId === undefined && id === ids[visibleIndex])}
+                    overlay={<Text maxWidth={'min(350px, 90vw)'}>{description}</Text>}
+                  >
+                    {child}
+                  </Tooltip>
+                </div>
               )
             }
 
             return (
               <Fragment key={id}>
-                <a data-tip="true" data-for={`${id}-tooltip`}>
-                  {child}
-                </a>
+                {child}
               </Fragment>
             )
           })

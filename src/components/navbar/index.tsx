@@ -100,7 +100,7 @@ const NavbarContainer = styled(Box)`
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.colors.background};
-  box-shadow: inset 0 -13px 10px -7px ${({ theme }) => theme.colors.primary};
+  box-shadow: inset 0 -13px 10px -7px ${({ theme }) => `${theme.colors.primary}99`};
 
   ${({ theme }) => theme.mediaQueries.maxMd} {
     height: 64px;
@@ -124,7 +124,7 @@ const NavbarItemLink: React.FC<LeafNodeNavbarItemProps> = props => {
 
   return (
     <Component {...mergedProps}>
-      <NavbarLinkText fontSize={'20px'} bold color={isActive ? 'primary' : 'disabled'}>
+      <NavbarLinkText fontSize={'20px'} bold color={isActive ? 'primary' : 'text'}>
         {name}
       </NavbarLinkText>
     </Component>
@@ -184,7 +184,7 @@ const RootNavbarItem: React.FC<NavbarItemProps> = props => {
   return (
     <Wrapper>
       <Dropdown overlay={overlay} animation="slide-up" mouseEnterDelay={0}>
-        <NavbarLinkText fontSize={'20px'} bold color={isActive ? 'primary' : 'disabled'} style={{ cursor: 'pointer' }}>
+        <NavbarLinkText fontSize={'20px'} bold color={isActive ? 'primary' : 'text'} style={{ cursor: 'pointer' }}>
           {name}
         </NavbarLinkText>
       </Dropdown>
@@ -206,7 +206,7 @@ const MobileNavLink: React.FC<RootNavbarItemProps> = ({ path, name, match, as: A
 
   return (
     <As {...mergedProps}>
-      <Text color={active ? 'primary' : 'textDisabled'} fontSize={'24px'} bold={active}>
+      <Text color={active ? 'primary' : 'text'} fontSize={'24px'} bold={active}>
         {name}
       </Text>
     </As>
