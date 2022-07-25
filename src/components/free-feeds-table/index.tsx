@@ -7,11 +7,16 @@ import dayjs from 'dayjs'
 import styled from 'styled-components'
 import { createColumnHelper, flexRender, getCoreRowModel, Table, useReactTable } from '@tanstack/react-table'
 import { range } from 'lodash'
+import { FreeFeedsCollectionQueryOrder } from '@/api/types'
+import { ArrowDownSvg, ArrowUpSvg } from '@/components/svgs'
 
 export type FreeFeedsTableProps = {
   data?: FeedInfo[]
   pageSize?: number
   loading?: boolean
+
+  orders?: FreeFeedsCollectionQueryOrder[]
+  onOrdersChange?: (orders: FreeFeedsCollectionQueryOrder[]) => void
 }
 
 const fakeAccount = {
@@ -146,12 +151,18 @@ export const FakeFreeFeedsData: FeedInfo[] = [
 
 const columnHelper = createColumnHelper<FeedInfo>()
 
-const priceRender = (value: BN) => !value?.isZero() ? `${fromLamports(value)} SOL` : '0 SOL'
+const priceRender = (value?: BN | number) => {
+  if (typeof value === 'number') {
+    return value ? `${value.toFixed(4)} SOL` : '0 SOL'
+  }
+
+  return !value?.isZero() ? `${fromLamports(value)} SOL` : '0 SOL'
+}
 
 const _columns = [
   columnHelper.accessor('index', {
     header: '#',
-    cell: props => <Text>{props.getValue()}</Text>
+    cell: props => <Text>{props.getValue()}</Text>,
   }),
   columnHelper.accessor(row => row, {
     header: 'Collection',
@@ -171,27 +182,39 @@ const _columns = [
       )
     }
   }),
-  columnHelper.accessor('account.floorPrice', {
+  columnHelper.accessor('floorPrice', {
     header: 'Floor Price',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>
+    cell: props => <Text>{priceRender(props.getValue())}</Text>,
+    meta: {
+      field: 'floorPrice'
+    }
   }),
-  columnHelper.accessor('account.aiFloorPrice', {
+  columnHelper.accessor('aiFloorPrice', {
     header: 'AI Floor Price',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>
+    cell: props => <Text>{priceRender(props.getValue())}</Text>,
+    meta: {
+      field: 'aiFloorPrice'
+    }
   }),
-  columnHelper.accessor('account.avgPrice', {
+  columnHelper.accessor('avgPrice', {
     header: 'Avg Price(24h)',
-    cell: props => <Text>{priceRender(props.getValue())}</Text>
+    cell: props => <Text>{priceRender(props.getValue())}</Text>,
+    meta: {
+      field: 'avgPrice'
+    }
   }),
-  columnHelper.accessor('account.aggregateTime', {
+  columnHelper.accessor('time', {
     header: 'Update Time',
     cell: props => {
       const value = props.getValue()
       return (
         <Text>
-          {value ? dayjs(value.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss') : '-'}
+          {value ? dayjs(value * 1000).format('YYYY/MM/DD HH:mm:ss') : '-'}
         </Text>
       )
+    },
+    meta: {
+      field: 'time'
     }
   })
 ]
@@ -212,7 +235,6 @@ const TableRow = styled(Grid)`
     box-shadow: 0 15px 10px -7px #7864e699;
     cursor: pointer;
   }
-  
 `
 
 const rowGridProps = {
@@ -223,7 +245,11 @@ const rowGridProps = {
   gap: '0 16px'
 }
 
-const renderTableHeaders = (table: Table<FeedInfo>) => {
+const renderTableHeaders = (
+  table: Table<FeedInfo>,
+  orders?: FreeFeedsCollectionQueryOrder[],
+  onOrdersChange?: (orders: FreeFeedsCollectionQueryOrder[]) => void
+) => {
   return (
     <Fragment>
       {
@@ -236,21 +262,64 @@ const renderTableHeaders = (table: Table<FeedInfo>) => {
             key={headerGroup.id}
           >
             {
-              headerGroup.headers.map(header => (
-                <Text
-                  key={header.id}
-                  color={'disabled'}
-                  fontSize={'14px'}
-                  fontWeight={400}
-                >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-                </Text>
-              ))
+              headerGroup.headers.map(header => {
+                const meta = header.column.columnDef.meta as Record<string, any> | undefined
+                const field = meta?.field
+                const fieldOrder = orders?.find(o => o.field === field)
+
+                const triggerSortChange = () => {
+                  if (!onOrdersChange || !orders) return
+
+                  if (fieldOrder) {
+                    const index = orders.map(o => o.field).indexOf(field)
+
+                    const cloned = [...orders]
+                    const currentOrder = fieldOrder.order
+
+                    if (currentOrder === 'descend') {
+                      cloned.splice(index, 1, {
+                        ...fieldOrder,
+                        order: fieldOrder.order === 'descend' ? 'ascend' : 'descend'
+                      })
+                    } else {
+                      cloned.splice(index, 1)
+                    }
+
+                    onOrdersChange(cloned)
+                  } else {
+                    onOrdersChange([
+                      ...orders,
+                      { field, order: 'descend' }
+                    ])
+                  }
+                }
+
+                const columnTitle = (
+                  <Text color={'disabled'} fontSize={'14px'} bold>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                  </Text>
+                )
+
+                return (
+                  field ? (
+                    <Flex key={header.id} ai={'center'} style={{ cursor: 'pointer' }} onClick={triggerSortChange}>
+                      {
+                        fieldOrder && (
+                          <Box mr={'4px'}>
+                            {fieldOrder.order === 'descend' ? <ArrowDownSvg /> : <ArrowUpSvg />}
+                          </Box>
+                        )
+                      }
+                      {columnTitle}
+                    </Flex>
+                  ) : columnTitle
+                )
+              })
             }
           </Grid>
         ))
@@ -299,7 +368,7 @@ const renderLoadingBody = (rows: number) => {
   )
 }
 
-export const FreeFeedsTable: React.FC<FreeFeedsTableProps> = ({ data, loading, pageSize }) => {
+export const FreeFeedsTable: React.FC<FreeFeedsTableProps> = ({ data, loading, pageSize, orders, onOrdersChange }) => {
   const table = useReactTable({
     data: data || [],
     columns: _columns,
@@ -309,7 +378,7 @@ export const FreeFeedsTable: React.FC<FreeFeedsTableProps> = ({ data, loading, p
   return (
     <Box overflowX={'auto'} width={'100%'}>
       <Box minWidth={'870px'}>
-        {renderTableHeaders(table)}
+        {renderTableHeaders(table, orders, onOrdersChange)}
         {
           loading
             ? renderLoadingBody(pageSize || 5)

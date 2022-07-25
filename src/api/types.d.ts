@@ -9,9 +9,11 @@ export type CollectionAggregateHistoriesQuery = {
 type Order = 'ascend' | 'descend'
 type Fields = 'nftName' | 'floorPrice' | 'aiFloorPrice' | 'avgPrice' | 'time'
 
+export type FreeFeedsCollectionQueryOrder = { order: Order, field: Fields }
+
 export type FreeFeedsCollectionQuery = BankseaApiPageQuery & {
   search?: string
-  orders?: Array<{ order: Order, field: Fields }>
+  orders?: Array<FreeFeedsCollectionQueryOrder>
 }
 
 export type AuthenticateRequest = {

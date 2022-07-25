@@ -1,9 +1,7 @@
 import React, { useCallback, useRef, useState, KeyboardEvent, MouseEvent } from 'react'
 import {
-  Box,
-  Button,
-  Flex,
-  Input,
+  Box, Button,
+  Flex, Input,
   Pagination,
   scales,
   Tag,
@@ -11,12 +9,13 @@ import {
 } from '@banksea-finance/ui-kit'
 import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import usePageQuery from '@/hooks/usePageQuery'
-import { AiOutlineSearch } from 'react-icons/ai'
 import { FakeFreeFeedsData, FreeFeedsTable } from '@/components/free-feeds-table'
 import { useLocation } from 'react-router'
 import { useStoredUrlQuery } from '@/hooks/useStoredUrlQuery'
 import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
 import { Element, scroller } from 'react-scroll'
+import { FreeFeedsCollectionQueryOrder } from '@/api/types'
+import { AiOutlineSearch } from 'react-icons/ai'
 
 export const AllFreeFeedsPage: React.FC = () => {
   const searchParams = new URLSearchParams(useLocation().search)
@@ -26,7 +25,10 @@ export const AllFreeFeedsPage: React.FC = () => {
 
   const inputRef = useRef<any>()
   const { current, size, handleChange } = usePageQuery({ size: 10 }, { keepInSearch: true })
-  const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size, search })
+
+  const [orders, setOrders] = useState<FreeFeedsCollectionQueryOrder[]>([{ order: 'descend', field: 'aiFloorPrice' }])
+
+  const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size, search, orders })
 
   const onChange = useCallback((page: number, pageSize: number) => {
     scroller.scrollTo('free-feeds-explorer-title', { duration: 250, smooth: true })
@@ -49,20 +51,20 @@ export const AllFreeFeedsPage: React.FC = () => {
 
   return (
     <Box>
-      <Flex jc={'space-between'} ai={'center'} mb={'24px'} flexWrap={'wrap'} gap={'4px 24px'}>
-        <Element name={'free-feeds-explorer-title'}>
-          <Flex ai={'center'} gap={'12px'}>
-            <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
-              Free Feeds Explorer
-            </Text>
-            {
-              feeds
-                ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
-                : <></>
-            }
-          </Flex>
-        </Element>
+      <Element name={'free-feeds-explorer-title'}>
+        <Flex ai={'center'} gap={'12px'}>
+          <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+            Free Feeds Explorer
+          </Text>
+          {
+            feeds
+              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
+              : <></>
+          }
+        </Flex>
+      </Element>
 
+      <Flex jc={'flex-end'} mb={'24px'}>
         <Input
           defaultValue={search}
           onKeyDown={onSearch}
@@ -85,6 +87,8 @@ export const AllFreeFeedsPage: React.FC = () => {
         suspendHeight={'890px'}
         content={
           <FreeFeedsTable
+            orders={orders}
+            onOrdersChange={setOrders}
             pageSize={size}
             loading={isFetching}
             data={feeds?.records}
