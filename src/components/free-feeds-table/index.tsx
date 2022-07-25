@@ -146,7 +146,7 @@ export const FakeFreeFeedsData: FeedInfo[] = [
 
 const columnHelper = createColumnHelper<FeedInfo>()
 
-const priceRender = (value: BN) => !value?.isZero() ? `${fromLamports(value)} SOL` : '0'
+const priceRender = (value: BN) => !value?.isZero() ? `${fromLamports(value)} SOL` : '0 SOL'
 
 const _columns = [
   columnHelper.accessor('index', {

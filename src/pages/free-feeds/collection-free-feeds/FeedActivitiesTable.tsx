@@ -15,7 +15,7 @@ export type FeedActivitiesTableProps = {
 
 const columnHelper = createColumnHelper<CollectionFeedActivity>()
 
-const priceRender = (value?: number) => value ? `${value.toFixed(4)} SOL` : '-'
+const priceRender = (value?: number) => value ? `${value.toFixed(4)} SOL` : '0 SOL'
 
 const _columns = [
   columnHelper.accessor('signature', {
@@ -24,8 +24,7 @@ const _columns = [
       const value = props.getValue()
 
       return (
-        <Flex ai={'center'} gap={'8px'}>
-          <Text width={'110px'} textAlign={'end'}>{shortenAddress(value)}</Text>
+        <Flex ai={'center'} gap={'4px'}>
           <a href={`https://solscan.io/tx/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
             <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
           </a>
@@ -35,6 +34,7 @@ const _columns = [
               style={{ width: '20px', height: '20px' }}
             />
           </a>
+          <Text textAlign={'end'}>{shortenAddress(value)}</Text>
         </Flex>
       )
     }
@@ -135,7 +135,10 @@ const TableBody: React.FC<{ table: Table<CollectionFeedActivity> }> = ({ table }
           >
             {
               row.getVisibleCells().map(cell => (
-                flexRender(cell.column.columnDef.cell, cell.getContext())
+                flexRender(cell.column.columnDef.cell, {
+                  ...cell.getContext(),
+                  key: cell.id
+                })
               ))
             }
           </TableRow>

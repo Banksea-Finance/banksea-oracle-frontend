@@ -16,6 +16,7 @@ import { FakeFreeFeedsData, FreeFeedsTable } from '@/components/free-feeds-table
 import { useLocation } from 'react-router'
 import { useStoredUrlQuery } from '@/hooks/useStoredUrlQuery'
 import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
+import { Element, scroller } from 'react-scroll'
 
 export const AllFreeFeedsPage: React.FC = () => {
   const searchParams = new URLSearchParams(useLocation().search)
@@ -26,6 +27,11 @@ export const AllFreeFeedsPage: React.FC = () => {
   const inputRef = useRef<any>()
   const { current, size, handleChange } = usePageQuery({ size: 10 }, { keepInSearch: true })
   const { data: feeds, isFetching } = useFreeFeedsQuery({ current, size, search })
+
+  const onChange = useCallback((page: number, pageSize: number) => {
+    scroller.scrollTo('free-feeds-explorer-title', { duration: 250, smooth: true })
+    handleChange(page, pageSize)
+  }, [handleChange])
 
   const onSearch = useCallback((event: KeyboardEvent<HTMLDivElement> | MouseEvent) => {
     if ('code' in event && !inputRef.current) {
@@ -44,21 +50,23 @@ export const AllFreeFeedsPage: React.FC = () => {
   return (
     <Box>
       <Flex jc={'space-between'} ai={'center'} mb={'24px'} flexWrap={'wrap'} gap={'4px 24px'}>
-        <Flex ai={'center'} gap={'12px'}>
-          <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
-            Free Feeds Explorer
-          </Text>
-          {
-            feeds
-              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
-              : <></>
-          }
-        </Flex>
+        <Element name={'free-feeds-explorer-title'}>
+          <Flex ai={'center'} gap={'12px'}>
+            <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+              Free Feeds Explorer
+            </Text>
+            {
+              feeds
+                ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
+                : <></>
+            }
+          </Flex>
+        </Element>
 
         <Input
           defaultValue={search}
           onKeyDown={onSearch}
-          placeholder={'Search by collection name or slug...'}
+          placeholder={'Search by collection name'}
           endAdornment={
             <Button
               ml={'8px'}
@@ -100,7 +108,7 @@ export const AllFreeFeedsPage: React.FC = () => {
           current={current}
           pageSize={size}
           total={feeds?.total}
-          onChange={handleChange}
+          onChange={onChange}
           showLessItems={isXs || isSm}
         />
       </Flex>

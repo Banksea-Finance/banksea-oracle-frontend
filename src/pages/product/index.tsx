@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Card, CardProps, Flex, Grid, scales, Tag, Text } from '@banksea-finance/ui-kit'
+import { Button, Card, CardProps, Flex, Grid, Text } from '@banksea-finance/ui-kit'
 import { PageWrapper } from '@/components/page-wrapper'
 
 interface ProductPricePlanCardProps {
@@ -10,16 +10,18 @@ interface ProductPricePlanCardProps {
   price: string
   name: string
   popular?: boolean
-  description: string
+  description: React.ReactNode
 
-  supports: Array<{
+  supportedDimensions: Array<{
     label: string
     supported: boolean
   }>
+
+  supportedData: string[]
 }
 
 const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
-  credits, price, name, popular, description, supports, variant, background
+  price, name, description, supportedDimensions, variant, background, supportedData
 }) => {
   return (
     <Card
@@ -30,32 +32,20 @@ const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
       activeOnHover
       variant={variant}
     >
-      <Flex jc={'space-between'} mb={'24px'}>
-        <Box>
-          <Text fontSize={'28px'} bold>
-            {credits}
-          </Text>
-          <Text color={'textDisabled'} fontSize={'14px'}>API Credits*</Text>
-        </Box>
-        <Box>
-          <Text fontSize={'28px'} bold>
-            {price}
-          </Text>
-          <Text color={'textDisabled'} fontSize={'14px'}>Monthly</Text>
-        </Box>
+      <Flex jc={'space-between'} mb={'24px'} ai={'flex-start'}>
+        <Text fontSize={'32px'} bold>
+          {name}
+        </Text>
+        <Text fontSize={'24px'} bold>
+          {price}
+        </Text>
       </Flex>
 
-      <Flex ai={'center'} mb={'4px'}>
-        <Text fontSize={'20px'} bold mr={'4px'}>{name}</Text>
-        {
-          popular && <Tag scale={scales.S}>Most popular</Tag>
-        }
-      </Flex>
       <Text color={'textDisabled'} mb={'16px'}>{description}</Text>
 
-      <Flex flexDirection={'column'} gap={'6px'} mb={'24px'}>
+      <Flex flexDirection={'column'} gap={'6px'} mb={'12px'}>
         {
-          supports.map(({ label, supported }) => (
+          supportedDimensions.map(({ label, supported }) => (
             <Flex key={label} ai={'center'}>
               <Text color={supported ? 'primary': 'textDisabled'} mr={'6px'} width={'12px'}>{supported ? '√' : '×'}</Text>
               <Text color={supported ? 'text': 'textDisabled'}>{label}</Text>
@@ -64,8 +54,26 @@ const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
         }
       </Flex>
 
+      <Flex flexDirection={'column'} gap={'6px'} mb={'24px'}>
+        {
+          supportedData.map(data => (
+            <Flex key={data} ai={'center'}>
+              <Text color={'primary'} mr={'6px'} width={'12px'}>{'√'}</Text>
+              <Text color={'text'}>{data}</Text>
+            </Flex>
+          ))
+        }
+      </Flex>
+
       <Flex jc={'center'}>
-        <Button>Get started {'>'}</Button>
+        <Button
+          as={'a'}
+          href={'https://c2dtw7wmuwa.typeform.com/to/DBQ3SUXv'}
+          target={'_blank'}
+          rel={'noreferrer'}
+        >
+          Get started {'>'}
+        </Button>
       </Flex>
     </Card>
   )
@@ -78,30 +86,36 @@ const PLANS: Array<ProductPricePlanCardProps> = [
     variant: 'disabled',
     price: 'Free',
     credits: '10,000',
-    description: 'Interact with our powerful API’s for free with our Discover Plan, Great for tinkerers,traders, crayon learning web3.',
-    supports: [
+    description: <span>Interact with our powerful API for free with our <b>Discover Plan</b>. Great for traders tracking nft.</span>,
+    supportedDimensions: [
       { label: 'Auto Scaling', supported: false },
       { label: '25 Requests / sec', supported: true },
-      { label: '1 Endpoint', supported: true },
       { label: 'Quick performance', supported: true },
       { label: 'Single Region', supported: true },
-      { label: 'Community Support', supported: true }
+    ],
+    supportedData: [
+      'Metadata',
+      'Activity',
+      'Analysis'
     ]
   },
   {
     name: 'Build',
     background: 'card',
     variant: 'primary',
-    price: '$49',
+    price: 'Enterprise',
     credits: '1 Million',
-    description: 'This plan is the starting point for businesses. All of our features plus auto-scaling to grow as your business grows.',
-    supports: [
-      { label: 'Auto Scaling at $20 / additional million', supported: true },
+    description: 'This plan is the starting point for businesses. It will automatically grow as your business grows by auto-scaling.',
+    supportedDimensions: [
+      { label: 'Auto Scaling', supported: true },
       { label: '100 Requests / sec', supported: true },
-      { label: '10 Endpoint', supported: true },
       { label: 'Quicker performance', supported: true },
       { label: 'Multiple Region', supported: true },
-      { label: '24hrs Support response time', supported: true }
+    ],
+    supportedData: [
+      'Metadata',
+      'All-time Activity',
+      'Real-time AI Analysis'
     ]
   },
 ]
@@ -114,7 +128,7 @@ export const ProductPage: React.FC = () => {
       </Text>
 
       <Text color={'textDisabled'} mb={'64px'} maxWidth={'600px'} textAlign={'center'}>
-        With our plan, builders get access to the platform - popularity, market cap, NFT metadata, activity, NFT AI valuation, AI floor - and only pay for what they use.
+        With our plan, builders get access to the platform - popularity, market cap, NFT metadata, activity, NFT AI valuation, AI floor - and only pay for what you use.
       </Text>
 
       <Grid

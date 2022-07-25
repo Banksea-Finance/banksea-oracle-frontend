@@ -2,7 +2,8 @@ import React, { Fragment } from 'react'
 import { Flex, Text } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 import styled from 'styled-components'
-import ReactTooltip from 'react-tooltip'
+import Tooltip from 'rc-tooltip'
+import 'rc-tooltip/assets/bootstrap.css'
 
 const UseCasesContainer = styled.div`
   position: relative;
@@ -133,6 +134,9 @@ const UseCasesContainer = styled.div`
     height: 22%;
   }
 
+  .custom-tooltip {
+    width: 350px;
+  }
 `
 
 export const UseCasesModule: React.FC = () => {
@@ -140,95 +144,42 @@ export const UseCasesModule: React.FC = () => {
     {
       id: 'game-fi',
       label: 'Game Fi',
-      description: (
-        <>
-          <p>
-            The game and de-fi will be better combined through Banksea valuation
-          </p>
-          <p>
-            service that provide more possibilities for the liquidity of virtual assets.
-          </p>
-        </>
-      )
+      description: 'The game and de-fi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.',
+      tooltipPosition: 'bottom',
     },
     {
       id: 'lending',
       label: 'Lending',
-      description: (
-        <>
-          <p>
-            Banksea provides safe and reasonable solutions for NFT lending with the valuation of
-          </p>
-          <p>
-            NFTs and Collections, and monitors the market in real time to minimize the risk of lending.
-          </p>
-        </>
-      )
+      description: 'Banksea provides safe and reasonable solutions for NFT lending with the valuation of NFTs and Collections, and monitors the market in real time to minimize the risk of lending.',
+      tooltipPosition: 'bottom',
+      offsetX: -100
     },
     {
       id: 'marketplace',
       label: 'Marketplace',
-      description: (
-        <>
-          <p>
-            Banksea provides secure, objective, and real-time data analysis and NFT valuation
-          </p>
-          <p>
-            for users to formulate better trading strategies in the marketplace.
-          </p>
-        </>
-      )
+      description: 'Banksea provides secure, objective, and real-time data analysis and NFT valuation for users to formulate better trading strategies in the marketplace.',
+      tooltipPosition: 'bottom',
+      offsetX: 100
     },
     {
       id: 'music',
       label: 'Music',
-      description: (
-        <>
-          <p>
-            Banksea is exploring and researching music NFT and can customize
-          </p>
-          <p>
-            the data analysis and valuation services for music NFTs.
-          </p>
-        </>
-      )
+      description: 'Banksea is exploring and researching music NFT and can customize the data analysis and valuation services for music NFTs.',
+      tooltipPosition: 'top',
+      offsetX: 120
     },
     {
       id: 'meta-verse',
       label: 'MetaVerse',
-      description: (
-        <>
-          <p>
-            As the infrastructure in the metaverse, Banksea will build
-          </p>
-          <p>
-            a bridge between the virtual and real world for value measurement,
-          </p>
-          <p>
-            providing more connections and possibilities for the two worlds.
-          </p>
-        </>
-      )
+      description: 'As the infrastructure in the metaverse, Banksea will build a bridge between the virtual and real world for value measurement, providing more connections and possibilities for the two worlds.',
+      tooltipPosition: 'top',
     },
     {
       id: 'wallet',
       label: 'Wallet',
-      description: (
-        <>
-          <p>
-            Banksea has established in-depth cooperation with NFT wallet project to provide
-          </p>
-          <p>
-            comprehensive analysis of NFTs, such as traits analysis, rarity analysis,
-          </p>
-          <p>
-            popularity analysis, transaction analysis, real-time valuation, etc.
-          </p>
-          <p>
-            It is convenient for users to analyze the status of assets directly on the wallet.
-          </p>
-        </>
-      )
+      description: 'Banksea has established in-depth cooperation with NFT wallet project to provide comprehensive analysis of NFTs, such as traits analysis, rarity analysis, popularity analysis, transaction analysis, real-time valuation, etc. It is convenient for users to analyze the status of assets directly on the wallet.',
+      tooltipPosition: 'top',
+      offsetX: -80
     },
     {
       id: 'banksea-oracle',
@@ -246,31 +197,30 @@ export const UseCasesModule: React.FC = () => {
         <img src={require('@/assets/images/pages/home/use-cases-bg.webp')} alt="" id={'bg'} />
 
         {
-          items.map(({ id, label, description }) => (
-            <Fragment key={id}>
-              <a data-tip="true" data-for={`${id}-tooltip`}>
-                <span id={id} data-aos={'fade-zoom-in'} data-aos-delay={'250'}>
-                  {label}
-                </span>
-              </a>
-              {
-                description && (
-                  <>
-                    <ReactTooltip
-                      id={`${id}-tooltip`}
-                      className={'custom-tooltip'}
-                      aria-haspopup="true"
-                    >
-                      <Text>{description}</Text>
-                    </ReactTooltip>
-                  </>
-                )
-              }
+          items.map(({ id, label, description }) => {
+            let child = (
+              <span id={id} data-aos={'fade-zoom-in'} data-aos-delay={'250'}>
+                {label}
+              </span>
+            )
 
-            </Fragment>
-          ))
+            if (description) {
+              child = (
+                <Tooltip overlay={<Text maxWidth={'min(350px, 90vw)'}>{description}</Text>}>
+                  {child}
+                </Tooltip>
+              )
+            }
+
+            return (
+              <Fragment key={id}>
+                <a data-tip="true" data-for={`${id}-tooltip`}>
+                  {child}
+                </a>
+              </Fragment>
+            )
+          })
         }
-
       </UseCasesContainer>
     </Flex>
   )
