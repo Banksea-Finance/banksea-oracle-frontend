@@ -86,7 +86,7 @@ const PLANS: Array<ProductPricePlanCardProps> = [
     variant: 'disabled',
     price: 'Free',
     credits: '10,000',
-    description: <span>Interact with our powerful API for free with our <b>Discover Plan</b>. Great for traders tracking nft.</span>,
+    description: <span>Interact with our powerful API for free with our <b>Discovery Plan</b>. Great for traders tracking nft.</span>,
     supportedDimensions: [
       { label: 'Auto Scaling', supported: false },
       { label: '25 Requests / sec', supported: true },
@@ -124,7 +124,7 @@ export const ProductPage: React.FC = () => {
   return (
     <PageWrapper py={'48px'}>
       <Text
-        fontSize={'min(48px, 8vw)'}
+        fontSize={'min(45px, 6vw)'}
         textAlign={'center'}
         mb={'16px'}
         maxWidth={'1200px'}
@@ -132,11 +132,11 @@ export const ProductPage: React.FC = () => {
         important
         fontWeight={600}
       >
-        Simple, Metadata, Activity, AI analysis design for you
+        Metadata, Activity, AI analysis designed for you
       </Text>
 
       <Text color={'textDisabled'} mb={'64px'} maxWidth={'600px'} textAlign={'center'}>
-        With our plan, builders get access to the platform - popularity, market cap, NFT metadata, activity, NFT AI valuation, AI floor - and only pay for what you use.
+        You can access the service - popularity, market cap, NFT metadata, Transaction, NFT AI valuation, AI floor price etc, and only pay for what you use.
       </Text>
 
       <Grid

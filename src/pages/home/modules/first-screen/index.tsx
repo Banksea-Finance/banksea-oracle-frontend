@@ -78,7 +78,7 @@ export const FirstScreenModule: React.FC = () => {
 
           <Text
             bold
-            color={'primary'}
+            color={'rgb(222,221,227)'}
             mb={{ lg: '42px', _: '36px' }}
             mt={{ lg: '36px', _: '24px' }}
             fontSize={'min(24px, 5vw)'}

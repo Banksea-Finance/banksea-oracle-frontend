@@ -55,7 +55,7 @@ const Title: React.FC = () => {
   const CommonText = ({ children }: any) => (
     <Text
       as={'span'}
-      fontSize={{ xl: 'min(50px, 3.33vw)', _: 'min(50px, 5.0vw)' }}
+      fontSize={{ xl: 'min(50px, 3.03vw)', _: 'min(50px, 5.0vw)' }}
       important
       bold
       lineHeight={'1.5'}

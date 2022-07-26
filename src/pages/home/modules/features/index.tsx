@@ -3,15 +3,6 @@ import { Flex, useResponsive } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 import styled from 'styled-components'
 
-export const features = {
-  massiveData: 'Massive Data',
-  aiDrive: 'AI Drive',
-  decentralize: 'Decentralize',
-  realtime: 'Realtime'
-} as const
-
-export type FeatureKey = keyof typeof features
-
 const ImageContainer = styled.div`
   --mobile-image-height: 80vw;
   --mobile-image-width: calc(var(--mobile-image-height) * 2.05);
@@ -21,7 +12,6 @@ const ImageContainer = styled.div`
   img {
     width: 100%;
   }
-  
 `
 
 export const FeaturesModule: React.FC = () => {

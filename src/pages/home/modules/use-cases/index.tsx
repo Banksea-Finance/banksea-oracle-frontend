@@ -12,6 +12,7 @@ const UseCasesContainer = styled.div`
   span {
     color: white;
     font-family: ${({ theme }) => theme.fontFamilies.common};
+    font-weight: 600;
 
     background-color: rgb(120, 100, 230);
     display: flex;
@@ -154,35 +155,26 @@ const items = [
     id: 'lending',
     label: 'Lending',
     description: 'Banksea provides safe and reasonable solutions for NFT lending with the valuation of NFTs and Collections, and monitors the market in real time to minimize the risk of lending.',
-    tooltipPosition: 'bottom',
-    offsetX: -100
   },
   {
     id: 'marketplace',
     label: 'Marketplace',
     description: 'Banksea provides secure, objective, and real-time data analysis and NFT valuation for users to formulate better trading strategies in the marketplace.',
-    tooltipPosition: 'bottom',
-    offsetX: 100
   },
   {
     id: 'music',
     label: 'Music',
-    description: 'Banksea is exploring and researching music NFT and can customize the data analysis and valuation services for music NFTs.',
-    tooltipPosition: 'top',
-    offsetX: 120
+    description: 'Banksea can customize the data analysis and valuation services for music NFTs.',
   },
   {
     id: 'meta-verse',
     label: 'MetaVerse',
     description: 'As the infrastructure in the metaverse, Banksea will build a bridge between the virtual and real world for value measurement, providing more connections and possibilities for the two worlds.',
-    tooltipPosition: 'top',
   },
   {
     id: 'wallet',
     label: 'Wallet',
     description: 'Banksea has established in-depth cooperation with NFT wallet project to provide comprehensive analysis of NFTs, such as traits analysis, rarity analysis, popularity analysis, transaction analysis, real-time valuation, etc. It is convenient for users to analyze the status of assets directly on the wallet.',
-    tooltipPosition: 'top',
-    offsetX: -80
   },
   {
     id: 'banksea-oracle',
@@ -234,6 +226,10 @@ export const UseCasesModule: React.FC = () => {
                 >
                   <Tooltip
                     visible={hoveredIdRef.current === id || (hoveredIdRef.current === undefined && id === ids[visibleIndex])}
+                    overlayInnerStyle={{
+                      background: '#37373799',
+                      borderRadius: '20px'
+                    }}
                     overlay={
                       <Flex flexDirection={'column'} ai={'center'}>
                         <Text fontSize={'24px'}>{label}</Text>
