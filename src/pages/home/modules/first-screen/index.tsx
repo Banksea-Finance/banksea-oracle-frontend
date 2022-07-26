@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Flex, Grid, Text } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { EthereumSvg, PolkadotSvg, SolanaSvg } from '@/components/svgs'
+import { EthereumSvg, MoonbeamSvg, SolanaSvg } from '@/components/svgs'
 
 const FirstScreenModuleContainer = styled.div`
   display: flex;
@@ -98,7 +98,7 @@ export const FirstScreenModule: React.FC = () => {
             gridTemplateColumns={{ sm: 'repeat(3, max-content)', _: 'repeat(1, max-content)' }}
           >
             <SolanaSvg />
-            <PolkadotSvg />
+            <MoonbeamSvg />
             <EthereumSvg />
           </Grid>
         </Flex>
