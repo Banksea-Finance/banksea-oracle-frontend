@@ -334,15 +334,15 @@ const FeedHistorySection: React.FC = () => {
             const range = new BigNumber(max - min)
             let decimals: number
 
-            if (max > 10) {
-              decimals = 0
-            } else if (max > 1) {
+            if (max <= 1 || range.lte(1)) {
+              decimals =  4
+            } else if (max <= 10 || range.lte(10)) {
               decimals = 2
             } else {
-              decimals = 4
+              decimals = 0
             }
 
-            return new BigNumber(min).minus(range.multipliedBy('0.15')).toFixed(decimals)
+            return new BigNumber(min).minus(range.multipliedBy('0.15')).toFixed(decimals, BigNumber.ROUND_DOWN)
           }
         }
       ],

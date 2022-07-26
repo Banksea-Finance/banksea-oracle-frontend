@@ -58,7 +58,7 @@ export const PartnershipsModule: React.FC = () => {
                 <img
                   src={image}
                   alt=""
-                  style={{ height: `calc(${heightBase} * ${scale})`, width: '100%' }}
+                  style={{ height: `calc(${heightBase} * ${scale})` }}
                   data-aos="zoomin"
                 />
                 <Text important fontSize={'28px'} ml={'8px'} data-aos="zoomin">{text}</Text>

@@ -147,8 +147,8 @@ const ids = [
 const items = [
   {
     id: 'game-fi',
-    label: 'Game Fi',
-    description: 'The game and de-fi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.',
+    label: 'GameFi',
+    description: 'The game and DeFi will be better combined through Banksea valuation service that provide more possibilities for the liquidity of virtual assets.',
     tooltipPosition: 'bottom',
   },
   {
