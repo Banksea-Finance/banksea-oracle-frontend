@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Box, Flex, Grid, Skeleton, Text } from '@banksea-finance/ui-kit'
+import { Box, Flex, Grid, Image, Skeleton, Text } from '@banksea-finance/ui-kit'
 import { FeedInfo } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import { BN } from '@project-serum/anchor'
 import { fromLamports } from '@/utils'
@@ -171,7 +171,7 @@ const _columns = [
 
       return (
         <Flex ai={'center'}>
-          <img src={row.imageUrl} style={{ width: '50px', height: '50px', borderRadius: '25px' }} alt={''} />
+          <Image src={row.imageUrl} width={'50px'} height={'50px'} borderRadius={'50%'} />
           <Text
             fontSize={'18px'}
             ml={'8px'}

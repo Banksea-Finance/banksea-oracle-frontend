@@ -4,11 +4,14 @@ import {
   Box,
   ButtonMenu,
   Card,
+  Image,
   Flex,
   Grid,
   Pagination,
-  scales, Skeleton,
-  Text, useMatchBreakpoints
+  scales,
+  Skeleton,
+  Text,
+  useMatchBreakpoints
 } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { useCollectionFreeFeedInfoQuery } from '@/hooks/queries/free-feeds/useCollectionFreeFeedInfoQuery'
@@ -18,12 +21,11 @@ import dayjs from 'dayjs'
 import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
 
 import usePageQuery from '@/hooks/usePageQuery'
-import { fromLamports, shortenAddress } from '@/utils'
+import { fromLamports } from '@/utils'
 import { useCollectionFeedActivitiesQuery } from '@/hooks/queries/free-feeds/useCollectionFeedActiviesQuery'
 import ReactECharts from 'echarts-for-react'
 import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds/useCollectionAggregateHistoriesQuery'
 import { EChartsOption } from 'echarts'
-import CopyToClipboard from 'react-copy-to-clipboard'
 import { QuestionMarkSvg } from '@/components/svgs'
 import ReactTooltip from 'react-tooltip'
 import { FeedActivitiesTable } from '@/pages/free-feeds/collection-free-feeds/FeedActivitiesTable'
@@ -31,118 +33,124 @@ import Redirect from '@/pages/redirect'
 import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 import { Element, scroller } from 'react-scroll'
 import BigNumber from 'bignumber.js'
-
-const OverviewItemContainer = styled(Box)`
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 const OverviewsContainer = styled(Card)`
-  flex-direction: row;
-  padding: 20px 0 20px 40px;
   margin-bottom: 16px;
 
-  & > div:nth-of-type(1) {
-    flex: 1;
-    overflow-wrap: anywhere;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-right: 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+
+  .part__2 > div {
+    padding: 0 24px;
   }
 
-  & > div:not(:nth-of-type(1)) {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 
-    padding: 0 24px;
-    border-width: 2px;
-    border-style: solid;
-    border-right: 0;
-    border-image: linear-gradient(to bottom,
-    ${({ theme }) => `${theme.colors.primary}00`},
-    ${({ theme }) => theme.colors.primary},
-    ${({ theme }) => `${theme.colors.primary}00`}) 1 1;
+  ${({ theme }) => theme.mediaQueries.minXl} {
+    padding: 20px 0 20px 40px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .part__1 {
+      flex: 1;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .part__2 {
+      display: flex;
+      width: fit-content;
+      margin-left: 8px;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        border-width: 2px;
+        border-style: solid;
+        border-right: 0;
+        border-image: linear-gradient(to bottom,
+        ${({ theme }) => `${theme.colors.primary}00`},
+        ${({ theme }) => theme.colors.primary},
+        ${({ theme }) => `${theme.colors.primary}00`}) 1 1;
+      }
+    }
   }
 
   ${({ theme }) => theme.mediaQueries.maxXl} {
-    padding: 20px 0;
+    padding: 20px 16px 20px 16px;
+    flex-direction: column;
+    align-items: center;
 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, auto);
-
-    & > div:nth-of-type(1) {
-      grid-area: 1 / 1 / 2 / 6;
+    .part__1 {
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      margin-bottom: 8px;
       padding-bottom: 8px;
+      margin-bottom: 12px;
 
       border-width: 2px;
       border-style: solid;
       border-top: 0;
       border-image: linear-gradient(to right,
       ${({ theme }) => `${theme.colors.primary}00`},
-      ${({ theme }) => theme.colors.primary}99,
+      ${({ theme }) => theme.colors.primary}cc,
       ${({ theme }) => `${theme.colors.primary}00`}) 1 0 100%;
-
-      overflow-wrap: anywhere;
     }
 
-    & > div:nth-of-type(2) {
-      grid-area: 2 / 1 / 3 / 2;
-      border-left: 0;
-    }
+    .part__2 {
+      display: grid;
+      grid-template-columns: repeat(4, max-content);
 
-    & > div:nth-of-type(3) {
-      grid-area: 2 / 2 / 3 / 3;
-    }
 
-    & > div:nth-of-type(4) {
-      grid-area: 2 / 3 / 3 / 4;
-    }
+      & > div:not(:nth-child(1)) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
-    & > div:nth-of-type(5) {
-      grid-area: 2 / 4 / 3 / 5;
+        border-width: 2px;
+        border-style: solid;
+        border-right: 0;
+        border-image: linear-gradient(to bottom,
+        ${({ theme }) => `${theme.colors.primary}00`},
+        ${({ theme }) => theme.colors.primary},
+        ${({ theme }) => `${theme.colors.primary}00`}) 1 1;
+      }
     }
   }
 
   ${({ theme }) => theme.mediaQueries.maxMd} {
-    padding: 20px 0;
+    flex-direction: column;
+    align-items: center;
 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, auto);
+    .part__2 {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
 
+      & > div {
+        padding: 0 12px;
+        width: 100%;
+      }
 
-    & > div:nth-of-type(2) {
-      grid-area: 2 / 1 / 3 / 3;
+      & > div:nth-child(3) {
+        border-left: 0;
+      }
     }
-
-    & > div:nth-of-type(3) {
-      grid-area: 2 / 3 / 3 / 5;
-    }
-
-    & > div:nth-of-type(4) {
-      grid-area: 3 / 1 / 4 / 3;
-      border-left: 0;
-    }
-
-    & > div:nth-of-type(5) {
-      grid-area: 3 / 3 / 4 / 5;
-    }
-
   }
+
 `
 
-function OverviewItem<DataType>({ title, description, ...rest }: { title: React.ReactNode, description?: React.ReactNode } & QueriedDataProps<DataType>) {
+function OverviewItem<DataType>({
+  title,
+  description,
+  ...rest
+}: { title: React.ReactNode, description?: React.ReactNode } & QueriedDataProps<DataType>) {
   return (
-    <OverviewItemContainer>
+    <Flex width={'100%'} flexDirection={'column'} ai={{ xl: 'start', _: 'center' }}>
       <Flex ai={'center'}>
         <Text color={'primary'} bold mr={'4px'}>{title}</Text>
         {
@@ -164,7 +172,7 @@ function OverviewItem<DataType>({ title, description, ...rest }: { title: React.
       </Flex>
 
       <QueriedData {...rest} fontSize={'18px'} />
-    </OverviewItemContainer>
+    </Flex>
   )
 }
 
@@ -180,79 +188,78 @@ const OverviewSection: React.FC = () => {
       <ModuleTitle title={'Overview'} />
 
       <OverviewsContainer>
-        <OverviewItem
-          title={'Feed Account'}
-          description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
-          value={info}
-          dataRender={({ collectionTask: value }) => (
-            <Flex jc={{ _: 'center', sm: 'flex-start' }} ai={'center'} gap={'8px'} width={'fit-content'}>
-              <CopyToClipboard
-                text={value}
-                onCopy={() => ReactTooltip.show(copyTooltipRef.current)}
-              >
-                <Text
-                  fontSize={'18px'}
-                  ref={ref => copyTooltipRef.current = ref}
-                  data-tip="true"
-                  data-for={`copy-for-${value}`}
-                  textAlign={'center'}
-                  width={{ _: '100%' }}
+        <div className="part__1">
+          <OverviewItem
+            title={'Feed Account'}
+            description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
+            value={info}
+            dataRender={({ collectionTask: value }) => (
+              <Flex jc={{ _: 'center', xl: 'flex-start' }} ai={'center'} gap={'8px'} width={'100%'}>
+                <CopyToClipboard text={value} onCopy={() => ReactTooltip.show(copyTooltipRef.current)}>
+                  <Text
+                    fontSize={'18px'}
+                    ref={ref => copyTooltipRef.current = ref}
+                    data-tip="true"
+                    data-for={`copy-for-${value}`}
+                    textAlign={'center'}
+                    style={{ cursor: 'pointer', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflowX: 'hidden' }}
+                  >
+                    {value}
+                  </Text>
+                </CopyToClipboard>
+                <a href={`https://solscan.io/account/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
+                  <Image src="https://solscan.io/favicon.ico" alt="Solscan" width={'20px'} height={'20px'} />
+                </a>
+                <a
+                  href={`https://explorer.solana.com/account/${value}?cluster=devnet`}
+                  target={'_blank'}
+                  rel="noreferrer"
                 >
-                  {shortenAddress(value, 8)}
-                </Text>
-              </CopyToClipboard>
+                  <Image src="https://explorer.solana.com/favicon.ico" width={'20px'} height={'20px'} />
+                </a>
 
-              <a href={`https://solscan.io/account/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
-                <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
-              </a>
-              <a
-                href={`https://explorer.solana.com/account/${value}?cluster=devnet`}
-                target={'_blank'}
-                rel="noreferrer"
-              >
-                <img
-                  src="https://explorer.solana.com/favicon.ico"
-                  alt="Solana Explorer"
-                  style={{ width: '20px', height: '20px' }}
-                />
-              </a>
 
-              <ReactTooltip
-                id={`copy-for-${value}`}
-                className={'custom-tooltip'}
-                aria-haspopup="true"
-                event={'click'}
-                afterShow={() => setTimeout(ReactTooltip.hide, 750)}
-              >
-                <Text>Copy success!</Text>
-              </ReactTooltip>
-            </Flex>
-          )}
-        />
-        <OverviewItem
-          title={'Floor Price'}
-          description={'Minimum listing price of this collection on marketplace.'}
-          value={collectionTaskAccount}
-          dataRender={({ floorPrice }) => !floorPrice?.isZero() ? `${fromLamports(floorPrice)} SOL` : '0 SOL'}
-        />
-        <OverviewItem
-          title={'AI Floor Price'}
-          description={'The minimum AI valuation of this collection.'}
-          value={collectionTaskAccount}
-          dataRender={({ aiFloorPrice }) => !aiFloorPrice?.isZero() ? `${fromLamports(aiFloorPrice)} SOL` : '0 SOL'}
-        />
-        <OverviewItem
-          title={'Avg Price(24h)'}
-          description={'Average price traded in 24 hours'}
-          value={collectionTaskAccount}
-          dataRender={({ avgPrice }) => !avgPrice?.isZero() ? `${fromLamports(avgPrice)} SOL` : '0 SOL'}
-        />
-        <OverviewItem
-          title={'Update Time'}
-          description={'Time of Oracle data aggregation.'}
-          value={collectionTaskAccount}
-          dataRender={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')}
-        />
+                <ReactTooltip
+                  id={`copy-for-${value}`}
+                  className={'custom-tooltip'}
+                  aria-haspopup="true"
+                  event={'click'}
+                  afterShow={() => setTimeout(ReactTooltip.hide, 750)}
+                >
+                  <Text>Copy success!</Text>
+                </ReactTooltip>
+              </Flex>
+            )}
+          />
+        </div>
+
+        <div className="part__2">
+          <OverviewItem
+            title={'Floor Price'}
+            description={'Minimum listing price of this collection on marketplace.'}
+            value={collectionTaskAccount}
+            dataRender={({ floorPrice }) => !floorPrice?.isZero() ? `${fromLamports(floorPrice)} SOL` : '0 SOL'}
+          />
+          <OverviewItem
+            title={'AI Floor Price'}
+            description={'The minimum AI valuation of this collection.'}
+            value={collectionTaskAccount}
+            dataRender={({ aiFloorPrice }) => !aiFloorPrice?.isZero() ? `${fromLamports(aiFloorPrice)} SOL` : '0 SOL'}
+          />
+          <OverviewItem
+            title={'Avg Price(24h)'}
+            description={'Average price traded in 24 hours'}
+            value={collectionTaskAccount}
+            dataRender={({ avgPrice }) => !avgPrice?.isZero() ? `${fromLamports(avgPrice)} SOL` : '0 SOL'}
+          />
+          <OverviewItem
+            title={'Update Time'}
+            description={'Time of Oracle data aggregation.'}
+            value={collectionTaskAccount}
+            dataRender={({ aggregateTime }) => dayjs(aggregateTime.toNumber() * 1000).format('YYYY/MM/DD HH:mm:ss')}
+          />
+        </div>
+
       </OverviewsContainer>
     </section>
   )
@@ -292,7 +299,12 @@ const FeedHistorySection: React.FC = () => {
         borderColor: 'transparent'
       },
       dataset: [
-        { source: data?.map(o => ({ ...o, time: o.time * 1000 }))?.filter(o => o.avgPrice || o.floorPrice || o.aiFloorPrice) || [] }
+        {
+          source: data?.map(o => ({
+            ...o,
+            time: o.time * 1000
+          }))?.filter(o => o.avgPrice || o.floorPrice || o.aiFloorPrice) || []
+        }
       ],
       color: ['#7864e6', '#d25ae6', 'rgb(2,182,142)'],
       legend: {
@@ -429,7 +441,7 @@ const FeedActivitiesSection: React.FC = () => {
 
       <Flex mt={'16px'} jc={'flex-end'}>
         <Pagination
-          showLessItems={ isXs || isSm || isMd }
+          showLessItems={isXs || isSm || isMd}
           showSizeChanger
           current={current}
           pageSize={size}
@@ -451,11 +463,20 @@ export const CollectionFreeFeedsPage: React.FC = () => {
   const { collection } = useParams()
   const { data } = useCollectionFreeFeedInfoQuery(collection)
 
+  const imageSize = 'calc(min(48px, 7.5vw) * 2)'
+
   return (
     <Box>
-      <Text gradient important bold fontSize={'min(48px, 7.5vw)'} mb={'24px'}>
-        { data ? data.nftName : <Skeleton width={'400px'} height={'72px'} /> }
-      </Text>
+      {data
+        ? (
+          <Flex ai={'center'} gap={'16px'} mb={'24px'}>
+            <Image src={data?.imageUrl} width={imageSize} height={imageSize} borderRadius={'50%'} />
+            <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+              { data.nftName }
+            </Text>
+          </Flex>
+        ) : <Skeleton width={'400px'} height={'72px'} />}
+
       <Grid gridTemplateColumns={'100%'} gap={'36px'}>
         <OverviewSection />
         <FeedHistorySection />

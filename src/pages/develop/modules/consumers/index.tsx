@@ -57,13 +57,15 @@ const CodeContainer = styled.div`
 
   .hljs {
     width: 100%;
-    height: 400px;
+    height: 410px;
     background: ${({ theme }) => theme.colors.backgroundSecondary};
+    font-family: Consolas, serif;
+    font-size: 14px;
     border: 1px solid ${({ theme }) => theme.colors.primary};
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
     border-radius: 20px;
-    line-height: 120%;
-
+    line-height: 1.5;
+    
     overflow-x: auto;
   }
 `
