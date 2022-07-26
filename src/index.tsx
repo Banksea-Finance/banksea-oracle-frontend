@@ -58,7 +58,7 @@ ReactDOM.render(
             },
             fontFamilies: {
               common: 'Rajdhani',
-              important: 'G8321'
+              important: 'orbitron'
             }
           }}
         >

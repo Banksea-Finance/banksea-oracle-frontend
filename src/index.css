@@ -4,6 +4,30 @@
 }
 
 @font-face {
+  font-family: orbitron;
+  font-weight: 800;
+  src: url("./assets/fonts/orbitron/Orbitron-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: orbitron;
+  font-weight: 700;
+  src: url("./assets/fonts/orbitron/Orbitron-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: orbitron;
+  font-weight: 500;
+  src: url("./assets/fonts/orbitron/Orbitron-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: orbitron;
+  font-weight: 400;
+  src: url("./assets/fonts/orbitron/Orbitron-Regular.ttf") format("truetype");
+}
+
+@font-face {
   font-family: Rajdhani;
   font-weight: 700;
   src: url("./assets/fonts/Rajdhani/Rajdhani-Bold.ttf") format("truetype");

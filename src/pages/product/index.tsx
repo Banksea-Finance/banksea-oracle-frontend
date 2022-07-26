@@ -123,7 +123,15 @@ const PLANS: Array<ProductPricePlanCardProps> = [
 export const ProductPage: React.FC = () => {
   return (
     <PageWrapper py={'48px'}>
-      <Text fontSize={'min(48px, 8vw)'} textAlign={'center'} mb={'16px'} maxWidth={'1200px'} gradient important>
+      <Text
+        fontSize={'min(48px, 8vw)'}
+        textAlign={'center'}
+        mb={'16px'}
+        maxWidth={'1200px'}
+        gradient
+        important
+        fontWeight={600}
+      >
         Simple, Metadata, Activity, AI analysis design for you
       </Text>
 

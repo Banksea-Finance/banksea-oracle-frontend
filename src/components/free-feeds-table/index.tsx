@@ -209,7 +209,7 @@ const _columns = [
     cell: props => {
       const value = props.getValue()
       return (
-        <Text fontSize={'18px'} width={'150px'}>
+        <Text fontSize={'18px'} width={'160px'}>
           {value ? dayjs(value * 1000).format('YYYY/MM/DD HH:mm:ss') : '-'}
         </Text>
       )
@@ -296,12 +296,14 @@ const renderTableHeaders = (
                 }
 
                 const columnTitle = (
-                  <Text color={'textDisabled'} fontSize={'14px'} bold>
+                  <Text color={'textDisabled'} fontSize={'14px'} bold key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
+                        header.column.columnDef.header, {
+                          ...header.getContext(),
+                          key: header.column.id
+                        }
                       )}
                   </Text>
                 )

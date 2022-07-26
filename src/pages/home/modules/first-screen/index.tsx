@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Grid, Text } from '@banksea-finance/ui-kit'
+import { Button, Flex, Grid, Text, Image } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { EthereumSvg, MoonbeamSvg, SolanaSvg } from '@/components/svgs'
@@ -22,15 +22,6 @@ const FirstScreenModuleContainer = styled.div`
   }
 `
 
-const Image = styled.img`
-  width: min(722px, 50vw);
-  z-index: 1;
-
-  ${({ theme }) => theme.mediaQueries.maxXl} {
-    width: 60vw;
-  }
-`
-
 export const FirstScreenModule: React.FC = () => {
   return (
     <FirstScreenModuleContainer>
@@ -43,7 +34,22 @@ export const FirstScreenModule: React.FC = () => {
         jc={{ xl: 'space-between' }}
         position={'relative'}
       >
-        <Image src={require('@/assets/images/pages/home/fs.webp')} alt="" />
+        <Image
+          width={{ xl: 'min(722px, 50vw)', _: '60vw' }}
+          zIndex={1}
+          src={require('@/assets/images/pages/home/fs.webp')}
+          style={{ userSelect: 'none' }}
+        />
+
+        <Image
+          position={'absolute'}
+          right={{ xl: '-5%', _: '0' }}
+          top={{ xl: '20%', _: '10%' }}
+          width={{ xl: 'calc(min(722px, 50vw) * 1.2)', _: '90vw' }}
+          zIndex={1}
+          src={require('@/assets/images/pages/home/dots.png')}
+          style={{ userSelect: 'none' }}
+        />
 
         <Flex
           flexDirection={'column'}

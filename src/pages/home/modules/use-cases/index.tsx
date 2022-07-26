@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import { Flex, Text } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 import styled from 'styled-components'
@@ -25,7 +25,7 @@ const UseCasesContainer = styled.div`
       content: "";
     }
 
-    &:hover {
+    &:hover, &[data-active=true] {
       &:after {
         z-index: -1;
         position: absolute;
@@ -100,8 +100,8 @@ const UseCasesContainer = styled.div`
   }
 
   #marketplace {
-    top: 32%;
-    right: 64%;
+    top: 24%;
+    right: 70%;
     width: 13%;
     height: 13%;
   }
@@ -191,18 +191,20 @@ const items = [
 ]
 
 export const UseCasesModule: React.FC = () => {
-  const [hoveredId, setHoveredId] = useState<string>()
+  const hoveredIdRef = useRef<string>()
   const [visibleIndex, setVisibleIndex] = useState(0)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setVisibleIndex(prev => (prev + 1) % 6)
+      if (!hoveredIdRef.current) {
+        setVisibleIndex(prev => (prev + 1) % 6)
+      }
     }, 3000)
 
     return () => {
       clearInterval(intervalId)
     }
-  }, [])
+  }, [hoveredIdRef])
 
   return (
     <Flex flexDirection={'column'} ai={'center'} width={'100%'} overflowX={'hidden'}>
@@ -216,7 +218,7 @@ export const UseCasesModule: React.FC = () => {
         {
           items.map(({ id, label, description }) => {
             let child = (
-              <span id={id} data-aos={'fade-zoom-in'} data-aos-delay={'250'}>
+              <span id={id} data-aos={'fade-zoom-in'} data-aos-delay={'250'} data-active={id === ids[visibleIndex]}>
                 {label}
               </span>
             )
@@ -226,13 +228,24 @@ export const UseCasesModule: React.FC = () => {
                 <div
                   onMouseEnter={() => {
                     setVisibleIndex(ids.indexOf(id))
-                    setHoveredId(id)
+                    hoveredIdRef.current = id
                   }}
-                  onMouseLeave={() => setHoveredId(undefined)}
+                  onMouseLeave={() => hoveredIdRef.current = undefined}
                 >
                   <Tooltip
-                    visible={hoveredId === id || (hoveredId === undefined && id === ids[visibleIndex])}
-                    overlay={<Text maxWidth={'min(350px, 90vw)'}>{description}</Text>}
+                    visible={hoveredIdRef.current === id || (hoveredIdRef.current === undefined && id === ids[visibleIndex])}
+                    overlay={
+                      <Flex flexDirection={'column'} ai={'center'}>
+                        <Text fontSize={'24px'}>{label}</Text>
+                        <Text
+                          maxWidth={'min(350px, 90vw)'}
+                          textAlign={'center'}
+                          fontSize={{ _: '14px', sm: '16px' }}
+                        >
+                          {description}
+                        </Text>
+                      </Flex>
+                    }
                   >
                     {child}
                   </Tooltip>

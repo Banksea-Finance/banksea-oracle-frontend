@@ -18,7 +18,7 @@ import dayjs from 'dayjs'
 import { useQueryCollectionTaskAccount } from '@/hooks/programs/oracle'
 
 import usePageQuery from '@/hooks/usePageQuery'
-import { fromLamports } from '@/utils'
+import { fromLamports, shortenAddress } from '@/utils'
 import { useCollectionFeedActivitiesQuery } from '@/hooks/queries/free-feeds/useCollectionFeedActiviesQuery'
 import ReactECharts from 'echarts-for-react'
 import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds/useCollectionAggregateHistoriesQuery'
@@ -45,7 +45,7 @@ const OverviewsContainer = styled(Card)`
   & > div:nth-of-type(1) {
     flex: 1;
     overflow-wrap: anywhere;
-    white-space: break-spaces;
+    white-space: nowrap;
     text-overflow: ellipsis;
     margin-right: 8px;
   }
@@ -56,7 +56,7 @@ const OverviewsContainer = styled(Card)`
     align-items: center;
     justify-content: center;
 
-    padding: 0 min(60px, 2.5vw);
+    padding: 0 24px;
     border-width: 2px;
     border-style: solid;
     border-right: 0;
@@ -185,7 +185,7 @@ const OverviewSection: React.FC = () => {
           description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
           value={info}
           dataRender={({ collectionTask: value }) => (
-            <Grid gridTemplateColumns={'auto 20px 20px'} jc={{ _: 'center', sm: 'flex-start' }} ai={'center'} gap={'8px'} width={'min(430px, 78vw)'}>
+            <Flex jc={{ _: 'center', sm: 'flex-start' }} ai={'center'} gap={'8px'} width={'fit-content'}>
               <CopyToClipboard
                 text={value}
                 onCopy={() => ReactTooltip.show(copyTooltipRef.current)}
@@ -196,10 +196,9 @@ const OverviewSection: React.FC = () => {
                   data-tip="true"
                   data-for={`copy-for-${value}`}
                   textAlign={'center'}
-                  width={{ _: '160px', sm: 'fit-content' }}
-                  style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', cursor: 'pointer' }}
+                  width={{ _: '100%' }}
                 >
-                  {value}
+                  {shortenAddress(value, 8)}
                 </Text>
               </CopyToClipboard>
 
@@ -227,7 +226,7 @@ const OverviewSection: React.FC = () => {
               >
                 <Text>Copy success!</Text>
               </ReactTooltip>
-            </Grid>
+            </Flex>
           )}
         />
         <OverviewItem
@@ -320,7 +319,18 @@ const FeedHistorySection: React.FC = () => {
             show: false,
           },
           min: ({ max, min }) => {
-            return BigNumber.min(new BigNumber(max), new BigNumber(min).multipliedBy(0.8)).toFixed()
+            const range = new BigNumber(max - min)
+            let decimals: number
+
+            if (max > 10) {
+              decimals = 0
+            } else if (max > 1) {
+              decimals = 2
+            } else {
+              decimals = 4
+            }
+
+            return new BigNumber(min).minus(range.multipliedBy('0.15')).toFixed(decimals)
           }
         }
       ],
