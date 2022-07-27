@@ -156,7 +156,7 @@ const priceRender = (value?: BN | number) => {
     return value ? `${value.toFixed(4)} SOL` : '0 SOL'
   }
 
-  return !value?.isZero() ? `${fromLamports(value)} SOL` : '0 SOL'
+  return value?.isZero() ? '0 SOL' : `${fromLamports(value)} SOL`
 }
 
 const _columns = [
