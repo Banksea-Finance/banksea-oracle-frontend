@@ -33,7 +33,7 @@ const ConsumersModuleContainer = styled.div`
   width: 100%;
   padding-bottom: 96px;
   
-  background-image: url("${require('@/assets/images/pages/develop/consumer-bg.webp')}");
+  background-image: url("${require('@/assets/images/pages/oracle-home/consumer-bg.webp')}");
   background-repeat: no-repeat;
   background-size: 50%;
   

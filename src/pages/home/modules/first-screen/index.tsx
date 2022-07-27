@@ -87,10 +87,10 @@ export const FirstScreenModule: React.FC = () => {
           </Text>
 
           <Flex gap={'16px'} mb={{ lg: '100px', _: '48px' }}>
-            <Button as={Link} autoScale to={'/product/oracle'} width={'min(170px, 30vw)'}>
+            <Button as={Link} autoScale to={'/oracle'} width={'min(170px, 30vw)'}>
               Oracle
             </Button>
-            <Button as={Link} autoScale to={'/product/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
+            <Button as={Link} autoScale to={'/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
               API
             </Button>
           </Flex>

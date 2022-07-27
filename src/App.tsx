@@ -5,18 +5,19 @@ import { Routes } from 'react-router-dom'
 
 import ScrollToTopWrapper from '@/components/scroll-to-top-wrapper'
 import { Route } from 'react-router'
-import Redirect from '@/pages/redirect'
 import Footer from '@/components/footer'
 import {
   AllFreeFeedsPage,
   AnalyticsPage,
   CollectionFreeFeedsPage,
-  DevelopPage,
+  OracleHomePage,
   FreeFeedsPage,
-  HomePage
+  HomePage,
+  RoadmapPage,
+  ApiPage,
+  Redirect
 } from '@/pages'
-import { ProductPage } from '@/pages/product'
-import { RoadmapPage } from '@/pages/roadmap'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 const App: React.FC = () => {
   return (
@@ -26,16 +27,16 @@ const App: React.FC = () => {
         <main>
           <Routes>
             <Route path={'/'} element={<HomePage />} />
-            <Route path={'/develop'} element={<DevelopPage />} />
-            <Route path={'/free-feeds'} element={<FreeFeedsPage />}>
+
+            <Route path={'/oracle'} element={<OracleHomePage />} />
+            <Route path={FREE_FEEDS_PAGE_PATH} element={<FreeFeedsPage />}>
               <Route index element={<AllFreeFeedsPage />} />
               <Route path={':collection'} element={<CollectionFreeFeedsPage />} />
             </Route>
 
             <Route path={'/roadmap'} element={<RoadmapPage />} />
             <Route path={'/analytics'} element={<AnalyticsPage />} />
-            <Route path={'/product/api'} element={<ProductPage />} />
-            <Route path={'/product/oracle'} element={<DevelopPage />} />
+            <Route path={'/api'} element={<ApiPage />} />
             <Route path={'*'} element={<Redirect to={''} />} />
           </Routes>
         </main>

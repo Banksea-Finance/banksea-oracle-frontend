@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, Flex, Grid, Text, useScale } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 const FirstScreenModuleContainer = styled(Box)`
   width: 100vw;
@@ -90,7 +91,7 @@ export const FirstScreenModule: React.FC = () => {
 
   return (
     <FirstScreenModuleContainer>
-      <Image src={require('@/assets/images/pages/develop/fs.webp')} />
+      <Image src={require('@/assets/images/pages/oracle-home/fs.webp')} />
 
       <Flex
         width={'min(1800px, 96vw)'}
@@ -102,7 +103,7 @@ export const FirstScreenModule: React.FC = () => {
           <Title />
 
           <Flex gap={'32px'} mt={'32px'} jc={{ xl: 'start', _: 'center' }}>
-            <Button scale={scale} as={Link} to={'/free-feeds'}>Free Feeds</Button>
+            <Button scale={scale} as={Link} to={FREE_FEEDS_PAGE_PATH}>Free Feeds</Button>
           </Flex>
         </Box>
       </Flex>

@@ -25,17 +25,18 @@ type NavbarItemProps =
 
 const NAVBAR_ITEMS: NavbarItemProps[] = [
   {
-    name: 'Product',
-    match: /^\/product/,
+    name: 'Products',
+    match: /(^\/api)|(^\/oracle)/,
     children: [
       {
         name: 'Oracle',
-        path: '/product/oracle',
+        path: '/oracle',
+        match: /^\/oracle/,
         inner: true
       },
       {
         name: 'API',
-        path: '/product/api',
+        path: '/api',
         inner: true
       }
     ]

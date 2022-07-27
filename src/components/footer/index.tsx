@@ -19,8 +19,8 @@ const CATEGORIES = {
   'Banksea': {
     'Home': '/',
     'Roadmap': '/roadmap',
-    'Oracle': '/product/oracle',
-    'API': '/product/api',
+    'Oracle': '/oracle',
+    'API': '/api',
   },
   'Docs': {
     'White Paper': 'https://banksea-finance.gitbook.io/banksea-finance/',

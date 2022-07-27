@@ -13,5 +13,7 @@ export const FreeFeedsPage = () => {
   )
 }
 
+export const FREE_FEEDS_PAGE_PATH = '/oracle/free-feeds'
+
 export { AllFreeFeedsPage } from './AllFreeFeedsPage'
 export { CollectionFreeFeedsPage } from './collection-free-feeds'

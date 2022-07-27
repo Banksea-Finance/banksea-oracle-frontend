@@ -28,12 +28,13 @@ import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds
 import { EChartsOption } from 'echarts'
 import { QuestionMarkSvg } from '@/components/svgs'
 import ReactTooltip from 'react-tooltip'
-import { FeedActivitiesTable } from '@/pages/free-feeds/collection-free-feeds/FeedActivitiesTable'
-import Redirect from '@/pages/redirect'
+import { FeedActivitiesTable } from '@/pages/oracle/free-feeds/collection-free-feeds/FeedActivitiesTable'
+import { Redirect } from '@/pages'
 import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 import { Element, scroller } from 'react-scroll'
 import BigNumber from 'bignumber.js'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 const OverviewsContainer = styled(Card)`
   margin-bottom: 16px;
@@ -457,7 +458,7 @@ export const CollectionFreeFeedsPage: React.FC = () => {
   const { accessToken } = useSolanaWalletBasedAuthentication()
 
   if (!accessToken) {
-    return <Redirect to={'/free-feeds'} />
+    return <Redirect to={FREE_FEEDS_PAGE_PATH} />
   }
 
   const { collection } = useParams()

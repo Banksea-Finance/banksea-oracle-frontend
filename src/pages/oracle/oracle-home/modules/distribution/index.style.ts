@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import AINodsBac from '../../../../images/home/AINodes/AINodesBac.png'
+import AINodsBac from '../../../../../images/home/AINodes/AINodesBac.png'
 
 export const AINodesContainer = styled.div`
     // background: url(${AINodsBac}) no-repeat;
