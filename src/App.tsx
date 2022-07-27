@@ -1,43 +1,46 @@
 import React from 'react'
-import { AppContainer, BackTopButton } from '@/App.style'
+import { AppContainer } from '@/App.style'
 import Navbar from '@/components/navbar'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Footer from '@/components/footer'
-import Redirect from '@/pages/redirect'
-import { ArrowUpOutlined } from '@ant-design/icons'
-import { BackTop } from 'antd'
-import HomePage from '@/pages/home'
-import MarketPage from '@/pages/market'
-import CollectionsListPage from './pages/collections'
-import * as echarts from 'echarts'
+import { Routes } from 'react-router-dom'
 
-import world from '@/assets/world.json'
 import ScrollToTopWrapper from '@/components/scroll-to-top-wrapper'
-
-echarts.registerMap('world', world as any)
+import { Route } from 'react-router'
+import Redirect from '@/pages/redirect'
+import Footer from '@/components/footer'
+import {
+  AllFreeFeedsPage,
+  AnalyticsPage,
+  CollectionFreeFeedsPage,
+  DevelopPage,
+  FreeFeedsPage,
+  HomePage
+} from '@/pages'
+import { ProductPage } from '@/pages/product'
+import { RoadmapPage } from '@/pages/roadmap'
 
 const App: React.FC = () => {
   return (
     <AppContainer>
-      <BrowserRouter>
-        <ScrollToTopWrapper>
-          <Navbar />
-          <main>
-            <Routes>
-              <Route path={'/'} element={<HomePage />} />
-              <Route path={'/market'} element={<MarketPage />} />
-              <Route path={'/collection'} element={<CollectionsListPage />} />
-              <Route path={'*'} element={<Redirect to={''} />} />
-            </Routes>
-          </main>
-          <BackTop style={{ paddingBottom: '100px' }}>
-            <BackTopButton>
-              <ArrowUpOutlined />
-            </BackTopButton>
-          </BackTop>
-          <Footer />
-        </ScrollToTopWrapper>
-      </BrowserRouter>
+      <ScrollToTopWrapper>
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path={'/'} element={<HomePage />} />
+            <Route path={'/develop'} element={<DevelopPage />} />
+            <Route path={'/free-feeds'} element={<FreeFeedsPage />}>
+              <Route index element={<AllFreeFeedsPage />} />
+              <Route path={':collection'} element={<CollectionFreeFeedsPage />} />
+            </Route>
+
+            <Route path={'/roadmap'} element={<RoadmapPage />} />
+            <Route path={'/analytics'} element={<AnalyticsPage />} />
+            <Route path={'/product/api'} element={<ProductPage />} />
+            <Route path={'/product/oracle'} element={<DevelopPage />} />
+            <Route path={'*'} element={<Redirect to={''} />} />
+          </Routes>
+        </main>
+        <Footer />
+      </ScrollToTopWrapper>
     </AppContainer>
   )
 }

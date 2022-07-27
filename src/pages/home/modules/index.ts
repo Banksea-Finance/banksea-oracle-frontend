@@ -1,0 +1,7 @@
+export * from './first-screen'
+export * from './use-cases'
+export * from './news'
+export * from './investors'
+export * from './partnerships'
+export * from './statistic'
+export * from './features'

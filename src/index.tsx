@@ -2,12 +2,16 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import reportWebVitals from './reportWebVitals'
-import { ModalProvider, RefreshControllerProvider, ThemeWrapperProvider } from '@/contexts'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { message } from 'antd'
-
-import { ResetCSS } from '@/libs/uikit'
+import { RefreshControllerProvider } from './contexts'
+import { GlobalStyles, ThemeWrapperProvider, ModalProvider, NotifyProvider } from '@banksea-finance/ui-kit'
+import dayjs from 'dayjs'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+import { BrowserRouter } from 'react-router-dom'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+import { SolanaWeb3Provider } from '@/contexts/solana-web3'
+import { SolanaWalletBasedAuthenticationProvider } from '@/contexts/solana-wallet-based-authtication'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,25 +22,59 @@ const queryClient = new QueryClient({
   }
 })
 
-message.config({
-  duration: 5
-})
+dayjs.extend(LocalizedFormat)
+
+AOS.init()
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
-    <ThemeWrapperProvider>
-      <ResetCSS />
-      <ModalProvider>
-        <RefreshControllerProvider>
-          <App />
-        </RefreshControllerProvider>
-      </ModalProvider>
-    </ThemeWrapperProvider>
+    <BrowserRouter>
+      <RefreshControllerProvider>
+        <ThemeWrapperProvider
+          componentsOverride={{
+            Table: {
+              rowHoverBackground: '#7864e699'
+            },
+            Input: {
+              border: 'none'
+            }
+          }}
+          configOverride={{
+            siteWidth: '1440px',
+            shadows: {
+              active: '0px 0px 4px 4px #7864e642'
+            },
+            colors: {
+              primary: '#7864e6',
+              secondary: '#5A82D2',
+              background: '#050f1e',
+              backgroundDisabled: 'rgb(30, 30, 50)',
+              backgroundSecondary: 'rgb(10, 20, 60)',
+              text: '#fff',
+              card: 'rgb(30, 40, 100)',
+              disabled: '#999999',
+              textDisabled: '#c0c0c0',
+              gradient: 'linear-gradient(90deg, #7864E6 0%, #D25AE6 55%)'
+            },
+            fontFamilies: {
+              common: 'Rajdhani',
+              important: 'orbitron'
+            }
+          }}
+        >
+          <GlobalStyles />
+          <ModalProvider>
+            <NotifyProvider>
+              <SolanaWeb3Provider>
+                <SolanaWalletBasedAuthenticationProvider>
+                  <App />
+                </SolanaWalletBasedAuthenticationProvider>
+              </SolanaWeb3Provider>
+            </NotifyProvider>
+          </ModalProvider>
+        </ThemeWrapperProvider>
+      </RefreshControllerProvider>
+    </BrowserRouter>
   </QueryClientProvider>
   , document.getElementById('root')
 )
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()

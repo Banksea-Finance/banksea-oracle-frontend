@@ -1,87 +1,62 @@
-@import '~antd/dist/antd.css';
-
-body {
-  margin: 0;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(250, 246, 246);
-  color: black;
-  font-family: 'gilroy';
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: G8321;
+  src: url("./assets/fonts/G8321/G8321-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'ArialMT';
-  src: local('ArialMT'), url("./fonts/ArialMT.ttf") format('opentype');
+  font-family: orbitron;
+  font-weight: 800;
+  src: url("./assets/fonts/orbitron/Orbitron-Black.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: orbitron;
+  font-weight: 700;
+  src: url("./assets/fonts/orbitron/Orbitron-Bold.ttf") format("truetype");
+}
 
 @font-face {
+  font-family: orbitron;
+  font-weight: 500;
+  src: url("./assets/fonts/orbitron/Orbitron-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: orbitron;
+  font-weight: 400;
+  src: url("./assets/fonts/orbitron/Orbitron-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Rajdhani;
+  font-weight: 700;
+  src: url("./assets/fonts/Rajdhani/Rajdhani-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: Rajdhani;
   font-weight: 300;
-  font-family: 'gilroy';
-  src: local('gilroy'), url("./fonts/gilroy/Gilroy-Light.ttf") format('truetype');
+  src: url("./assets/fonts/Rajdhani/Rajdhani-Light.ttf") format("truetype");
 }
+
 @font-face {
-  font-weight: 400;
-  font-family: 'gilroy';
-  src: local('gilroy'), url("./fonts/gilroy/Gilroy-Regular.ttf") format('truetype');
-}
-@font-face {
+  font-family: Rajdhani;
   font-weight: 500;
-  font-family: 'gilroy';
-  src: local('gilroy'), url("./fonts/gilroy/Gilroy-Medium.ttf") format('truetype');
-}
-@font-face {
-  font-family: 'gilroy';
-  font-weight: 600;
-  src: local('gilroy'), url("./fonts/gilroy/Gilroy-SemiBold.ttf") format('truetype');
-}
-@font-face {
-  font-family: 'gilroy';
-  font-weight: 700;
-  src: local('gilroy'), url("./fonts/gilroy/Gilroy-Bold.ttf") format('truetype');
+  src: url("./assets/fonts/Rajdhani/Rajdhani-Medium.ttf") format("truetype");
 }
 
-/** orbitron */
 @font-face {
-  font-family: 'orbitron';
+  font-family: Rajdhani;
   font-weight: 400;
-  src: local('orbitron'), url("./fonts/orbitron/Orbitron-Regular.ttf") format('truetype');
+  src: url("./assets/fonts/Rajdhani/Rajdhani-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'orbitron';
-  font-weight: 500;
-  src: local('orbitron'), url("./fonts/orbitron/Orbitron-Medium.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: 'orbitron';
+  font-family: Rajdhani;
   font-weight: 600;
-  src: local('orbitron'), url("./fonts/orbitron/Orbitron-Bold.ttf") format('truetype');
+  src: url("./assets/fonts/Rajdhani/Rajdhani-SemiBold.ttf") format("truetype");
 }
 
-@font-face {
-  font-family: 'orbitron';
-  font-weight: 700;
-  src: local('orbitron'), url("./fonts/orbitron/Orbitron-Black.ttf") format('truetype');
-}
-
-body::-webkit-scrollbar {
-  width: 1em;
-}
-
-body::-webkit-scrollbar-track {
-  background: linear-gradient(90deg, #434343, #434343 1px, #111 0, #111);
-}
-
-body::-webkit-scrollbar-thumb {
-  background: #434343;
-  border-radius: 16px;
-  box-shadow: inset 2px 2px 2px hsl(0deg 0% 100% / 25%), inset -2px -2px 2px rgb(0 0 0 / 25%);
+a {
+  display: flex;
 }

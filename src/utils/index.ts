@@ -1,9 +1,13 @@
 import BigNumber from 'bignumber.js'
 import SolanaIcon from '@/images/icon/solana.png'
 import EthIcon from '@/images/icon/eth.png'
+import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js'
+import { BN } from '@project-serum/anchor'
 
-export const shortenAddress = (address?: string, length = 6) => {
-  return address ? `${address.substring(0, length)}...${address.slice(-length)}` : '-'
+export const shortenAddress = (address?: string | PublicKey, length = 6) => {
+  const str = address?.toString()
+
+  return str ? `${str.slice(0, length)}...${str.slice(-length)}` : '-'
 }
 
 export function numberWithCommas(x?: string | number | BigNumber, decimalPlace = 2, showSign?: boolean): string {
@@ -149,4 +153,10 @@ export function getCurrencyIcon(chainSource?: string): string | undefined {
     'Solana': SolanaIcon,
     'Ethereum': EthIcon,
   }[chainSource]
+}
+
+export const fromLamports = (lamports?: BN | string | number, decimals = Math.log10(LAMPORTS_PER_SOL), formatDecimals = 4) => {
+  if (lamports === undefined || lamports === null) return 0
+
+  return new BigNumber(lamports.toString()).shiftedBy(-decimals).toFixed(formatDecimals)
 }

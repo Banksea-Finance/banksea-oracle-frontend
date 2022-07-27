@@ -18,7 +18,7 @@ export const MapMain = styled.div<{ scale: number }>`
   background-size: 72%;
   background-position: top 10% left 50%;
 
-  ${({ theme }) => theme.mediaQueries.xl} {
+  ${({ theme }) => theme.mediaQueries.maxXl} {
     transform: scale(${props => props.scale * 1.3}%);
     transform-origin: top;
   }
@@ -29,11 +29,10 @@ export const Title = styled.div`
   color: #333333;
   font-size: 50px;
   font-weight: 600;
-  font-family: orbitron;
   letter-spacing: 4px;
   margin-top: 98px;
   
-  ${({ theme }) => theme.mediaQueries.xl} {
+  ${({ theme }) => theme.mediaQueries.maxXl} {
     font-size: 8vw;
     width: 80vw;
     margin-left: calc((1400px - 80vw) / 2);
@@ -51,23 +50,16 @@ export const ExecutingNodesContainer = styled.div`
     margin: -8vw auto 100px auto;
   }
   
-  ${({ theme }) => theme.mediaQueries.xl} {
+  ${({ theme }) => theme.mediaQueries.maxXl} {
     margin: -10vw auto 100px auto;
   }
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.maxMd} {
     margin: -30vw auto 100px auto;
   }
 
-  ${({ theme }) => theme.mediaQueries.sm} {
+  ${({ theme }) => theme.mediaQueries.maxSm} {
     margin: -100vw auto 100px auto;
     width: 90vw;
   }
-`
-
-export const AvatarsContainer = styled.div`
-  display: grid;
- 
-  grid-template-columns: repeat(auto-fill, 32px);
-  gap: 5px 10px;
 `

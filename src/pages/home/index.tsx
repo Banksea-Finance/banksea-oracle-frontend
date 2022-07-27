@@ -1,21 +1,37 @@
 import React from 'react'
-import { HomeContainer } from '@/pages/home/index.style'
-import TopModule from '@/pages/home/top'
-import ArchitectureModule from '@/pages/home/architecture'
-import DistributionModule from '@/pages/home/distribution'
-import ConsumersModule from '@/pages/home/consumers'
-import DataProvidersModule from '@/pages/home/data-providers'
+import {
+  FeaturesModule,
+  FirstScreenModule, InvestorsModule, NewsModule, PartnershipsModule, UseCasesModule
+} from './modules'
 
-const HomePage: React.FC = () => {
+import { Box, Flex, Grid } from '@banksea-finance/ui-kit'
+
+export const HomePage: React.FC = () => {
   return (
-    <HomeContainer>
-      <TopModule />
-      <ArchitectureModule />
-      <DistributionModule />
-      <ConsumersModule />
-      <DataProvidersModule />
-    </HomeContainer>
+    <Box width={'100%'}>
+      <Box height={'fit-content'} background={'#050F1E'} width={'100%'}>
+        <FirstScreenModule />
+      </Box>
+      <Flex
+        width={'100vw'}
+        flexDirection={'column'}
+        ai={'center'}
+        py={'128px'}
+        px={{ xl: '128px', sm: '5%' }}
+      >
+        <Grid
+          width={'min(1440px, 96vw)'}
+          gap={'128px'}
+          position={'relative'}
+          zIndex={2}
+        >
+          <FeaturesModule />
+          <UseCasesModule />
+          <PartnershipsModule />
+          <InvestorsModule />
+          <NewsModule />
+        </Grid>
+      </Flex>
+    </Box>
   )
 }
-
-export default HomePage
