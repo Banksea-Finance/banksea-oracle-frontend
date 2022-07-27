@@ -14,8 +14,15 @@ const NewsCard: React.FC<MediumPublication> = ({ imageUrl, link, content, date, 
       height={'fit-content'}
       color={'backgroundSecondary'}
       p={{ sm: '0 0 32px 0', _: '0 0 8px 0' }}
+      overflow={'hidden'}
     >
-      <Image src={imageUrl} width={'100%'} placeholderHeight={'200px'} borderRadius={'32px'} alt={title} style={{ objectFit: 'cover' }} />
+      <Image
+        src={imageUrl}
+        width={'100%'}
+        placeholderHeight={'200px'}
+        alt={title}
+        style={{ objectFit: 'cover' }}
+      />
 
       <Flex mt={{ sm: '28px', _: '12px' }} height={'48px'} ai={'center'}>
         <Text

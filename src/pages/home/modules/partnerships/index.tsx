@@ -71,7 +71,7 @@ const PARTNERSHIPS: Partnership[] = [
   },
   {
     image: require('@/assets/images/pages/home/partnerships/CryptoTimes.png'),
-    url: 'https://www.cryptotimes.io/',
+    url: 'https://www.crypto-times.jp/',
     scale: 0.45
   },
 ]
