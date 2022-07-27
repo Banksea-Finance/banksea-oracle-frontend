@@ -23,6 +23,21 @@ type NavbarItemProps =
   | LeafNodeNavbarItemProps
   | (BaseNavbarItemProps & { children: LeafNodeNavbarItemProps[] })
 
+declare const window: any
+declare const navigator: any
+
+function isTouchDevice() {
+  return (
+    !!(typeof window !== 'undefined' &&
+      ('ontouchstart' in window ||
+        (window.DocumentTouch &&
+          typeof document !== 'undefined' &&
+          document instanceof window.DocumentTouch))) ||
+    !!(typeof navigator !== 'undefined' &&
+      (navigator.maxTouchPoints || navigator.msMaxTouchPoints))
+  )
+}
+
 const NAVBAR_ITEMS: NavbarItemProps[] = [
   {
     name: 'Products',
@@ -193,7 +208,7 @@ const RootNavbarItem: React.FC<NavbarItemProps> = props => {
 
   return (
     <Wrapper>
-      <Dropdown overlay={overlay} animation="slide-up" mouseEnterDelay={0}>
+      <Dropdown overlay={overlay} animation="slide-up" mouseEnterDelay={0} trigger={isTouchDevice() ? 'click' : 'hover'}>
         <NavbarLinkText fontSize={'20px'} bold color={isActive ? 'primary' : 'text'} style={{ cursor: 'pointer' }}>
           {name}
         </NavbarLinkText>
