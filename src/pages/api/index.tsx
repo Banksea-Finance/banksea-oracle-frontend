@@ -43,7 +43,7 @@ const ApiPricePlanCard: React.FC<ApiPricePlanCardProps> = ({
 
       <Text color={'textDisabled'} mb={'16px'}>{description}</Text>
 
-      <Flex flexDirection={'column'} gap={'6px'} mb={'12px'}>
+      <Grid gridTemplateColumns={'100%'} gap={'6px'} mb={'12px'}>
         {
           supportedDimensions.map(({ label, supported }) => (
             <Flex key={label} ai={'center'}>
@@ -52,9 +52,9 @@ const ApiPricePlanCard: React.FC<ApiPricePlanCardProps> = ({
             </Flex>
           ))
         }
-      </Flex>
+      </Grid>
 
-      <Flex flexDirection={'column'} gap={'6px'} mb={'24px'}>
+      <Grid gridTemplateColumns={'100%'} gap={'6px'} mb={'24px'}>
         {
           supportedData.map(data => (
             <Flex key={data} ai={'center'}>
@@ -63,7 +63,7 @@ const ApiPricePlanCard: React.FC<ApiPricePlanCardProps> = ({
             </Flex>
           ))
         }
-      </Flex>
+      </Grid>
 
       <Flex jc={'center'}>
         <Button

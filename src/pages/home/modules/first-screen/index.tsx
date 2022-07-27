@@ -86,14 +86,14 @@ export const FirstScreenModule: React.FC = () => {
             Objective, safe and real-time NFT valuation
           </Text>
 
-          <Flex gap={'16px'} mb={{ lg: '100px', _: '48px' }}>
+          <Grid gridTemplateColumns={'repeat(2, 1fr)'} gap={'16px'} mb={{ lg: '100px', _: '48px' }}>
             <Button as={Link} autoScale to={'/oracle'} width={'min(170px, 30vw)'}>
               Oracle
             </Button>
             <Button as={Link} autoScale to={'/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
               API
             </Button>
-          </Flex>
+          </Grid>
 
           <Grid
             gap={'24px'}

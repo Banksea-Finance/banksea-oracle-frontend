@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Flex, useResponsive } from '@banksea-finance/ui-kit'
+import { Flex, Image, useResponsive } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 
 export type Investor = {
@@ -36,7 +36,7 @@ const INVESTORS: Investor[] = [
   },
   {
     image: require('@/assets/images/pages/home/investors/springwind.svg').default,
-    url: '',
+    url: 'https://springwind.vc/',
     scale: 1.3
   },
   {
@@ -100,14 +100,15 @@ export const InvestorsModule: React.FC = () => {
     <Flex width={'100%'} flexDirection={'column'} ai={'center'}>
       <ModuleTitle fontSize={'min(38px, 11vw)'}>Investors</ModuleTitle>
 
-      <Flex ai={'center'} jc={'center'} flexWrap={'wrap'} gap={{ _: '32px', md: '32px 64px' }}>
+      <Flex ai={'center'} jc={'center'} flexWrap={'wrap'}>
         {
           INVESTORS.map(({ image, url, scale = 1.0 }) => (
-            <a href={url} key={url} target={'_blank'} rel="noreferrer">
-              <img
+            <a href={url} target={'_blank'} rel="noreferrer" key={url}>
+              <Image
                 src={image}
-                alt=""
-                style={{ height: `${heightBase * (scale as number)}px` }}
+                height={`${heightBase * (scale as number)}px`}
+                my={'16px'}
+                mx={{ md: '32px', _: '16px' }}
                 data-aos="zoomin"
               />
             </a>

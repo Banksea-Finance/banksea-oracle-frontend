@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react'
-import { Flex, Text, useResponsive } from '@banksea-finance/ui-kit'
+import { Flex, Image, useResponsive } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 
 export type Partnership = {
   image: string
   url: string
-  text?: string
   scale?: number
 }
 
@@ -80,25 +79,23 @@ const PARTNERSHIPS: Partnership[] = [
 export const PartnershipsModule: React.FC = () => {
   const { isMobile } = useResponsive()
 
-  const heightBase = useMemo(() => isMobile ? '40px' : '90px', [isMobile])
+  const heightBase = useMemo(() => isMobile ? 40 : 90, [isMobile])
 
   return (
     <Flex width={'100%'} flexDirection={'column'} ai={'center'}>
       <ModuleTitle fontSize={'min(38px, 8vw)'}>Partnerships</ModuleTitle>
 
-      <Flex ai={'center'} jc={'center'} flexWrap={'wrap'} gap={{ _: '32px', md: '32px 64px' }}>
+      <Flex ai={'center'} jc={'center'} flexWrap={'wrap'}>
         {
-          PARTNERSHIPS.map(({ scale = 1.0, url, image, text }) => (
+          PARTNERSHIPS.map(({ scale = 1.0, url, image }) => (
             <a href={url} target={'_blank'} rel="noreferrer" key={url}>
-              <Flex ai={'center'}>
-                <img
-                  src={image}
-                  alt=""
-                  style={{ height: `calc(${heightBase} * ${scale})` }}
-                  data-aos="zoomin"
-                />
-                <Text important fontSize={'28px'} ml={'8px'} data-aos="zoomin">{text}</Text>
-              </Flex>
+              <Image
+                src={image}
+                height={`${heightBase * (scale as number)}px`}
+                my={'16px'}
+                mx={{ md: '32px', _: '16px' }}
+                data-aos="zoomin"
+              />
             </a>
           ))
         }

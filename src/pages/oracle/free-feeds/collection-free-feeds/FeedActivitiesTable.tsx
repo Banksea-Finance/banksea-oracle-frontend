@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Box, Flex, Grid, Skeleton, Text } from '@banksea-finance/ui-kit'
+import { Box, Grid, Skeleton, Text } from '@banksea-finance/ui-kit'
 import { shortenAddress } from '@/utils'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
@@ -24,7 +24,7 @@ const _columns = [
       const value = props.getValue()
 
       return (
-        <Flex ai={'center'} gap={'4px'}>
+        <Grid gridTemplateColumns={'repeat(3, auto)'} jc={'flex-start'} ai={'center'} gap={'4px'}>
           <a href={`https://solscan.io/tx/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
             <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
           </a>
@@ -35,7 +35,7 @@ const _columns = [
             />
           </a>
           <Text textAlign={'end'} fontSize={'18px'}>{shortenAddress(value)}</Text>
-        </Flex>
+        </Grid>
       )
     }
   }),

@@ -89,11 +89,12 @@ export const ConsumersModule: React.FC = () => {
         Consumers
       </ModuleTitle>
 
-      <Flex jc={'space-between'} ai={{ lg: 'start', _: 'center' }} gap={'32px'} flexDirection={{ lg: 'row', _: 'column' }}>
+      <Flex jc={'space-between'} ai={{ xl: 'center', _: 'center' }} flexDirection={{ xl: 'row', _: 'column' }}>
         <CodeContainer dangerouslySetInnerHTML={{ __html: EXAMPLE_CODE }} />
-        <Flex flexDirection={'column'} ai={'center'} flex={1} mt={{ lg: '64px', _: '16px' }}>
-          <Flex flexDirection={'column'} ai={{ lg: 'start', _: 'center' }}>
-            <Text fontSize={'20px'} mb={'16px'} textAlign={{ lg: 'unset', _: 'center' }}>
+
+        <Flex flexDirection={'column'} ai={'center'} flex={1} mt={{ xl: '0', _: '32px' }} ml={{ xl: '64px', _: '0' }}>
+          <Flex flexDirection={'column'} ai={{ xl: 'start', _: 'center' }}>
+            <Text fontSize={'20px'} mb={'16px'} textAlign={{ xl: 'unset', _: 'center' }}>
               Use Javascript client library<br />
               to consume data from Banksea oracle.
             </Text>

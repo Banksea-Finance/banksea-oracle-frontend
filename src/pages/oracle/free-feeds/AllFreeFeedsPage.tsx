@@ -105,7 +105,7 @@ export const AllFreeFeedsPage: React.FC = () => {
         }
       />
 
-      <Flex mt={'16px'} jc={'space-between'} flexWrap={'wrap'} gap={'8px 0'}>
+      <Grid gridTemplateColumns={{ lg: 'repeat(2, auto)', _: '100%' }} mt={'16px'} jc={'space-between'} gap={'8px 0'}>
         <a href="https://c2dtw7wmuwa.typeform.com/to/k4yiiPHi" target={'_blank'} rel="noreferrer">
           <Text fontSize={'16px'} color={'secondary'} style={{ textDecoration: 'underline' }}>
             Need more collections feeding?
@@ -121,7 +121,7 @@ export const AllFreeFeedsPage: React.FC = () => {
           onChange={onChange}
           showLessItems={isXs || isSm}
         />
-      </Flex>
+      </Grid>
     </Box>
   )
 }

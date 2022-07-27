@@ -102,7 +102,7 @@ export const FirstScreenModule: React.FC = () => {
         <Box>
           <Title />
 
-          <Flex gap={'32px'} mt={'32px'} jc={{ xl: 'start', _: 'center' }}>
+          <Flex mt={'32px'} jc={{ xl: 'start', _: 'center' }}>
             <Button scale={scale} as={Link} to={FREE_FEEDS_PAGE_PATH}>Free Feeds</Button>
           </Flex>
         </Box>

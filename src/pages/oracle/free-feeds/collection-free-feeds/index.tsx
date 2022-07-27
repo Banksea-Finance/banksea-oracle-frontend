@@ -195,7 +195,7 @@ const OverviewSection: React.FC = () => {
             description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
             value={info}
             dataRender={({ collectionTask: value }) => (
-              <Flex jc={{ _: 'center', xl: 'flex-start' }} ai={'center'} gap={'8px'} width={'100%'}>
+              <Grid gridTemplateColumns={'repeat(3, auto)'} jc={{ _: 'center', xl: 'flex-start' }} ai={'center'} gap={'8px'} width={'100%'}>
                 <CopyToClipboard text={value} onCopy={() => ReactTooltip.show(copyTooltipRef.current)}>
                   <Text
                     fontSize={'18px'}
@@ -229,7 +229,7 @@ const OverviewSection: React.FC = () => {
                 >
                   <Text>Copy success!</Text>
                 </ReactTooltip>
-              </Flex>
+              </Grid>
             )}
           />
         </div>
@@ -472,12 +472,13 @@ export const CollectionFreeFeedsPage: React.FC = () => {
     <Box>
       {data
         ? (
-          <Flex ai={'center'} gap={'16px'} mb={'24px'}>
+          <Flex ai={'center'} mb={'24px'}>
             <Image
               src={data?.imageUrl}
               width={'calc(min(48px, 7.5vw) * 2)'}
               height={'calc(min(48px, 7.5vw) * 2)'}
               borderRadius={'50%'}
+              mr={'16px'}
             />
             <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
               { data.nftName }
