@@ -478,9 +478,8 @@ export const CollectionFreeFeedsPage: React.FC = () => {
               width={'calc(min(48px, 7.5vw) * 2)'}
               height={'calc(min(48px, 7.5vw) * 2)'}
               borderRadius={'50%'}
-              mr={'16px'}
             />
-            <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+            <Text gradient important bold fontSize={'min(48px, 7.5vw)'} ml={'16px'}>
               { data.nftName }
             </Text>
           </Flex>

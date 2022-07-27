@@ -141,11 +141,10 @@ export const ApiPage: React.FC = () => {
 
       <Grid
         jc={'center'}
-        flexWrap={'wrap'}
         width={'100%'}
-        gap={'48px'}
+        gap={{ xl: '48px', _: '24px' }}
         gridTemplateColumns={{
-          xl: 'repeat(2, 500px)',
+          lg: 'repeat(2, min(500px, calc(50vw - 48px)))',
           _: 'repeat(1, min(500px, 90vw))'
         }}
       >
