@@ -462,21 +462,29 @@ export const CollectionFreeFeedsPage: React.FC = () => {
   }
 
   const { collection } = useParams()
-  const { data } = useCollectionFreeFeedInfoQuery(collection)
+  const { data, error } = useCollectionFreeFeedInfoQuery(collection)
 
-  const imageSize = 'calc(min(48px, 7.5vw) * 2)'
+  if (data === null || error) {
+    return <Redirect to={FREE_FEEDS_PAGE_PATH} />
+  }
 
   return (
     <Box>
       {data
         ? (
           <Flex ai={'center'} gap={'16px'} mb={'24px'}>
-            <Image src={data?.imageUrl} width={imageSize} height={imageSize} borderRadius={'50%'} />
+            <Image
+              src={data?.imageUrl}
+              width={'calc(min(48px, 7.5vw) * 2)'}
+              height={'calc(min(48px, 7.5vw) * 2)'}
+              borderRadius={'50%'}
+            />
             <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
               { data.nftName }
             </Text>
           </Flex>
-        ) : <Skeleton width={'400px'} height={'72px'} />}
+        )
+        : <Skeleton width={'400px'} height={'72px'} />}
 
       <Grid gridTemplateColumns={'100%'} gap={'36px'}>
         <OverviewSection />
