@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import documentBac from '../../../../images/document/documentBac.webp'
+import documentBac from '../../../../../images/document/documentBac.webp'
 
 export const DataProvidersModuleContainer = styled.div`
   background: url(${documentBac}) no-repeat;

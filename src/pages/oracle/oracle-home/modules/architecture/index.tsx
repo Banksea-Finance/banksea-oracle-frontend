@@ -35,7 +35,7 @@ export const ArchitectureModule: React.FC = () => {
 
       <Flex width={'100%'} jc={'center'}>
         <ImageContainer>
-          <img src={isDesktop ? require('@/assets/images/pages/develop/architecture.webp') : require('@/assets/images/pages/develop/architecture-sm.webp')} />
+          <img src={isDesktop ? require('@/assets/images/pages/oracle-home/architecture.webp') : require('@/assets/images/pages/oracle-home/architecture-sm.webp')} />
         </ImageContainer>
       </Flex>
     </Container>

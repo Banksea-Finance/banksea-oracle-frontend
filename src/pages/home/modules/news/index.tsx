@@ -1,6 +1,6 @@
 import React from 'react'
 import { MediumPublication, useBankseaMediumPublicationsQuery } from '@/hooks/queries'
-import { Card, Flex, Grid, Text } from '@banksea-finance/ui-kit'
+import { Card, Flex, Grid, Image, Text } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 
 const NewsCard: React.FC<MediumPublication> = ({ imageUrl, link, content, date, title }) => {
@@ -15,7 +15,7 @@ const NewsCard: React.FC<MediumPublication> = ({ imageUrl, link, content, date, 
       color={'backgroundSecondary'}
       p={{ sm: '0 0 32px 0', _: '0 0 8px 0' }}
     >
-      <img src={imageUrl} alt={title} style={{ width: '100%', height: '50%', objectFit: 'cover' }} />
+      <Image src={imageUrl} width={'100%'} placeholderHeight={'200px'} borderRadius={'32px'} alt={title} style={{ objectFit: 'cover' }} />
 
       <Flex mt={{ sm: '28px', _: '12px' }} height={'48px'} ai={'center'}>
         <Text
@@ -75,7 +75,7 @@ export const NewsModule: React.FC = () => {
       <Grid
         width={'100%'}
         jc={'center'}
-        gridTemplateColumns={{ xl: 'repeat(3, min(30.5%, 400px))', xs: 'min(400px, 80%)', _: '94%' }}
+        gridTemplateColumns={{ lg: 'repeat(3, min(30.5%, 400px))', xs: 'min(400px, 80%)', _: '94%' }}
         gap={'32px'}
       >
         {

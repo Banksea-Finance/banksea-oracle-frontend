@@ -28,12 +28,13 @@ import { useCollectionAggregateHistoriesQuery } from '@/hooks/queries/free-feeds
 import { EChartsOption } from 'echarts'
 import { QuestionMarkSvg } from '@/components/svgs'
 import ReactTooltip from 'react-tooltip'
-import { FeedActivitiesTable } from '@/pages/free-feeds/collection-free-feeds/FeedActivitiesTable'
-import Redirect from '@/pages/redirect'
+import { FeedActivitiesTable } from '@/pages/oracle/free-feeds/collection-free-feeds/FeedActivitiesTable'
+import { Redirect } from '@/pages'
 import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 import { Element, scroller } from 'react-scroll'
 import BigNumber from 'bignumber.js'
 import CopyToClipboard from 'react-copy-to-clipboard'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 const OverviewsContainer = styled(Card)`
   margin-bottom: 16px;
@@ -194,7 +195,7 @@ const OverviewSection: React.FC = () => {
             description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
             value={info}
             dataRender={({ collectionTask: value }) => (
-              <Flex jc={{ _: 'center', xl: 'flex-start' }} ai={'center'} gap={'8px'} width={'100%'}>
+              <Grid gridTemplateColumns={'repeat(3, auto)'} jc={{ _: 'center', xl: 'flex-start' }} ai={'center'} gap={'8px'} width={'100%'}>
                 <CopyToClipboard text={value} onCopy={() => ReactTooltip.show(copyTooltipRef.current)}>
                   <Text
                     fontSize={'18px'}
@@ -228,7 +229,7 @@ const OverviewSection: React.FC = () => {
                 >
                   <Text>Copy success!</Text>
                 </ReactTooltip>
-              </Flex>
+              </Grid>
             )}
           />
         </div>
@@ -457,25 +458,33 @@ export const CollectionFreeFeedsPage: React.FC = () => {
   const { accessToken } = useSolanaWalletBasedAuthentication()
 
   if (!accessToken) {
-    return <Redirect to={'/free-feeds'} />
+    return <Redirect to={FREE_FEEDS_PAGE_PATH} />
   }
 
   const { collection } = useParams()
-  const { data } = useCollectionFreeFeedInfoQuery(collection)
+  const { data, error } = useCollectionFreeFeedInfoQuery(collection)
 
-  const imageSize = 'calc(min(48px, 7.5vw) * 2)'
+  if (data === null || error) {
+    return <Redirect to={FREE_FEEDS_PAGE_PATH} />
+  }
 
   return (
     <Box>
       {data
         ? (
-          <Flex ai={'center'} gap={'16px'} mb={'24px'}>
-            <Image src={data?.imageUrl} width={imageSize} height={imageSize} borderRadius={'50%'} />
-            <Text gradient important bold fontSize={'min(48px, 7.5vw)'}>
+          <Flex ai={'center'} mb={'24px'}>
+            <Image
+              src={data?.imageUrl}
+              width={'calc(min(48px, 7.5vw) * 2)'}
+              height={'calc(min(48px, 7.5vw) * 2)'}
+              borderRadius={'50%'}
+            />
+            <Text gradient important bold fontSize={'min(48px, 7.5vw)'} ml={'16px'}>
               { data.nftName }
             </Text>
           </Flex>
-        ) : <Skeleton width={'400px'} height={'72px'} />}
+        )
+        : <Skeleton width={'400px'} height={'72px'} />}
 
       <Grid gridTemplateColumns={'100%'} gap={'36px'}>
         <OverviewSection />

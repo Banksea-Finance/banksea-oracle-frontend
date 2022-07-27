@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Button, Flex, Grid, Text, useScale } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 const FirstScreenModuleContainer = styled(Box)`
   width: 100vw;
@@ -10,21 +11,15 @@ const FirstScreenModuleContainer = styled(Box)`
   position: relative;
   padding-left: 10vw;
   
-  ${({ theme }) => theme.mediaQueries.minXl} {
-    display: flex;
-    justify-content: center;
-  }
-  
-  ${({ theme }) => theme.mediaQueries.maxXl} {
-    padding-left: 0;
-    height:  fit-content;
-    padding-bottom: 48px;
-  }
-  
   ${({ theme }) => theme.mediaQueries.maxLg} {
+    position: relative;
     margin-bottom: 48px;
     background-size: 80%, 200%;
     background-position: 50% 100%;
+
+    padding-left: 0;
+    height: fit-content;
+    padding-bottom: 48px;
   }
 `
 
@@ -32,16 +27,15 @@ const Image = styled.img`
   width: min(1800px, 80vw);
   position: absolute;
   right: 0;
-  top: 10%;
   z-index: -1;
 
-  ${({ theme }) => theme.mediaQueries.maxXl} {
+  ${({ theme }) => theme.mediaQueries.maxLg} {
     position: relative;
+    
     width: 150%;
     right: 40%;
-    top: initial;
-    bottom: 100%;
     
+    margin-top: -20%;
     margin-bottom: -15%;
   }
 
@@ -52,14 +46,16 @@ const Image = styled.img`
 `
 
 const Title: React.FC = () => {
+  const breakPoint = 'lg'
+
   const CommonText = ({ children }: any) => (
     <Text
       as={'span'}
-      fontSize={{ xl: 'min(50px, 3.03vw)', _: 'min(50px, 5.0vw)' }}
+      fontSize={{ [breakPoint]: 'min(50px, 2.90vw)', _: 'min(50px, 5.0vw)' }}
       important
       bold
       lineHeight={'1.5'}
-      textAlign={{ xl: 'start', _: 'center' }}
+      textAlign={{ [breakPoint]: 'start', _: 'center' }}
     >
       {children}
     </Text>
@@ -68,8 +64,8 @@ const Title: React.FC = () => {
   return (
     <Grid
       zIndex={22}
-      gridTemplateColumns={{ xl: 'max-content', _: '100%' }}
-      justifyItems={{ _: 'center', xl: 'flex-start' }}
+      gridTemplateColumns={{ [breakPoint]: 'max-content', _: '100%' }}
+      justifyItems={{ [breakPoint]: 'flex-start', _: 'center' }}
       width={'100%'}
     >
       <CommonText>Provide Comprehensive NFT</CommonText>
@@ -87,22 +83,23 @@ const Title: React.FC = () => {
 
 export const FirstScreenModule: React.FC = () => {
   const scale = useScale()
+  const breakPoint = 'lg'
 
   return (
     <FirstScreenModuleContainer>
-      <Image src={require('@/assets/images/pages/develop/fs.webp')} />
+      <Image src={require('@/assets/images/pages/oracle-home/fs.webp')} />
 
       <Flex
         width={'min(1800px, 96vw)'}
-        ai={{ xl: 'center', _: 'center' }}
-        jc={{ xl: 'flex-start', _: 'center' }}
-        height={{ xl: '100%', _: 'fit-content' }}
+        ai={{ [breakPoint]: 'center', _: 'center' }}
+        jc={{ [breakPoint]: 'flex-start', _: 'center' }}
+        height={{ [breakPoint]: '100%', _: 'fit-content' }}
       >
         <Box>
           <Title />
 
-          <Flex gap={'32px'} mt={'32px'} jc={{ xl: 'start', _: 'center' }}>
-            <Button scale={scale} as={Link} to={'/free-feeds'}>Free Feeds</Button>
+          <Flex mt={{ [breakPoint]: '32px', _: '16px' }} jc={{ [breakPoint]: 'start', _: 'center' }}>
+            <Button scale={scale} as={Link} to={FREE_FEEDS_PAGE_PATH}>Free Feeds</Button>
           </Flex>
         </Box>
       </Flex>

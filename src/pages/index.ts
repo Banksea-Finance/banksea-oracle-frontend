@@ -1,4 +1,6 @@
 export { AnalyticsPage } from './analytics'
-export { DevelopPage } from './develop'
-export { FreeFeedsPage, AllFreeFeedsPage, CollectionFreeFeedsPage } from './free-feeds'
+export { FreeFeedsPage, AllFreeFeedsPage, CollectionFreeFeedsPage, OracleHomePage } from './oracle'
 export { HomePage } from './home'
+export { RoadmapPage } from './roadmap'
+export { ApiPage } from './api'
+export { Redirect } from './redirect'

@@ -7,7 +7,7 @@ import 'rc-tooltip/assets/bootstrap.css'
 
 const UseCasesContainer = styled.div`
   position: relative;
-  width: max(440px, min(1042px, 96vw));
+  width: max(440px, min(1042px, 60vw)); // 440px 60vw 1024px
 
   span {
     color: white;

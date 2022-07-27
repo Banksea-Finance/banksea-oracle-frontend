@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Redirect: React.FC<{ to: string }> = ({ to }) => {
+export const Redirect: React.FC<{ to: string }> = ({ to }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -13,5 +13,3 @@ const Redirect: React.FC<{ to: string }> = ({ to }) => {
     </>
   )
 }
-
-export default Redirect

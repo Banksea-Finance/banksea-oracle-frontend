@@ -3,7 +3,7 @@ import { ContentContainer, DataProvidersModuleContainer, MainContainer, ToButton
 
 import toIcon from '@/images/icon/toIcon.svg'
 import arrow from '@/images/icon/arrow.svg'
-import documentImg from '../../../../images/document/documentImg.png'
+import documentImg from '../../../../../images/document/documentImg.png'
 import { Text, useResponsive } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Grid, Text } from '@banksea-finance/ui-kit'
+import { Box, Flex, Grid, Image, Text } from '@banksea-finance/ui-kit'
 import { BankseaLogoSvg } from '@/components/svgs'
 import styled from 'styled-components'
 
@@ -19,8 +19,8 @@ const CATEGORIES = {
   'Banksea': {
     'Home': '/',
     'Roadmap': '/roadmap',
-    'Oracle': '/product/oracle',
-    'API': '/product/api',
+    'Oracle': '/oracle',
+    'API': '/api',
   },
   'Docs': {
     'White Paper': 'https://banksea-finance.gitbook.io/banksea-finance/',
@@ -44,11 +44,7 @@ const SocialMediumContainer = styled.a`
   display: flex;
   align-items: center;
   font-size: 16px;
-
-  img {
-    width: 37px;
-    height: 37px;
-  }
+  width: 32px;
 `
 
 const CategoryTitle = styled(Text)`
@@ -92,31 +88,27 @@ const Footer: React.FC = () => {
   return (
     <StyledFooter>
       <Box background={'transparent'} p={'48px 10%'}>
-        <Flex
-          jc={{ xl: 'space-between' }}
-          ai={{ _: 'flex-start' }}
-          flexDirection={{ _: 'column', xl: 'row' }}
-        >
-          <Flex ai={'start'} flexDirection={'column'} width={'262px'} mb={{ xl: '0', _: '32px' }}>
+        <Flex jc={{ xl: 'space-between' }} ai={{ _: 'flex-start' }} flexDirection={{ _: 'column', xl: 'row' }}>
+          <Flex ai={'start'} flexDirection={'column'} width={'282px'} mb={{ xl: '0', _: '32px' }}>
             <BankseaLogoSvg />
-            <Text color={'disabled'} my={'16px'}>
+            <Text color={'disabled'} my={{ lg: '16px', _: '8px' }}>
               Safe, objective, and real-time NFT valuation
             </Text>
-            <Flex jc={'space-between'} width={'100%'}>
+            <Grid jc={'flex-start'} width={'100%'} gap={'12px'} gridTemplateColumns={'repeat(4, 32px)'}>
               {
                 SOCIAL_MEDIA.map(({ icon, to }, index) => (
                   <SocialMediumContainer href={to} target={'_blank'} rel={'noreferrer'} key={index}>
-                    <img src={icon} alt={to} />
+                    <Image width={'32px'} height={'32px'} src={icon} alt={to} />
                   </SocialMediumContainer>
                 ))
               }
-            </Flex>
+            </Grid>
           </Flex>
 
           <Box width={'min(256px, 5vw)'} />
 
           <Grid
-            gridTemplateColumns={{ md: 'repeat(3, 108px) 220px', sm: '108px 220px', _: '220px' }}
+            gridTemplateColumns={{ sm: 'repeat(4, 1fr)', xs: 'repeat(2, 1fr)', _: '220px' }}
             jc={{ md: 'space-between', sm: 'start' }}
             gap={{ md: '0', _: '16px 48px' }}
             flex={1}
@@ -164,12 +156,7 @@ const Footer: React.FC = () => {
           </Grid>
         </Flex>
 
-        <Box
-          my={'32px'}
-          height={'2px'}
-          width={'100%'}
-          background={'linear-gradient(to right, #7864e600, #7864e6, #7864e600)'}
-        />
+        <Box my={'32px'} height={'2px'} width={'100%'} background={'linear-gradient(to right, #7864e600, #7864e6, #7864e600)'} />
 
         <Text color={'disabled'} textAlign={'center'}>
           @ 2022 Banksea - All rights reserved

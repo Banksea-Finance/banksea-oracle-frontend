@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Flex, Grid, Text, Image } from '@banksea-finance/ui-kit'
+import { Button, Flex, Grid, Text, Image, Box } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { EthereumSvg, MoonbeamSvg, SolanaSvg } from '@/components/svgs'
@@ -23,19 +23,23 @@ const FirstScreenModuleContainer = styled.div`
 `
 
 export const FirstScreenModule: React.FC = () => {
+  const breakPoint = 'lg'
+
   return (
     <FirstScreenModuleContainer>
       <Flex
         width={'min(1440px, 96vw)'}
         pt={'2%'}
         height={'fit-content'}
-        flexDirection={{ xl: 'row-reverse', _: 'column' }}
+        flexDirection={{ [breakPoint]: 'row-reverse', _: 'column' }}
         ai={{ _: 'center' }}
-        jc={{ xl: 'space-between' }}
+        jc={{ [breakPoint]: 'space-between' }}
         position={'relative'}
       >
         <Image
-          width={{ xl: 'min(722px, 50vw)', _: '60vw' }}
+          width={{ [breakPoint]: 'min(722px, 50vw)', _: '60vw' }}
+          height={{ [breakPoint]: 'calc(3200 / 2889 * min(722px, 50vw))', _: 'calc(3200 / 2889 * 60vw)' }}
+          placeholder={(width, height) => <Box width={width} height={height} />}
           zIndex={1}
           src={require('@/assets/images/pages/home/fs.webp')}
           style={{ userSelect: 'none' }}
@@ -43,9 +47,11 @@ export const FirstScreenModule: React.FC = () => {
 
         <Image
           position={'absolute'}
-          right={{ xl: '-5%', _: '0' }}
-          top={{ xl: '20%', _: '10%' }}
-          width={{ xl: 'calc(min(722px, 50vw) * 1.2)', _: '90vw' }}
+          right={{ [breakPoint]: '-5%', _: '0' }}
+          top={{ [breakPoint]: '20%', _: '10%' }}
+          width={{ [breakPoint]: 'calc(min(722px, 50vw) * 1.2)', _: '90vw' }}
+          height={{ [breakPoint]: 'calc(467 / 852 * min(722px, 50vw) * 1.2)', _: 'calc(467 / 852 * 90vw)' }}
+          placeholder={(width, height) => <Box width={width} height={height} />}
           zIndex={1}
           src={require('@/assets/images/pages/home/dots.png')}
           style={{ userSelect: 'none' }}
@@ -53,19 +59,19 @@ export const FirstScreenModule: React.FC = () => {
 
         <Flex
           flexDirection={'column'}
-          ai={{ xl: 'start', _: 'center' }}
+          ai={{ [breakPoint]: 'start', _: 'center' }}
           width={'90vw'}
-          position={{ xl: 'absolute', _: 'relative' }}
+          position={{ [breakPoint]: 'absolute', _: 'relative' }}
           left={'0'}
           zIndex={'11'}
         >
           <Text
             as={'span'}
-            fontSize={{ xl: 'min(75px, 4vw)', _: 'min(60px, 8vw)' }}
+            fontSize={{ [breakPoint]: 'min(75px, 4vw)', _: 'min(60px, 8vw)' }}
             important
             bold
             lineHeight={'1.5'}
-            textAlign={{ xl: 'start', _: 'center' }}
+            textAlign={{ [breakPoint]: 'start', _: 'center' }}
             width={'100%'}
           >
             {'The First '}
@@ -86,14 +92,14 @@ export const FirstScreenModule: React.FC = () => {
             Objective, safe and real-time NFT valuation
           </Text>
 
-          <Flex gap={'16px'} mb={{ lg: '100px', _: '48px' }}>
-            <Button as={Link} autoScale to={'/product/oracle'} width={'min(170px, 30vw)'}>
+          <Grid gridTemplateColumns={'repeat(2, 1fr)'} gap={'16px'} mb={{ lg: '100px', _: '48px' }}>
+            <Button as={Link} autoScale to={'/oracle'} width={'min(170px, 30vw)'}>
               Oracle
             </Button>
-            <Button as={Link} autoScale to={'/product/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
+            <Button as={Link} autoScale to={'/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
               API
             </Button>
-          </Flex>
+          </Grid>
 
           <Grid
             gap={'24px'}
@@ -109,8 +115,6 @@ export const FirstScreenModule: React.FC = () => {
           </Grid>
         </Flex>
       </Flex>
-
-
     </FirstScreenModuleContainer>
   )
 }

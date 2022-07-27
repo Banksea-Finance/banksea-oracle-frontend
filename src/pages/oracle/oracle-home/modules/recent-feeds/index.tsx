@@ -5,6 +5,7 @@ import { useFreeFeedsQuery } from '@/hooks/queries/free-feeds/useFreeFeedsQuery'
 import { Box, Flex, Text } from '@banksea-finance/ui-kit'
 import { WhitelistRequiredContentWrapper } from '@/components/whitelist-required-content-wrapper'
 import { Link } from 'react-router-dom'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 export const RecentFeedsSection: React.FC = () => {
   const { data: feeds } = useFreeFeedsQuery({
@@ -27,7 +28,7 @@ export const RecentFeedsSection: React.FC = () => {
               loading={!feeds?.records.length}
               data={feeds?.records}
             />
-            <Link to={'/free-feeds'}>
+            <Link to={FREE_FEEDS_PAGE_PATH}>
               <Text color={'primary'} fontSize={'16px'}>
                 View more
               </Text>

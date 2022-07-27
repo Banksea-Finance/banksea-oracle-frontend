@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Card, CardProps, Flex, Grid, Text } from '@banksea-finance/ui-kit'
 import { PageWrapper } from '@/components/page-wrapper'
 
-interface ProductPricePlanCardProps {
+interface ApiPricePlanCardProps {
   variant: CardProps['variant']
   background: string
 
@@ -20,7 +20,7 @@ interface ProductPricePlanCardProps {
   supportedData: string[]
 }
 
-const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
+const ApiPricePlanCard: React.FC<ApiPricePlanCardProps> = ({
   price, name, description, supportedDimensions, variant, background, supportedData
 }) => {
   return (
@@ -43,7 +43,7 @@ const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
 
       <Text color={'textDisabled'} mb={'16px'}>{description}</Text>
 
-      <Flex flexDirection={'column'} gap={'6px'} mb={'12px'}>
+      <Grid gridTemplateColumns={'100%'} gap={'6px'} mb={'12px'}>
         {
           supportedDimensions.map(({ label, supported }) => (
             <Flex key={label} ai={'center'}>
@@ -52,9 +52,9 @@ const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
             </Flex>
           ))
         }
-      </Flex>
+      </Grid>
 
-      <Flex flexDirection={'column'} gap={'6px'} mb={'24px'}>
+      <Grid gridTemplateColumns={'100%'} gap={'6px'} mb={'24px'}>
         {
           supportedData.map(data => (
             <Flex key={data} ai={'center'}>
@@ -63,7 +63,7 @@ const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
             </Flex>
           ))
         }
-      </Flex>
+      </Grid>
 
       <Flex jc={'center'}>
         <Button
@@ -79,7 +79,7 @@ const ProductPricePlanCard: React.FC<ProductPricePlanCardProps> = ({
   )
 }
 
-const PLANS: Array<ProductPricePlanCardProps> = [
+const PLANS: Array<ApiPricePlanCardProps> = [
   {
     name: 'Discovery',
     background: 'backgroundSecondary',
@@ -120,7 +120,7 @@ const PLANS: Array<ProductPricePlanCardProps> = [
   },
 ]
 
-export const ProductPage: React.FC = () => {
+export const ApiPage: React.FC = () => {
   return (
     <PageWrapper py={'48px'}>
       <Text
@@ -141,17 +141,16 @@ export const ProductPage: React.FC = () => {
 
       <Grid
         jc={'center'}
-        flexWrap={'wrap'}
         width={'100%'}
-        gap={'48px'}
+        gap={{ xl: '48px', _: '24px' }}
         gridTemplateColumns={{
-          xl: 'repeat(2, 500px)',
+          lg: 'repeat(2, min(500px, calc(50vw - 48px)))',
           _: 'repeat(1, min(500px, 90vw))'
         }}
       >
         {
           PLANS.map(plan => (
-            <ProductPricePlanCard {...plan} key={plan.name} />
+            <ApiPricePlanCard {...plan} key={plan.name} />
           ))
         }
       </Grid>

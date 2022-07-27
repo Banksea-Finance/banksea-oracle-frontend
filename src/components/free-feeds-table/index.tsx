@@ -9,6 +9,7 @@ import { createColumnHelper, flexRender, getCoreRowModel, Table, useReactTable }
 import { range } from 'lodash'
 import { FreeFeedsCollectionQueryOrder } from '@/api/types'
 import { ArrowDownSvg, ArrowUpSvg } from '@/components/svgs'
+import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 export type FreeFeedsTableProps = {
   data?: FeedInfo[]
@@ -339,7 +340,7 @@ const TableBody: React.FC<{ table: Table<FeedInfo> }> = ({ table }) => {
           <TableRow
             width={'100%'}
             key={row.id}
-            onClick={() => window.open(`/free-feeds/${row.original.id}`, '_blank')}
+            onClick={() => window.open(`${FREE_FEEDS_PAGE_PATH}/${row.original.id}`, '_blank')}
             {...rowGridProps}
           >
             {
