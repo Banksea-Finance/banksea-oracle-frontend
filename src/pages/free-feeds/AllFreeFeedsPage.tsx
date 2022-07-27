@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState, KeyboardEvent, MouseEvent } from 'react'
+import React, { useCallback, useRef, useState, KeyboardEvent, MouseEvent, useEffect } from 'react'
 import {
   Box, Button,
   Flex, Grid, Input,
@@ -24,6 +24,7 @@ export const AllFreeFeedsPage: React.FC = () => {
 
   const inputRef = useRef<any>()
   const { current, size, handleChange } = usePageQuery({ size: 10 })
+  const [total, setTotal] = useState<number>()
 
   const [orders, setOrders] = useState<FreeFeedsCollectionQueryOrder[]>([{ order: 'descend', field: 'aiFloorPrice' }])
 
@@ -46,6 +47,14 @@ export const AllFreeFeedsPage: React.FC = () => {
     }
   }, [inputRef])
 
+  useEffect(() => {
+    setTotal(prev => {
+      if (!prev && feeds?.total) return feeds.total
+
+      return prev
+    })
+  }, [feeds])
+
   return (
     <Box width={'100%'}>
       <Element name={'free-feeds-explorer-title'} width={'100%'}>
@@ -54,8 +63,8 @@ export const AllFreeFeedsPage: React.FC = () => {
             Free Feeds Explorer
           </Text>
           {
-            feeds
-              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {feeds.total} collections</Tag>
+            total
+              ? <Tag scale={scales.S} gradient p={{ _: '0 4px', sm: '0 20px' }} fontSize={'14px'}>Support {total} collections</Tag>
               : <></>
           }
         </Grid>

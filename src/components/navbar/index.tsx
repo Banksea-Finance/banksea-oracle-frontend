@@ -1,20 +1,13 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Box, Flex, Grid, Text, useMatchBreakpoints, useModal, useTheme } from '@banksea-finance/ui-kit'
+import { Box, Flex, Grid, Text, TextProps, useMatchBreakpoints, useModal, useTheme } from '@banksea-finance/ui-kit'
 import { BankseaLogoSvg } from '@/components/svgs'
 import styled from 'styled-components'
 import { useLocation } from 'react-router'
-import { CgMenuGridR, CgCloseO } from 'react-icons/cg'
-
+import { CgCloseO, CgMenuGridR } from 'react-icons/cg'
+import { Collapse } from 'react-collapse'
 import Dropdown from 'rc-dropdown'
 import 'rc-dropdown/assets/index.css'
-
-interface RootNavbarItemProps {
-  as?: 'a' | typeof Link
-  name: string
-  path?: string
-  match?: RegExp
-}
 
 type BaseNavbarItemProps = {
   name: string
@@ -22,7 +15,9 @@ type BaseNavbarItemProps = {
   match?: RegExp
 }
 
-type LeafNodeNavbarItemProps = BaseNavbarItemProps & { path: string }
+type LeafNodeNavbarItemProps = BaseNavbarItemProps
+  & { path: string }
+  & Pick<TextProps, 'fontSize' | 'bold' | 'color' | 'lineHeight'>
 
 type NavbarItemProps =
   | LeafNodeNavbarItemProps
@@ -81,8 +76,10 @@ const NAVBAR_ITEMS: NavbarItemProps[] = [
 const NavbarLinkText = styled(Text)`
   transition: color 0.28s;
 
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+  ${({ theme }) => theme.mediaQueries.minLg} {
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary};
+    }
   }
 `
 
@@ -107,9 +104,16 @@ const NavbarContainer = styled(Box)`
   }
 `
 
+const StyledMenuDrawer = styled(Flex)`
+  .ReactCollapse--collapse {
+    transition: height 0.38s;
+  }
+`
+
 const NavbarItemLink: React.FC<LeafNodeNavbarItemProps> = props => {
   const { pathname } = useLocation()
   const { name, match, inner, path } = props
+  const { isXl, isLg } = useMatchBreakpoints()
 
   const Component = inner ? Link : 'a'
 
@@ -124,7 +128,12 @@ const NavbarItemLink: React.FC<LeafNodeNavbarItemProps> = props => {
 
   return (
     <Component {...mergedProps}>
-      <NavbarLinkText fontSize={'20px'} bold color={isActive ? 'primary' : 'text'}>
+      <NavbarLinkText
+        fontSize={props.fontSize || '20px'}
+        bold={props.bold || isXl || isLg}
+        color={isActive ? 'primary' : (props.color || 'text')}
+        lineHeight={props.lineHeight}
+      >
         {name}
       </NavbarLinkText>
     </Component>
@@ -192,24 +201,63 @@ const RootNavbarItem: React.FC<NavbarItemProps> = props => {
   )
 }
 
-const MobileNavLink: React.FC<RootNavbarItemProps> = ({ path, name, match, as: As = 'a' }) => {
+const MobileRootNavbarItem: React.FC<NavbarItemProps> = props => {
   const { pathname } = useLocation()
+  const { theme } = useTheme()
 
-  const mergedProps = useMemo(() => ({
-    to: path || '',
-    href: path,
-    target: As === 'a' ? '_blank' : undefined,
-    rel: As === 'a' ? 'noreferrer' : undefined
-  }), [As])
+  const {  match, name } = props
 
-  const active = useMemo(() => pathname === path || match?.test(pathname), [pathname, match, path])
+  const path = 'path' in props ? props.path : undefined
+
+  const isActive = useMemo(() => (pathname === path) || match?.test(pathname), [pathname, match, props])
+
+  const Wrapper: React.FC = useCallback(({ children }) => {
+    return (
+      <Flex
+        flexDirection={'column'}
+        height={'fit-content'}
+        pl={`calc(12px + ${(isActive ? '0px' : '4px')})`}
+        borderLeft={isActive ? `4px solid ${theme.colors.primary}` : undefined}
+        borderTop={'6px solid transparent'}
+        borderRight={'6px solid transparent'}
+        borderBottom={'6px solid transparent'}
+      >
+        {children}
+      </Flex>
+    )
+  }, [isActive])
+
+  if ('path' in props) {
+    return (
+      <Wrapper>
+        <NavbarItemLink {...props} fontSize={'24px'} lineHeight={1} />
+      </Wrapper>
+    )
+  }
+
+  const [open, setOpen] = useState(false)
 
   return (
-    <As {...mergedProps}>
-      <Text color={active ? 'primary' : 'text'} fontSize={'24px'} bold={active}>
-        {name}
-      </Text>
-    </As>
+    <Box>
+      <Wrapper>
+        <NavbarLinkText
+          fontSize={'24px'}
+          color={isActive ? 'primary' : 'text'}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setOpen(prev => !prev)}
+        >
+          {name}
+        </NavbarLinkText>
+      </Wrapper>
+
+      <Box ml={'32px'}>
+        <Collapse isOpened={open}>
+          {
+            props.children.map(item => (<NavbarItemLink fontSize={'18px'} color={'textDisabled'} {...item} key={item.name} />))
+          }
+        </Collapse>
+      </Box>
+    </Box>
   )
 }
 
@@ -217,30 +265,20 @@ const MenuDrawer: React.FC = () => {
   const { closeModal } = useModal()
 
   return (
-    <Flex height={'100vh'} width={'100vw'} jc={'flex-end'}>
+    <StyledMenuDrawer height={'100vh'} width={'100vw'} jc={'flex-end'}>
       <Box background={'background'} width={'260px'} height={'100%'} p={'16px'} pt={'20%'}>
         <Flex jc={'space-between'} ai={'center'} mb={'24px'}>
           <BankseaLogoSvg width={'150px'} />
           <CgCloseO color={'#ccc'} size={24} onClick={closeModal} />
         </Flex>
 
-        <Grid ml={'16px'} gap={'8px'}>
+        <Grid gap={'16px'} gridTemplateColumns={'100%'}>
           {
-            NAVBAR_ITEMS.map((item, index) => {
-              const { name, inner, match } = item
-
-              if ('path' in item) {
-                return (
-                  <MobileNavLink path={item.path} name={name} as={inner ? Link : 'a'} match={match} key={index} />
-                )
-              } else {
-                return (<></>)
-              }
-            })
+            NAVBAR_ITEMS.map(item => <MobileRootNavbarItem {...item} key={item.name} />)
           }
         </Grid>
       </Box>
-    </Flex>
+    </StyledMenuDrawer>
   )
 }
 
