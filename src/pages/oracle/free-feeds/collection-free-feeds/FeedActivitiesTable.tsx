@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import { Box, Grid, Skeleton, Text } from '@banksea-finance/ui-kit'
-import { shortenAddress } from '@/utils'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
 import { createColumnHelper, flexRender, getCoreRowModel, Table, useReactTable } from '@tanstack/react-table'
 import { range } from 'lodash'
 import { CollectionFeedActivity } from '@/hooks/queries/free-feeds/useCollectionFeedActiviesQuery'
+import { PriceLabel } from '@/components/price-label'
+import { SolanaAddressLabel } from '@/components/solana-address-label'
 
 export type FeedActivitiesTableProps = {
   data?: CollectionFeedActivity[]
@@ -20,36 +21,19 @@ const priceRender = (value?: number) => value ? `${value.toFixed(4)} SOL` : '0 S
 const _columns = [
   columnHelper.accessor('signature', {
     header: 'Tx Hash',
-    cell: props => {
-      const value = props.getValue()
-
-      return (
-        <Grid gridTemplateColumns={'repeat(3, auto)'} jc={'flex-start'} ai={'center'} gap={'4px'}>
-          <a href={`https://solscan.io/tx/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
-            <img src="https://solscan.io/favicon.ico" alt="Solscan" style={{ width: '20px', height: '20px' }} />
-          </a>
-          <a href={`https://explorer.solana.com/tx/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
-            <img src="https://explorer.solana.com/favicon.ico"
-              alt="Solana Explorer"
-              style={{ width: '20px', height: '20px' }}
-            />
-          </a>
-          <Text textAlign={'end'} fontSize={'18px'}>{shortenAddress(value)}</Text>
-        </Grid>
-      )
-    }
+    cell: props => <SolanaAddressLabel address={props.getValue()} type={'tx'} maxLength={12} />
   }),
   columnHelper.accessor('floorPrice', {
     header: 'Floor Price',
-    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>
+    cell: props => <PriceLabel value={priceRender(props.getValue())} fontSize={'18px'} />
   }),
   columnHelper.accessor('aiFloorPrice', {
     header: 'AI Floor Price',
-    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>
+    cell: props => <PriceLabel value={priceRender(props.getValue())} fontSize={'18px'} />
   }),
   columnHelper.accessor('avgPrice', {
     header: 'Avg Price(24h)',
-    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>
+    cell: props => <PriceLabel value={priceRender(props.getValue())} fontSize={'18px'} />
   }),
   columnHelper.accessor('time', {
     header: 'Feed Time',
@@ -83,7 +67,7 @@ const TableRow = styled(Grid)`
 `
 
 const rowGridProps = {
-  gridTemplateColumns: '1fr repeat(3, 120px) 140px',
+  gridTemplateColumns: '1fr repeat(3, 140px) 140px',
   gap: '0 16px'
 }
 
