@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { ModuleTitle } from '@/components/ModuleTitle'
 import {
   Box,
@@ -33,8 +33,9 @@ import { Redirect } from '@/pages'
 import { useSolanaWalletBasedAuthentication } from '@/contexts/solana-wallet-based-authtication'
 import { Element, scroller } from 'react-scroll'
 import BigNumber from 'bignumber.js'
-import CopyToClipboard from 'react-copy-to-clipboard'
 import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
+import { PriceLabel } from '@/components/price-label'
+import { SolanaAddressLabel } from '@/components/solana-address-label'
 
 const OverviewsContainer = styled(Card)`
   margin-bottom: 16px;
@@ -182,7 +183,6 @@ const OverviewSection: React.FC = () => {
   const info = useCollectionFreeFeedInfoQuery(collection)
 
   const collectionTaskAccount = useQueryCollectionTaskAccount(info.data?.collectionTask)
-  const copyTooltipRef = useRef<any>()
 
   return (
     <section>
@@ -194,43 +194,7 @@ const OverviewSection: React.FC = () => {
             title={'Feed Account'}
             description={'The on-chain Account which save the aggregated data. \nYou can use it on your contracts to get the feed data.'}
             value={info}
-            dataRender={({ collectionTask: value }) => (
-              <Grid gridTemplateColumns={'repeat(3, auto)'} jc={{ _: 'center', xl: 'flex-start' }} ai={'center'} gap={'8px'} width={'100%'}>
-                <CopyToClipboard text={value} onCopy={() => ReactTooltip.show(copyTooltipRef.current)}>
-                  <Text
-                    fontSize={'18px'}
-                    ref={ref => copyTooltipRef.current = ref}
-                    data-tip="true"
-                    data-for={`copy-for-${value}`}
-                    textAlign={'center'}
-                    style={{ cursor: 'pointer', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflowX: 'hidden' }}
-                  >
-                    {value}
-                  </Text>
-                </CopyToClipboard>
-                <a href={`https://solscan.io/account/${value}?cluster=devnet`} target={'_blank'} rel="noreferrer">
-                  <Image src="https://solscan.io/favicon.ico" alt="Solscan" width={'20px'} height={'20px'} />
-                </a>
-                <a
-                  href={`https://explorer.solana.com/account/${value}?cluster=devnet`}
-                  target={'_blank'}
-                  rel="noreferrer"
-                >
-                  <Image src="https://explorer.solana.com/favicon.ico" width={'20px'} height={'20px'} />
-                </a>
-
-
-                <ReactTooltip
-                  id={`copy-for-${value}`}
-                  className={'custom-tooltip'}
-                  aria-haspopup="true"
-                  event={'click'}
-                  afterShow={() => setTimeout(ReactTooltip.hide, 750)}
-                >
-                  <Text>Copy success!</Text>
-                </ReactTooltip>
-              </Grid>
-            )}
+            dataRender={({ collectionTask }) => (<SolanaAddressLabel address={collectionTask} type={'account'} />)}
           />
         </div>
 
@@ -239,19 +203,19 @@ const OverviewSection: React.FC = () => {
             title={'Floor Price'}
             description={'Minimum listing price of this collection on marketplace.'}
             value={collectionTaskAccount}
-            dataRender={({ floorPrice }) => !floorPrice?.isZero() ? `${fromLamports(floorPrice)} SOL` : '0 SOL'}
+            dataRender={({ floorPrice }) => <PriceLabel value={fromLamports(floorPrice)} fontSize={'18px'} lineHeight={1.5} />}
           />
           <OverviewItem
             title={'AI Floor Price'}
             description={'The minimum AI valuation of this collection.'}
             value={collectionTaskAccount}
-            dataRender={({ aiFloorPrice }) => !aiFloorPrice?.isZero() ? `${fromLamports(aiFloorPrice)} SOL` : '0 SOL'}
+            dataRender={({ aiFloorPrice }) => <PriceLabel value={fromLamports(aiFloorPrice)} fontSize={'18px'} lineHeight={1.5} />}
           />
           <OverviewItem
             title={'Avg Price(24h)'}
             description={'Average price traded in 24 hours'}
             value={collectionTaskAccount}
-            dataRender={({ avgPrice }) => !avgPrice?.isZero() ? `${fromLamports(avgPrice)} SOL` : '0 SOL'}
+            dataRender={({ avgPrice }) => <PriceLabel value={fromLamports(avgPrice)} fontSize={'18px'} lineHeight={1.5} />}
           />
           <OverviewItem
             title={'Update Time'}
@@ -301,10 +265,13 @@ const FeedHistorySection: React.FC = () => {
       },
       dataset: [
         {
-          source: data?.map(o => ({
-            ...o,
-            time: o.time * 1000
-          }))?.filter(o => o.avgPrice || o.floorPrice || o.aiFloorPrice) || []
+          source: data
+            ?.map(o => ({
+              ...o,
+              time: o.time * 1000
+            }))
+            ?.filter(o => o.avgPrice || o.floorPrice || o.aiFloorPrice)
+            || []
         }
       ],
       color: ['#7864e6', '#d25ae6', 'rgb(2,182,142)'],

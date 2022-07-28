@@ -10,6 +10,7 @@ import { range } from 'lodash'
 import { FreeFeedsCollectionQueryOrder } from '@/api/types'
 import { ArrowDownSvg, ArrowUpSvg } from '@/components/svgs'
 import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
+import { PriceLabel } from '@/components/price-label'
 
 export type FreeFeedsTableProps = {
   data?: FeedInfo[]
@@ -154,7 +155,7 @@ const columnHelper = createColumnHelper<FeedInfo>()
 
 const priceRender = (value?: BN | number) => {
   if (typeof value === 'number') {
-    return value ? `${value.toFixed(4)} SOL` : '0 SOL'
+    return value ? value.toFixed(4) : '0 SOL'
   }
 
   return value?.isZero() ? '0 SOL' : `${fromLamports(value)} SOL`
@@ -186,21 +187,21 @@ const _columns = [
   }),
   columnHelper.accessor('floorPrice', {
     header: 'Floor Price',
-    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>,
+    cell: props => <PriceLabel value={priceRender(props.getValue())} fontSize={'18px'} />,
     meta: {
       field: 'floorPrice'
     }
   }),
   columnHelper.accessor('aiFloorPrice', {
     header: 'AI Floor Price',
-    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>,
+    cell: props => <PriceLabel value={priceRender(props.getValue())} fontSize={'18px'} />,
     meta: {
       field: 'aiFloorPrice'
     }
   }),
   columnHelper.accessor('avgPrice', {
     header: 'Avg Price(24h)',
-    cell: props => <Text fontSize={'18px'}>{priceRender(props.getValue())}</Text>,
+    cell: props => <PriceLabel value={priceRender(props.getValue())} fontSize={'18px'} />,
     meta: {
       field: 'avgPrice'
     }
@@ -241,7 +242,7 @@ const TableRow = styled(Grid)`
 
 const rowGridProps = {
   gridTemplateColumns: {
-    sm: '48px minmax(270px, 1fr) repeat(3, 120px) 140px',
+    sm: '48px minmax(270px, 1fr) repeat(3, 140px) 140px',
     _: '24px 160px repeat(3, 120px) 140px'
   },
   gap: '0 16px'
