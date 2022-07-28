@@ -155,10 +155,10 @@ const columnHelper = createColumnHelper<FeedInfo>()
 
 const priceRender = (value?: BN | number) => {
   if (typeof value === 'number') {
-    return value ? value.toFixed(4) : '0 SOL'
+    return value ? value.toFixed(4) : '0'
   }
 
-  return value?.isZero() ? '0 SOL' : `${fromLamports(value)} SOL`
+  return value?.isZero() ? '0' : `${fromLamports(value)}`
 }
 
 const _columns = [
