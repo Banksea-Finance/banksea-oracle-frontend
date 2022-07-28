@@ -16,7 +16,7 @@ export type FeedActivitiesTableProps = {
 
 const columnHelper = createColumnHelper<CollectionFeedActivity>()
 
-const priceRender = (value?: number) => value ? `${value.toFixed(4)} SOL` : '0 SOL'
+const priceRender = (value?: number) => value ? value.toFixed(4) : '0'
 
 const _columns = [
   columnHelper.accessor('signature', {
