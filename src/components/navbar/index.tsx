@@ -326,7 +326,7 @@ const Navbar: React.FC = () => {
               }
             </Flex>
           ) : (
-            <CgMenuGridR color={'#ccc'} size={'min(28px, 10vw)'} onClick={openDrawer} />
+            <CgMenuGridR color={'#ccc'} size={'28px'} onClick={openDrawer} />
           )
         }
       </Flex>
