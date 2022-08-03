@@ -58,14 +58,21 @@ export const WhitelistRequiredContentWrapper: React.FC<WhitelistRequiredContentW
 
       <Flex width={'100%'} height={'100%'} ai={'center'} jc={'center'} zIndex={11} className={'tips'}>
         <Flex flexDirection={'column'} ai={'center'}>
-          <Text fontSize={'28px'} mb={'16px'}>The content is now open to users in whitelist only</Text>
+          <Text fontSize={'28px'} mb={'16px'}>
+            The content is only visible to whitelisted users
+          </Text>
           {
             !account ? (
-              <Flex ai={'center'}>
-                <Text color={'textDisabled'} fontSize={'14px'}>In whitelist?</Text>
-                <Button variant={'text'} onClick={login} fontSize={'14px'}>
-                  Login via Solana wallet
+              <Flex flexDirection={'column'} ai={'center'}>
+                <Button as={'a'} href={'https://c2dtw7wmuwa.typeform.com/to/Da3lRDf0'} target={'_blank'} rel={'noreferrer'}>
+                  Apply for a whitelist
                 </Button>
+                <Flex ai={'center'}>
+                  <Text color={'textDisabled'} fontSize={'14px'}>In whitelist?</Text>
+                  <Button variant={'text'} onClick={login} fontSize={'14px'}>
+                    Login via Solana wallet
+                  </Button>
+                </Flex>
               </Flex>
             ) : (
               authenticating ? (
