@@ -89,6 +89,7 @@ export const FirstScreenModule: React.FC = () => {
             mt={{ lg: '36px', _: '24px' }}
             fontSize={'min(24px, 5vw)'}
           >
+            NFT Liquidity Infrastructure <br />
             Objective, safe and real-time NFT valuation
           </Text>
 

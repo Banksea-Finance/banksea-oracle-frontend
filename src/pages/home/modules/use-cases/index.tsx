@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react'
-import { Flex, Text } from '@banksea-finance/ui-kit'
+import { Flex } from '@banksea-finance/ui-kit'
 import { ModuleTitle } from '@/components/module-title'
 import styled from 'styled-components'
-import Tooltip from 'rc-tooltip'
 import 'rc-tooltip/assets/bootstrap.css'
 
 const UseCasesContainer = styled.div`
@@ -208,46 +207,46 @@ export const UseCasesModule: React.FC = () => {
         <img src={require('@/assets/images/pages/home/use-cases-bg.webp')} alt="" id={'bg'} />
 
         {
-          items.map(({ id, label, description }) => {
-            let child = (
+          items.map(({ id, label }) => {
+            const child = (
               <span id={id} data-aos={'fade-zoom-in'} data-aos-delay={'250'} data-active={id === ids[visibleIndex]}>
                 {label}
               </span>
             )
 
-            if (description) {
-              child = (
-                <div
-                  onMouseEnter={() => {
-                    setVisibleIndex(ids.indexOf(id))
-                    hoveredIdRef.current = id
-                  }}
-                  onMouseLeave={() => hoveredIdRef.current = undefined}
-                >
-                  <Tooltip
-                    visible={hoveredIdRef.current === id || (hoveredIdRef.current === undefined && id === ids[visibleIndex])}
-                    overlayInnerStyle={{
-                      background: '#37373799',
-                      borderRadius: '20px'
-                    }}
-                    overlay={
-                      <Flex flexDirection={'column'} ai={'center'}>
-                        <Text fontSize={'24px'}>{label}</Text>
-                        <Text
-                          maxWidth={'min(350px, 90vw)'}
-                          textAlign={'center'}
-                          fontSize={{ _: '14px', sm: '16px' }}
-                        >
-                          {description}
-                        </Text>
-                      </Flex>
-                    }
-                  >
-                    {child}
-                  </Tooltip>
-                </div>
-              )
-            }
+            // if (description) {
+            //   child = (
+            //     <div
+            //       onMouseEnter={() => {
+            //         setVisibleIndex(ids.indexOf(id))
+            //         hoveredIdRef.current = id
+            //       }}
+            //       onMouseLeave={() => hoveredIdRef.current = undefined}
+            //     >
+            //       <Tooltip
+            //         visible={hoveredIdRef.current === id || (hoveredIdRef.current === undefined && id === ids[visibleIndex])}
+            //         overlayInnerStyle={{
+            //           background: '#37373799',
+            //           borderRadius: '20px'
+            //         }}
+            //         overlay={
+            //           <Flex flexDirection={'column'} ai={'center'}>
+            //             <Text fontSize={'24px'}>{label}</Text>
+            //             <Text
+            //               maxWidth={'min(350px, 90vw)'}
+            //               textAlign={'center'}
+            //               fontSize={{ _: '14px', sm: '16px' }}
+            //             >
+            //               {description}
+            //             </Text>
+            //           </Flex>
+            //         }
+            //       >
+            //         {child}
+            //       </Tooltip>
+            //     </div>
+            //   )
+            // }
 
             return (
               <Fragment key={id}>
