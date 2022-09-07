@@ -19,6 +19,7 @@ const NewsCard: React.FC<MediumPublication> = ({ imageUrl, link, content, date, 
       <Image
         src={imageUrl}
         width={'100%'}
+        height={{ lg: 'min(  220px, calc( min(1440px,96vw) * 0.305 * 0.618 )  )', xs: '100%' }}
         placeholderHeight={'200px'}
         alt={title}
         style={{ objectFit: 'cover' }}
