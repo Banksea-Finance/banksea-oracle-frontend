@@ -1,5 +1,5 @@
 export { AnalyticsPage } from './analytics'
-export { FreeFeedsPage, AllFreeFeedsPage, CollectionFreeFeedsPage, OracleHomePage } from './oracle'
+export { OracleHomePage } from './oracle'
 export { HomePage } from './home'
 export { RoadmapPage } from './roadmap'
 export { ApiPage } from './api'
