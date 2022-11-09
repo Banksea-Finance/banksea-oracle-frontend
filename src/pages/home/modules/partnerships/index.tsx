@@ -41,6 +41,11 @@ const PARTNERSHIPS: Partnership[] = [
     scale: 0.85
   },
   {
+    image: require('@/assets/images/pages/home/partnerships/voyage.svg').default,
+    url: 'https://app.thevoyager.io/voyage',
+    scale: 0.6
+  },
+  {
     image: require('@/assets/images/pages/home/partnerships/Droid.png'),
     url: 'https://droidcapital.net/',
     scale: 2
