@@ -60,8 +60,8 @@ const INVESTORS: Investor[] = [
   },
   {
     image: require('@/assets/images/pages/home/investors/ventures.png'),
-    url: 'https://gtaventures.org/',
-    scale: 0.7
+    url: 'https://ventures.web3.com/',
+    scale: 0.6
   },
   {
     image: require('@/assets/images/pages/home/investors/definitive.png'),

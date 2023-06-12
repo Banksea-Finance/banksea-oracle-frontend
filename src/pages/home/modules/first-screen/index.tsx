@@ -81,7 +81,7 @@ export const FirstScreenModule: React.FC = () => {
         >
           <Text
             as={'span'}
-            fontSize={{ [breakPoint]: 'min(75px, 4vw)', _: 'min(60px, 8vw)' }}
+            fontSize={{ [breakPoint]: 'min(48px, 2.96vw)', _: '4.82vw' }}
             important
             bold
             lineHeight={'1.5'}
@@ -92,8 +92,9 @@ export const FirstScreenModule: React.FC = () => {
             <span className={'gradient'}>
               AI-Driven
             </span>
+            {' NFT Oracle & '}
             <br />
-            NFT Oracle
+            NFT Liquidity Infrastructure
           </Text>
 
           <Text

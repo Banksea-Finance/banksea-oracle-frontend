@@ -11,6 +11,11 @@ export interface Oracle {
           'isSigner': true
         },
         {
+          'name': 'platformAddr'
+          'isMut': true
+          'isSigner': false
+        },
+        {
           'name': 'authority'
           'isMut': true
           'isSigner': true
@@ -27,11 +32,11 @@ export interface Oracle {
           'type': 'publicKey'
         },
         {
-          'name': 'kseFee'
+          'name': 'feedKseFee'
           'type': 'u64'
         },
         {
-          'name': 'solFee'
+          'name': 'feedSolFee'
           'type': 'u64'
         },
         {
@@ -56,6 +61,14 @@ export interface Oracle {
         },
         {
           'name': 'maxFeedTime'
+          'type': 'u64'
+        },
+        {
+          'name': 'platformKseFee'
+          'type': 'u64'
+        },
+        {
+          'name': 'platformSolFee'
           'type': 'u64'
         }
       ]
@@ -72,6 +85,11 @@ export interface Oracle {
           'name': 'authority'
           'isMut': false
           'isSigner': true
+        },
+        {
+          'name': 'newAuthority'
+          'isMut': false
+          'isSigner': false
         }
       ]
       'args': []
@@ -85,18 +103,28 @@ export interface Oracle {
           'isSigner': false
         },
         {
+          'name': 'platformAddr'
+          'isMut': true
+          'isSigner': false
+        },
+        {
           'name': 'authority'
           'isMut': false
           'isSigner': true
+        },
+        {
+          'name': 'systemProgram'
+          'isMut': false
+          'isSigner': false
         }
       ]
       'args': [
         {
-          'name': 'kseFee'
+          'name': 'feedKseFee'
           'type': 'u64'
         },
         {
-          'name': 'solFee'
+          'name': 'feedSolFee'
           'type': 'u64'
         },
         {
@@ -121,6 +149,14 @@ export interface Oracle {
         },
         {
           'name': 'maxFeedTime'
+          'type': 'u64'
+        },
+        {
+          'name': 'platformKseFee'
+          'type': 'u64'
+        },
+        {
+          'name': 'platformSolFee'
           'type': 'u64'
         }
       ]
@@ -317,6 +353,27 @@ export interface Oracle {
           'type': 'u64'
         }
       ]
+    },
+    {
+      'name': 'removeWhitelist'
+      'accounts': [
+        {
+          'name': 'oracle'
+          'isMut': false
+          'isSigner': false
+        },
+        {
+          'name': 'whitelist'
+          'isMut': true
+          'isSigner': false
+        },
+        {
+          'name': 'authority'
+          'isMut': true
+          'isSigner': true
+        }
+      ]
+      'args': []
     },
     {
       'name': 'addService'
@@ -552,7 +609,17 @@ export interface Oracle {
           'isSigner': false
         },
         {
-          'name': 'nodeAccount'
+          'name': 'nodeKseAccount'
+          'isMut': true
+          'isSigner': false
+        },
+        {
+          'name': 'platformAddr'
+          'isMut': true
+          'isSigner': false
+        },
+        {
+          'name': 'platformKseAccount'
           'isMut': true
           'isSigner': false
         },
@@ -608,14 +675,6 @@ export interface Oracle {
             'type': 'publicKey'
           },
           {
-            'name': 'feedData'
-            'type': {
-              'vec': {
-                'defined': 'CollectionTaskData'
-              }
-            }
-          },
-          {
             'name': 'feedInterval'
             'type': 'u64'
           },
@@ -648,6 +707,14 @@ export interface Oracle {
             'type': 'u8'
           },
           {
+            'name': 'feedData'
+            'type': {
+              'vec': {
+                'defined': 'CollectionTaskData'
+              }
+            }
+          },
+          {
             'name': 'reserve'
             'type': {
               'array': [
@@ -666,6 +733,10 @@ export interface Oracle {
         'fields': [
           {
             'name': 'oracle'
+            'type': 'publicKey'
+          },
+          {
+            'name': 'subscriber'
             'type': 'publicKey'
           },
           {
@@ -779,11 +850,11 @@ export interface Oracle {
             'type': 'publicKey'
           },
           {
-            'name': 'kseFee'
+            'name': 'feedKseFee'
             'type': 'u64'
           },
           {
-            'name': 'solFee'
+            'name': 'feedSolFee'
             'type': 'u64'
           },
           {
@@ -811,11 +882,23 @@ export interface Oracle {
             'type': 'u64'
           },
           {
+            'name': 'platformKseFee'
+            'type': 'u64'
+          },
+          {
+            'name': 'platformSolFee'
+            'type': 'u64'
+          },
+          {
+            'name': 'platformAddr'
+            'type': 'publicKey'
+          },
+          {
             'name': 'reserve'
             'type': {
               'array': [
                 'u8',
-                128
+                64
               ]
             }
           }
@@ -1207,6 +1290,11 @@ export interface Oracle {
       'code': 6008
       'name': 'LackOfSolana'
       'msg': 'lack of solana'
+    },
+    {
+      'code': 6009
+      'name': 'InvalidFeedInterval'
+      'msg': 'too short feed interval'
     }
   ]
 }
@@ -1222,6 +1310,11 @@ export const IDL: Oracle = {
           name: 'oracle',
           isMut: true,
           isSigner: true
+        },
+        {
+          name: 'platformAddr',
+          isMut: true,
+          isSigner: false
         },
         {
           name: 'authority',
@@ -1240,11 +1333,11 @@ export const IDL: Oracle = {
           type: 'publicKey'
         },
         {
-          name: 'kseFee',
+          name: 'feedKseFee',
           type: 'u64'
         },
         {
-          name: 'solFee',
+          name: 'feedSolFee',
           type: 'u64'
         },
         {
@@ -1269,6 +1362,14 @@ export const IDL: Oracle = {
         },
         {
           name: 'maxFeedTime',
+          type: 'u64'
+        },
+        {
+          name: 'platformKseFee',
+          type: 'u64'
+        },
+        {
+          name: 'platformSolFee',
           type: 'u64'
         }
       ]
@@ -1285,6 +1386,11 @@ export const IDL: Oracle = {
           name: 'authority',
           isMut: false,
           isSigner: true
+        },
+        {
+          name: 'newAuthority',
+          isMut: false,
+          isSigner: false
         }
       ],
       args: []
@@ -1298,18 +1404,28 @@ export const IDL: Oracle = {
           isSigner: false
         },
         {
+          name: 'platformAddr',
+          isMut: true,
+          isSigner: false
+        },
+        {
           name: 'authority',
           isMut: false,
           isSigner: true
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false
         }
       ],
       args: [
         {
-          name: 'kseFee',
+          name: 'feedKseFee',
           type: 'u64'
         },
         {
-          name: 'solFee',
+          name: 'feedSolFee',
           type: 'u64'
         },
         {
@@ -1334,6 +1450,14 @@ export const IDL: Oracle = {
         },
         {
           name: 'maxFeedTime',
+          type: 'u64'
+        },
+        {
+          name: 'platformKseFee',
+          type: 'u64'
+        },
+        {
+          name: 'platformSolFee',
           type: 'u64'
         }
       ]
@@ -1530,6 +1654,27 @@ export const IDL: Oracle = {
           type: 'u64'
         }
       ]
+    },
+    {
+      name: 'removeWhitelist',
+      accounts: [
+        {
+          name: 'oracle',
+          isMut: false,
+          isSigner: false
+        },
+        {
+          name: 'whitelist',
+          isMut: true,
+          isSigner: false
+        },
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true
+        }
+      ],
+      args: []
     },
     {
       name: 'addService',
@@ -1765,7 +1910,17 @@ export const IDL: Oracle = {
           isSigner: false
         },
         {
-          name: 'nodeAccount',
+          name: 'nodeKseAccount',
+          isMut: true,
+          isSigner: false
+        },
+        {
+          name: 'platformAddr',
+          isMut: true,
+          isSigner: false
+        },
+        {
+          name: 'platformKseAccount',
           isMut: true,
           isSigner: false
         },
@@ -1821,14 +1976,6 @@ export const IDL: Oracle = {
             type: 'publicKey'
           },
           {
-            name: 'feedData',
-            type: {
-              vec: {
-                defined: 'CollectionTaskData'
-              }
-            }
-          },
-          {
             name: 'feedInterval',
             type: 'u64'
           },
@@ -1861,6 +2008,14 @@ export const IDL: Oracle = {
             type: 'u8'
           },
           {
+            name: 'feedData',
+            type: {
+              vec: {
+                defined: 'CollectionTaskData'
+              }
+            }
+          },
+          {
             name: 'reserve',
             type: {
               array: [
@@ -1879,6 +2034,10 @@ export const IDL: Oracle = {
         fields: [
           {
             name: 'oracle',
+            type: 'publicKey'
+          },
+          {
+            name: 'subscriber',
             type: 'publicKey'
           },
           {
@@ -1992,11 +2151,11 @@ export const IDL: Oracle = {
             type: 'publicKey'
           },
           {
-            name: 'kseFee',
+            name: 'feedKseFee',
             type: 'u64'
           },
           {
-            name: 'solFee',
+            name: 'feedSolFee',
             type: 'u64'
           },
           {
@@ -2024,11 +2183,23 @@ export const IDL: Oracle = {
             type: 'u64'
           },
           {
+            name: 'platformKseFee',
+            type: 'u64'
+          },
+          {
+            name: 'platformSolFee',
+            type: 'u64'
+          },
+          {
+            name: 'platformAddr',
+            type: 'publicKey'
+          },
+          {
             name: 'reserve',
             type: {
               array: [
                 'u8',
-                128
+                64
               ]
             }
           }
@@ -2420,6 +2591,11 @@ export const IDL: Oracle = {
       code: 6008,
       name: 'LackOfSolana',
       msg: 'lack of solana'
+    },
+    {
+      code: 6009,
+      name: 'InvalidFeedInterval',
+      msg: 'too short feed interval'
     }
   ]
 }

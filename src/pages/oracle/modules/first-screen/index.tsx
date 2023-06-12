@@ -1,8 +1,6 @@
 import React from 'react'
 import { Box, Button, Flex, Grid, Text, useScale } from '@banksea-finance/ui-kit'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-import { FREE_FEEDS_PAGE_PATH } from '@/pages/oracle/free-feeds'
 
 const FirstScreenModuleContainer = styled(Box)`
   width: 100vw;
@@ -99,7 +97,14 @@ export const FirstScreenModule: React.FC = () => {
           <Title />
 
           <Flex mt={{ [breakPoint]: '32px', _: '16px' }} jc={{ [breakPoint]: 'start', _: 'center' }}>
-            <Button scale={scale} as={Link} to={FREE_FEEDS_PAGE_PATH}>Free Feeds</Button>
+            <Button
+              scale={scale}
+              as={'a'}
+              href={'https://subscribe.banksea.finance'}
+              target={'_blank'}
+            >
+              Feeds Explorer
+            </Button>
           </Flex>
         </Box>
       </Flex>
