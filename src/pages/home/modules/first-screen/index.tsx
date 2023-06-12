@@ -22,6 +22,20 @@ const FirstScreenModuleContainer = styled.div`
   }
 `
 
+
+const Badge = styled.div`
+  position: absolute;
+  top: -18px;
+  right: -40px;
+  padding: 6px 8px;
+  border-radius: 9999px;
+  
+  transform: rotate(15deg);
+
+  background: linear-gradient(0deg,hsla(0,0%,100%,.2),hsla(0,0%,100%,.2)),linear-gradient(90deg,#f57b34,#f84f28);
+  color: white;
+`
+
 export const FirstScreenModule: React.FC = () => {
   const breakPoint = 'lg'
 
@@ -96,9 +110,14 @@ export const FirstScreenModule: React.FC = () => {
             <Button as={Link} autoScale to={'/oracle'} width={'min(170px, 30vw)'}>
               Oracle
             </Button>
-            <Button as={Link} autoScale to={'/api'} width={'min(170px, 30vw)'} variant={'outlined'}>
-              API
-            </Button>
+
+            <a href="https://perp.banksea.finance/" target={'_blank'} rel={'noreferrer'}>
+              <Button style={{ position: 'relative' }} width={'min(170px, 30vw)'} variant={'outlined'}>
+                NFT Perpetual
+
+                <Badge>Alpha Testing</Badge>
+              </Button>
+            </a>
           </Grid>
 
           <Grid
